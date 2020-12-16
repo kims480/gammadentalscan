@@ -1,0 +1,22 @@
+{
+  "web": {
+    "client_id": "909780462877-7uqkksfdop3v16avj4ae077134aluoim.apps.googleusercontent.com",
+    "project_id": "gammadental",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "LwiI4VkR8_f6LsQwP3-E40XY",
+    "API_KEY": "AIzaSyAQs4js8NHyL13zAbQ_hqydupYAV90tGm8",
+    "redirect_uris": [
+      "https://gamma-dental-scan.com/",
+      "https://gammadentalscan.com/",
+      "http://localhost:3000/",
+      "http://localhost:3000/app/session/signIn/"
+    ],
+    "javascript_origins": [
+      "https://gamma-dental-scan.com",
+      "https://gammadentalscan.com",
+      "http://localhost"
+    ]
+  }
+}

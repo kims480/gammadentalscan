@@ -1,0 +1,112 @@
+*{
+ box-sizing: border-box;
+}
+body{
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+    background: #f2f2f2;
+    font-weight: bold;
+    color: green;
+}
+.inner{
+    padding:.5em;
+    border-radius: .3em;
+
+    box-shadow:
+    7px 7px 5px rgba($color: #000000, $alpha: .04),
+    7px 7px 5px rgba($color: #FFFFFF, $alpha: .8);
+    border: 2px solid rgb(235, 235, 235);
+}
+input[type=checkbox]{
+    display: none;
+    pointer-events: none;
+
+    &+label {
+        cursor: pointer;
+        font-size:.8em;
+        display:grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+
+        svg:nth-child(1){
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            height: 55px;
+    width: auto;
+    fill:#07d4bbf5;
+   transform: scale(0.9);
+        }
+        svg:nth-child(2){
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            width: 2em;
+            stroke: green;
+            stroke-width: 5;
+            fill: white;
+            circle{
+                stroke-dasharray: 116;
+                stroke-dashoffset: 0;
+            }
+            .check{
+                fill: none;
+                transform-origin: bottom;
+                transform: translateX(-32px) translateY(-10px) scale(1.8);
+            }
+            .check:first-child{
+                stroke-width: 3px;
+                stroke-dasharray: 5;
+                stroke-dashoffset: 5;
+            }
+            .check:nth-child(2){
+
+                stroke-width: 3px;
+                stroke-dasharray: 12.6;
+                stroke-dashoffset: 12.6;
+                fill: none;
+            }
+
+        }
+        span{
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+           padding-top: .3em;
+           margin-left: .3em;
+
+        }
+    }
+    &:checked + label{
+        svg:nth-child(2){
+
+            circle{
+                stroke-dashoffset: 116;
+                transition: stroke-dashoffset .3s linear;
+            }
+            g.check{
+                transform: translateX(-32px) translateY(-25px) scale(1.8);
+
+                transition: stroke-dashoffset .3s linear;
+
+            }
+            .check:first-child{
+
+                stroke-dashoffset: 0;
+            }
+            .check:nth-child(2){
+                // transform: translateX(-1px) translateY(-8px) scaleY(1.5);
+                transform-origin: center;
+                stroke-dashoffset: 0;
+                fill: none;
+            }
+
+        }
+
+    }
+}

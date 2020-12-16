@@ -1,0 +1,129 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  background: #f2f2f2;
+  font-weight: bold;
+  color: green;
+}
+
+.inner {
+  padding: .5em;
+  border-radius: .3em;
+  width: 200px;
+  -webkit-box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.04), 7px 7px 5px rgba(255, 255, 255, 0.8);
+          box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.04), 7px 7px 5px rgba(255, 255, 255, 0.8);
+  border: 2px solid #ebebeb;
+}
+
+input[type=checkbox] {
+  display: none;
+  pointer-events: none;
+}
+
+input[type=checkbox] + label {
+  cursor: pointer;
+  font-size: .8em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto;
+      grid-template-columns: auto auto;
+  -ms-grid-rows: auto auto;
+      grid-template-rows: auto auto;
+}
+
+input[type=checkbox] + label svg:nth-child(1) {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 2;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 2;
+  height: 55px;
+  width: auto;
+  fill: #07d4bbf5;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+input[type=checkbox] + label svg:nth-child(2) {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 2;
+  width: 2em;
+  stroke: green;
+  stroke-width: 5;
+  fill: white;
+}
+
+input[type=checkbox] + label svg:nth-child(2) circle {
+  stroke-dasharray: 116;
+  stroke-dashoffset: 0;
+}
+
+input[type=checkbox] + label svg:nth-child(2) .check {
+  fill: none;
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+  -webkit-transform: translateX(-32px) translateY(-10px) scale(1.8);
+          transform: translateX(-32px) translateY(-10px) scale(1.8);
+}
+
+input[type=checkbox] + label svg:nth-child(2) .check:first-child {
+  stroke-width: 3px;
+  stroke-dasharray: 5;
+  stroke-dashoffset: 5;
+}
+
+input[type=checkbox] + label svg:nth-child(2) .check:nth-child(2) {
+  stroke-width: 3px;
+  stroke-dasharray: 12.6;
+  stroke-dashoffset: 12.6;
+  fill: none;
+}
+
+input[type=checkbox] + label span {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 3;
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  grid-row-end: 3;
+  padding-top: .3em;
+  margin-left: .3em;
+}
+
+input[type=checkbox]:checked + label svg:nth-child(2) circle {
+  stroke-dashoffset: 116;
+  -webkit-transition: stroke-dashoffset .3s linear;
+  transition: stroke-dashoffset .3s linear;
+}
+
+input[type=checkbox]:checked + label svg:nth-child(2) g.check {
+  -webkit-transform: translateX(-32px) translateY(-25px) scale(1.8);
+          transform: translateX(-32px) translateY(-25px) scale(1.8);
+  -webkit-transition: stroke-dashoffset .3s linear;
+  transition: stroke-dashoffset .3s linear;
+}
+
+input[type=checkbox]:checked + label svg:nth-child(2) .check:first-child {
+  stroke-dashoffset: 0;
+}
+
+input[type=checkbox]:checked + label svg:nth-child(2) .check:nth-child(2) {
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  stroke-dashoffset: 0;
+  fill: none;
+}
+/*# sourceMappingURL=main.css.map */
