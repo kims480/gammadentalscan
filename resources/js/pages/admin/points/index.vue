@@ -1,9 +1,193 @@
 <template>
-    <div></div>
+<div>
+    <span>Admin / Users</span>
+  <crud
+    :prefix="prefix"
+    :path="path"
+    :paths="paths"
+    :page-title="pageTitle"
+    :fields-info="fieldsInfo"
+    :details-title="$t('detailsTitle')"
+    :custom-buttons="buttons"
+    :item-elements="itemElements"
+    ref="crud"
+  >
+  </crud>
+  </div>
 </template>
 
 <script>
-export default {};
-</script>
+import Vue from 'vue'
+import Crud from '@/components/crud/components/Crud.vue'
+import {
+  mapActions,
+} from 'vuex'
 
-<style lang="sass" scoped></style>
+export default {
+  data () {
+    return {
+      prefix: '',
+      path: 'get-users',
+      paths: {
+        i: 'get-users',
+        st: 'get-users',
+      },
+      pageTitle: 'administration.users',
+    }
+  },
+  computed: {
+    itemElements () {
+      return {
+        userPermissions: {
+          title: this.$t('itemElements.userPermissions.title'),
+          url: 'admin/users/{id}/permissions',
+          controller: 'crud/admin/user-permissions',
+          itemObject: 'permission_users',
+          columns: [
+            {
+              obj: 'name',
+              name: 'permission',
+              header: this.$t('itemElements.userPermissions.headers.permission'),
+            },
+          ],
+          primaryId: 'user_id',
+          foreignId: 'permission_id',
+          icon: 'lock_open',
+          color: 'purple',
+          buttonText: this.$t('itemElements.userPermissions.title'),
+        },
+      }
+    },
+    buttons () {
+      return [
+        {
+          name: 'resetPassword',
+          icon: 'autorenew',
+          color: 'blue',
+          text: this.$t('buttons.resetPassword'),
+        },
+      ]
+    },
+    fieldsInfo () {
+      return [
+        {
+          text: this.$t('fields.id'),
+          name: 'id',
+          details: false,
+        },
+        {
+          type: 'input',
+          column: 'name',
+          text: this.$t('fields.name'),
+          name: 'name',
+          multiedit: false,
+        },
+        {
+          type: 'input',
+          column: 'email',
+          text: this.$t('fields.email'),
+          name: 'email',
+          multiedit: false,
+        },
+        {
+          type: 'select',
+        //   url: 'crud/admin/user-types',
+        //   list: {
+        //     value: 'id',
+        //     text: 'name',
+        //     data: [],
+        //   },
+          column: 'active',
+          text: 'Active',// this.$t('fields.userType'),
+          name: 'active',
+        //   apiObject: {
+        //     name: 'Active',
+        //   },
+        },
+        {
+          type: 'select',
+
+            list: {
+            value: 'id',
+            text: 'name',
+            data: ['admin','user','doctors'],
+          },
+          column: 'role',
+          text: 'Roles',
+          name: 'role',
+
+        },
+
+      ]
+    },
+  },
+  methods: {
+    ...mapActions('crud', ['getItems']),
+    ...mapActions(['openAlertBox']),
+    resetPassword (item) {
+      Vue.http.put('admin/users/' + item.id + '/reset-password')
+        .then((response) => {
+          this.openAlertBox([
+            'alertSuccess',
+            this.$t('passwordReseted'),
+          ])
+          this.getItems()
+        })
+    },
+  },
+  components: {
+    Crud,
+  },
+  i18n: {
+    messages: {
+      pl: {
+        detailsTitle: 'المستخدمين',
+        fields: {
+          id: 'Id',
+          name: 'Nazwa',
+          email: 'E-mail',
+          initialPassword: 'Hasło początkowe',
+          userType: 'Typ użytkownika',
+        },
+        itemElements: {
+          userPermissions: {
+            title: 'Uprawnienia użytkownika',
+            headers: {
+              permission: 'Uprawnienie',
+            },
+          },
+        },
+        buttons: {
+          resetPassword: 'Reset hasła',
+        },
+        passwordReseted: 'Hasło zostało zmienione',
+        passwordResetError: 'Błąd! Nie udało się zmienić hasła',
+      },
+      en: {
+        detailsTitle: 'User',
+        fields: {
+          id: 'Id',
+          name: 'Name',
+          email: 'E-mail',
+          active: 'Active',
+          roles: 'Roles',
+        },
+        itemElements: {
+          userPermissions: {
+            title: 'User permissions',
+            headers: {
+              permission: 'Permission',
+            },
+          },
+        },
+        buttons: {
+          resetPassword: 'Reset password',
+        },
+        passwordReseted: 'Password changed',
+        passwordResetError: 'Error! Password change unsuccessful',
+      },
+    },
+  },
+}
+
+</script>

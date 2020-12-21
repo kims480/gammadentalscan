@@ -138,7 +138,7 @@ export default {
     this.$store.dispatch("patient/getPatients").then(res => {
       this.fetchUsers(res.data);
       this.loading = false;
-      this.$toast
+      this.$toasted
         .success("users table loaded", {
           position: "top-center",
           className: "mytoast",

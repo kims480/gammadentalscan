@@ -23,6 +23,9 @@ import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
 // import V2Datepicker from "v2-datepicker";
 
 // locale.use(lang);
+// register the plugin on vue
+import Toasted from 'vue-toasted';
+
 
 export default {
     install(Vue) {
@@ -137,6 +140,23 @@ export default {
         //   // ...other defaults
         // });
 
+
+        // you can also pass options, check options reference below
+
+
+        Vue.use(Toasted)
+        Vue.toasted.register('my_app_error', 'Oops.. Something Went Wrong..', {
+            type : 'error',
+            icon : 'error_outline'
+        })
+        Vue.toasted.register('Not_Authorized', 'You are not authorized to access this Page/Data', "Toasted !!", {
+            theme: "bubble",
+            position: "top-center",
+            duration : 5000,
+            type : 'error',
+            icon : 'error_outline'
+        })
+        // console.log(Toasted.global)
         Vue.use(VueTour);
         Vue.use(VueLazyload, {
             observer: true,
@@ -147,4 +167,5 @@ export default {
             }
         });
     }
+
 };

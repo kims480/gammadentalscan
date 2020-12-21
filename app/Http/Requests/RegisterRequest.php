@@ -27,8 +27,18 @@ class RegisterRequest extends FormRequest
             //
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required','string'],
             'password' => ['required', 'string', 'min:8'],
             'password_confirm' => ['required', 'string', 'same:password'],
         ];
     }
+    /**
+     * custome validation messages.
+     *
+     * @return array
+     */
+    // public function messages()
+    // {
+
+    // }
 }

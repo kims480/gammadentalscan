@@ -16,7 +16,7 @@ const apiClient = axios.create({
 });
 export default {
     getDoctors() {
-        return apiClient.get("/doctors");
+        return ServicesConst.myApiClient.get("/doctors");
       },
     getChildPatient(id) {
         return apiClient.post("child/patients/" + id);

@@ -23,7 +23,7 @@
                 <v-sheet
                     color="#FaFaFa"
                     elevation="1"
-                    style="padding:1px"
+                    style="padding:1px;margin-bottom:60px"
                     width="100%"
                     >
                 <transition name="page" mode="out-in">

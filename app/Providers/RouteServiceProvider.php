@@ -24,6 +24,20 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The path to the "App_Home" route for your application.
+     *
+     * @var string
+     */
+    public const APP_HOME = '/app';
+
+    /**
+     * The path to the "App_Home" route for your application.
+     *
+     * @var string
+     */
+    public const APP_LOGIN = '/app/signin';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -43,6 +57,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
+        $this->mapAppRoutes();
 
         $this->mapWebRoutes();
 
@@ -76,5 +91,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+    /**
+     * Define the "app" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapAppRoutes()
+    {
+        Route::prefix('app')
+             ->middleware('api')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/app.php'));
     }
 }

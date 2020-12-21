@@ -1,29 +1,43 @@
 /** @format */
 import { mapGetters, mapState } from "vuex";
 import axios from "axios";
-const myBaseURL = "http://172.20.10.200";
-const myBaseURLPort = ":8800/";
+const myBaseURL = "https://gamma-dental-scan.dev";
+const myBaseURLPort = "/";
 const myFullBaseURL = myBaseURL + myBaseURLPort;
-let token =
-    localStorage.getItem("user") !== null
-        ? JSON.parse(localStorage.getItem("user")).token
-        : {
-              ...mapState("user", ["token"])
-          };
+const myApiBaseURL = myFullBaseURL + 'api';
+// let token = localStorage.getItem("token") ||= {...mapState(["token"])};
+export const myApiClient= axios.create({
+        baseURL: myApiBaseURL,
+        withCredentials: true,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            Accept: ["application/json", "Access-Control-Allow-Origin"],
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token") //token !== null ? token :
+        }
+    })
 
-export default {
+export default  {
     myBaseURL: myBaseURL,
-    myBaseURLPort: myBaseURLPort,
-    myFullBaseURL: myFullBaseURL,
+    myBaseURLPort,
+    myFullBaseURL,
+    myApiBaseURL ,
     apiClient: axios.create({
         baseURL: myFullBaseURL,
         withCredentials: true,
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token //token !== null ? token :
+            Authorization: "Bearer " + localStorage.getItem("token") //token !== null ? token :
         }
     }),
+    myApiClient
+    ,
+    getHeader(auth) {
+        axios.defaults.headers.common["Authorization"] = auth;
+
+        console.log(auth);
+      },
 
     authComputed: {
         ...mapGetters(["loggedIn"])

@@ -17,7 +17,6 @@ body {
 .inner {
   padding: .5em;
   border-radius: .3em;
-  width: 200px;
   -webkit-box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.04), 7px 7px 5px rgba(255, 255, 255, 0.8);
           box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.04), 7px 7px 5px rgba(255, 255, 255, 0.8);
   border: 2px solid #ebebeb;

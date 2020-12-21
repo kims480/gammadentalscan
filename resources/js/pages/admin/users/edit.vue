@@ -66,18 +66,10 @@
 
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6">
-               <v-text-field
-                  label="Created Date"
-                  :value="userCreatedAt"
-                  v-model="created_at"
 
-
-                ></v-text-field>
-              </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                    v-model="userRoles"
+                    v-model="userRole"
                     :items="roles"
                     chips
                     multiple
@@ -109,6 +101,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   props: ["user"],
   data: () => ({
@@ -119,11 +112,11 @@ export default {
     active: '',
     phone: '',
     whatsapp: '',
-    roles: ['user',
-            'admin',
-            'doctor',
-            'super_admin',
-            'developer'
+    roles: ['USER',
+            'ADMIN',
+            'DOCTOR',
+            'SUPER_ADMIN',
+            'DEVELPER'
           ],
     created_at: '',
     updated_at: '',
@@ -139,15 +132,16 @@ export default {
       prependSlot: false,
       prependItemSlot: false,
       selectSlot: false,
-      userRoles: ['user'],
+      userRoles: [],
 
         rules: {
           required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
+          min: v => !v?? (v.length >= 8 || 'Min 8 characters'),
           emailMatch: () => ('The email and password you entered don\'t match'),
         },
   }),
   computed: {
+      ...mapGetters(['userPermissions']),
     userEmail() {
       this.email = this.user.email;
     },
@@ -168,10 +162,11 @@ export default {
     },
     userRole(){
 
-        this.userRoles.push(this.user.role.role)
-
-
-
+        for(var i = 0; i < this.user.roles.length; i++) {
+                var input = this.user.roles[i];
+                this.userRoles.push(input.name);
+            }
+            console.log(this.userRoles)
 
     },
     userCreatedAt(){
@@ -183,7 +178,7 @@ export default {
   },
   created(){
 
-    console.log(this.userRole)
+
   }
   // watch: {
   //     multiple (val) {

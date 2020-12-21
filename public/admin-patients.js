@@ -295,7 +295,7 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.loading = false;
 
-      _this.$toast.success("users table loaded", {
+      _this.$toasted.success("users table loaded", {
         position: "top-center",
         className: "mytoast",
         type: "success",

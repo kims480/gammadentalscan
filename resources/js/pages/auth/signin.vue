@@ -68,7 +68,10 @@
                                         </span>
                                     </template>
                                 </v-btn>
-
+                            <hr class="my-4" />
+                            <span>
+                                Donot have Account! Need to <router-link to="/register">Register</router-link>
+                            </span>
 
                             <hr class="my-4" />
                             <button

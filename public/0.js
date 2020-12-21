@@ -1,1484 +1,1787 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
 
-/***/ "./node_modules/vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.umd.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.umd.js ***!
-  \********************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Button.vue */ "./resources/js/components/crud/components/Button.vue");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Controls',
+  components: {
+    CrudButton: _Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['createMode', 'editMode', 'deleteMode', 'selectManyMode', 'updateManyMode', 'removeManyMode', 'mainFilter', 'fieldFilters', 'refreshButton', 'exportButton', 'excelLoading', 'initialSearch', 'initialSelectedStatuses', 'initialColumnFilters'],
+  data: function data() {
+    return {
+      search: '',
+      selectedStatuses: [],
+      columnFilters: []
+    };
+  },
+  computed: {
+    statuses: function statuses() {
+      return [{
+        text: this.$t('global.datatable.status.active'),
+        value: 1
+      }, {
+        text: this.$t('global.datatable.status.inactive'),
+        value: 0
+      }];
+    },
+    filterModes: function filterModes() {
+      return [{
+        name: 'like',
+        text: this.$t('global.datatable.filterModes.options.like')
+      }, {
+        name: 'equals',
+        text: this.$t('global.datatable.filterModes.options.equals')
+      }, {
+        name: 'list',
+        text: this.$t('global.datatable.filterModes.options.list')
+      }];
+    }
+  },
+  methods: {
+    create: function create() {
+      this.$emit('create');
+    },
+    editSelected: function editSelected() {
+      this.$emit('editSelected');
+    },
+    suspendSelected: function suspendSelected() {
+      this.$emit('suspendSelected');
+    },
+    restoreSelected: function restoreSelected() {
+      this.$emit('restoreSelected');
+    },
+    destroySelected: function destroySelected() {
+      this.$emit('destroySelected');
+    },
+    refreshItemsView: function refreshItemsView() {
+      this.$emit('refreshItemsView');
+    },
+    updateSearch: function updateSearch() {
+      this.$emit('updateSearch', this.search);
+    },
+    updateSelectedStatuses: function updateSelectedStatuses() {
+      this.$emit('updateSelectedStatuses', this.selectedStatuses);
+    },
+    updateColumnFilterMode: function updateColumnFilterMode(event, index) {
+      this.$emit('updateColumnFilterMode', event, index);
+    },
+    updateColumnFilterValue: function updateColumnFilterValue(event, index) {
+      this.$emit('updateColumnFilterValue', event, index);
+    },
+    updateColumnFilters: function updateColumnFilters() {
+      this.$emit('updateColumnFilters', this.columnFilters);
+    },
+    clearFilters: function clearFilters() {
+      this.search = '';
+      this.updateSearch();
+      this.selectedStatuses = [1];
+      this.updateSelectedStatuses();
+
+      var _iterator = _createForOfIteratorHelper(this.columnFilters),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var column = _step.value;
+          column.mode = 'like';
+          column.value = '';
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      this.updateColumnFilters();
+      this.$emit('clearFilters');
+    },
+    exportToExcel: function exportToExcel() {
+      this.$emit('exportToExcel');
+    }
+  },
+  created: function created() {
+    this.search = this.initialSearch;
+    this.selectedStatuses = this.initialSelectedStatuses;
+    this.columnFilters = this.initialColumnFilters;
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Button.vue */ "./resources/js/components/crud/components/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _helpers_functions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/functions */ "./resources/js/components/crud/helpers/functions.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    CrudButton: _Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ['fieldInfo'],
+  filters: {
+    fileSize: function fileSize(size) {
+      return size != null ? Object(_helpers_functions__WEBPACK_IMPORTED_MODULE_2__["humanFileSize"])(size) : '';
+    }
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])('crud', ['filesPath'])), {}, {
+    field: function field() {
+      return Object.assign({
+        filename: '',
+        mime: '',
+        size: null
+      }, this.fieldInfo);
+    }
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])('crud', ['openImageContainer'])), {}, {
+    download: function download(item) {
+      Object(_helpers_functions__WEBPACK_IMPORTED_MODULE_2__["download"])("".concat(this.filesPath, "/").concat(item.path), item.filename);
+    },
+    isImage: function isImage(mime) {
+      var supportedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      return supportedMimeTypes.includes(mime);
+    },
+    showImage: function showImage(image) {
+      this.openImageContainer(image);
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Button.vue */ "./resources/js/components/crud/components/Button.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    CrudButton: _Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    item: {},
+    editButton: {},
+    customButtons: {},
+    deleteMode: {},
+    itemElements: {},
+    dynamicTextModes: {},
+    editMode: {},
+    selectManyMode: {
+      type: Boolean,
+      "default": false
+    }
+  },
+  methods: {
+    edit: function edit(id) {
+      this.$emit('edit', id);
+    },
+    custom: function custom(name, item) {
+      this.$emit('custom', name, item);
+    },
+    suspend: function suspend(id) {
+      this.$emit('suspend', id);
+    },
+    restore: function restore(id) {
+      this.$emit('restore', id);
+    },
+    destroy: function destroy(id) {
+      this.$emit('destroy', id);
+    },
+    editItemElements: function editItemElements(name, id) {
+      this.$emit('editItemElements', name, id);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FileDetails_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FileDetails.vue */ "./resources/js/components/crud/components/FileDetails.vue");
+/* harmony import */ var _config_crud__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/config/crud */ "./resources/js/config/crud.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    FileDetails: _FileDetails_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: {
+    value: {},
+    textMode: {
+      type: String,
+      "default": 'text'
+    }
+  },
+  filters: {
+    cropped: function cropped(value) {
+      var rvalue;
+      var maxLength = _config_crud__WEBPACK_IMPORTED_MODULE_1__["default"].maxLength || 40;
+
+      if (typeof value === 'string' || value instanceof String) {
+        rvalue = value.length <= maxLength ? value : "".concat(value.substring(0, maxLength - 3), "...");
+      } else {
+        rvalue = value;
+      }
+
+      return rvalue;
+    }
+  },
+  methods: {
+    fieldInfoToJSON: function fieldInfoToJSON(value) {
+      return JSON.parse(value);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-(function (global, factory) {
-   true ? factory(exports) :
-  undefined;
-}(this, (function (exports) { 'use strict';
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
 
-  /*!
-   * perfect-scrollbar v1.5.0
-   * Copyright 2020 Hyunje Jun, MDBootstrap and Contributors
-   * Licensed under MIT
-   */
 
-  function get(element) {
-    return getComputedStyle(element);
-  }
+// module
+exports.push([module.i, ".crud-controls__search[data-v-5c47c9a9] {\n  margin: 0 15px;\n  display: inline-block;\n  width: 120px;\n}\n@media (min-width: 500px) {\n.crud-controls__search[data-v-5c47c9a9] {\n    width: 250px;\n}\n}\n.crud-controls__search-input[data-v-5c47c9a9] {\n  margin-top: -8px;\n}\n.crud-controls__select-statuses[data-v-5c47c9a9] {\n  margin: 0 15px;\n  display: inline-block;\n  width: 120px;\n}\n@media (min-width: 500px) {\n.crud-controls__select-statuses[data-v-5c47c9a9] {\n    width: 250px;\n}\n}", ""]);
 
-  function set(element, obj) {
-    for (var key in obj) {
-      var val = obj[key];
-      if (typeof val === 'number') {
-        val = val + "px";
-      }
-      element.style[key] = val;
-    }
-    return element;
-  }
+// exports
 
-  function div(className) {
-    var div = document.createElement('div');
-    div.className = className;
-    return div;
-  }
 
-  var elMatches =
-    typeof Element !== 'undefined' &&
-    (Element.prototype.matches ||
-      Element.prototype.webkitMatchesSelector ||
-      Element.prototype.mozMatchesSelector ||
-      Element.prototype.msMatchesSelector);
+/***/ }),
 
-  function matches(element, query) {
-    if (!elMatches) {
-      throw new Error('No element matching method supported');
-    }
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-    return elMatches.call(element, query);
-  }
 
-  function remove(element) {
-    if (element.remove) {
-      element.remove();
-    } else {
-      if (element.parentNode) {
-        element.parentNode.removeChild(element);
-      }
-    }
-  }
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&");
 
-  function queryChildren(element, selector) {
-    return Array.prototype.filter.call(element.children, function (child) { return matches(child, selector); }
-    );
-  }
+if(typeof content === 'string') content = [[module.i, content, '']];
 
-  var cls = {
-    main: 'ps',
-    rtl: 'ps__rtl',
-    element: {
-      thumb: function (x) { return ("ps__thumb-" + x); },
-      rail: function (x) { return ("ps__rail-" + x); },
-      consuming: 'ps__child--consume',
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "\n    card-title\n    table-controls\n    px-3\n    d-flex\n    align-center\n    justify-space-between\n  "
     },
-    state: {
-      focus: 'ps--focus',
-      clicking: 'ps--clicking',
-      active: function (x) { return ("ps--active-" + x); },
-      scrolling: function (x) { return ("ps--scrolling-" + x); },
-    },
-  };
+    [
+      _c(
+        "div",
+        [
+          _vm.createMode
+            ? _c("crud-button", {
+                attrs: {
+                  "x-large": "",
+                  color: "light-blue lighten-2",
+                  icon: "add",
+                  tooltip: _vm.$t("global.datatable.add")
+                },
+                on: {
+                  clicked: function($event) {
+                    return _vm.create()
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.editMode && _vm.selectManyMode && _vm.updateManyMode
+            ? _c("crud-button", {
+                attrs: {
+                  large: "",
+                  color: "orange",
+                  icon: "edit",
+                  tooltip: _vm.$t("global.datatable.buttons.editSelected")
+                },
+                on: {
+                  clicked: function($event) {
+                    return _vm.editSelected()
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          ["soft", "both"].includes(_vm.deleteMode) &&
+          _vm.selectManyMode &&
+          _vm.updateManyMode
+            ? [
+                _c("crud-button", {
+                  attrs: {
+                    large: "",
+                    color: "red",
+                    icon: "undo",
+                    tooltip: _vm.$t("global.datatable.buttons.suspendSelected")
+                  },
+                  on: {
+                    clicked: function($event) {
+                      return _vm.suspendSelected()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("crud-button", {
+                  attrs: {
+                    large: "",
+                    color: "green",
+                    icon: "redo",
+                    tooltip: _vm.$t("global.datatable.buttons.restoreSelected")
+                  },
+                  on: {
+                    clicked: function($event) {
+                      return _vm.restoreSelected()
+                    }
+                  }
+                })
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          ["hard", "both"].includes(_vm.deleteMode) &&
+          _vm.selectManyMode &&
+          _vm.removeManyMode
+            ? _c("crud-button", {
+                attrs: {
+                  large: "",
+                  color: "black",
+                  icon: "delete",
+                  tooltip: _vm.$t("global.datatable.buttons.deleteSelected")
+                },
+                on: {
+                  clicked: function($event) {
+                    return _vm.destroySelected()
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._t("left")
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _vm.fieldFilters
+            ? _c(
+                "v-menu",
+                {
+                  attrs: {
+                    "close-on-content-click": false,
+                    "max-height": "50vh",
+                    "offset-y": ""
+                  },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "activator",
+                        fn: function(ref) {
+                          var on = ref.on
+                          return [
+                            _c(
+                              "v-btn",
+                              _vm._g(
+                                {
+                                  attrs: { large: "", color: "grey", icon: "" }
+                                },
+                                on
+                              ),
+                              [_c("v-icon", [_vm._v("filter_list")])],
+                              1
+                            )
+                          ]
+                        }
+                      }
+                    ],
+                    null,
+                    false,
+                    3165121118
+                  )
+                },
+                [
+                  _vm._v(" "),
+                  _c(
+                    "v-list",
+                    { staticStyle: { "overflow-y": "false" } },
+                    _vm._l(_vm.columnFilters, function(item, index) {
+                      return _c(
+                        "v-list-item",
+                        { key: index },
+                        [
+                          _c("v-autocomplete", {
+                            attrs: {
+                              items: _vm.filterModes,
+                              "item-text": "text",
+                              "item-value": "name",
+                              label: _vm.$t(
+                                "global.datatable.filterModes.label"
+                              ),
+                              "hide-details": ""
+                            },
+                            on: {
+                              input: function($event) {
+                                return _vm.updateColumnFilterMode($event, index)
+                              }
+                            },
+                            model: {
+                              value: item.mode,
+                              callback: function($$v) {
+                                _vm.$set(item, "mode", $$v)
+                              },
+                              expression: "item.mode"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: { "hide-details": "", label: item.text },
+                            on: {
+                              input: function($event) {
+                                return _vm.updateColumnFilterValue(
+                                  $event,
+                                  index
+                                )
+                              }
+                            },
+                            model: {
+                              value: item.value,
+                              callback: function($$v) {
+                                _vm.$set(item, "value", $$v)
+                              },
+                              expression: "item.value"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.mainFilter
+            ? _c(
+                "span",
+                { staticClass: "crud-controls__search" },
+                [
+                  _c("v-text-field", {
+                    staticClass: "crud-controls__search-input",
+                    attrs: {
+                      label: _vm.$t("global.datatable.search"),
+                      "append-icon": "search",
+                      "single-line": "",
+                      "hide-details": ""
+                    },
+                    on: { input: _vm.updateSearch },
+                    model: {
+                      value: _vm.search,
+                      callback: function($$v) {
+                        _vm.search = $$v
+                      },
+                      expression: "search"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          ["soft", "both", "filter"].includes(_vm.deleteMode)
+            ? [
+                _c(
+                  "span",
+                  { staticClass: "crud-controls__select-statuses" },
+                  [
+                    _c("v-autocomplete", {
+                      attrs: {
+                        items: _vm.statuses,
+                        label: _vm.$t("global.datatable.status.title"),
+                        "item-text": "text",
+                        "item-value": "value",
+                        "single-line": "",
+                        multiple: "",
+                        chips: ""
+                      },
+                      on: { change: _vm.updateSelectedStatuses },
+                      model: {
+                        value: _vm.selectedStatuses,
+                        callback: function($$v) {
+                          _vm.selectedStatuses = $$v
+                        },
+                        expression: "selectedStatuses"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.mainFilter || _vm.fieldFilters
+            ? _c("crud-button", {
+                attrs: {
+                  large: "",
+                  color: "grey",
+                  icon: "delete_sweep",
+                  tooltip: _vm.$t("global.datatable.buttons.clearFilters")
+                },
+                on: {
+                  clicked: function($event) {
+                    return _vm.clearFilters()
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._t("center")
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _vm.refreshButton
+            ? _c("crud-button", {
+                attrs: {
+                  large: "",
+                  color: "blue",
+                  icon: "refresh",
+                  tooltip: _vm.$t("global.datatable.buttons.refreshTable")
+                },
+                on: {
+                  clicked: function($event) {
+                    return _vm.refreshItemsView()
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.exportButton
+            ? _c("crud-button", {
+                attrs: {
+                  loading: _vm.excelLoading,
+                  tooltip: _vm.$t("global.datatable.buttons.copyToExcel"),
+                  color: "green darken-4",
+                  icon: "save_alt",
+                  large: ""
+                },
+                on: { clicked: _vm.exportToExcel }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._t("right")
+        ],
+        2
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
-  /*
-   * Helper methods
-   */
-  var scrollingClassTimeout = { x: null, y: null };
 
-  function addScrollingClass(i, x) {
-    var classList = i.element.classList;
-    var className = cls.state.scrolling(x);
 
-    if (classList.contains(className)) {
-      clearTimeout(scrollingClassTimeout[x]);
-    } else {
-      classList.add(className);
-    }
-  }
+/***/ }),
 
-  function removeScrollingClass(i, x) {
-    scrollingClassTimeout[x] = setTimeout(
-      function () { return i.isAlive && i.element.classList.remove(cls.state.scrolling(x)); },
-      i.settings.scrollingThreshold
-    );
-  }
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-  function setScrollingClassInstantly(i, x) {
-    addScrollingClass(i, x);
-    removeScrollingClass(i, x);
-  }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { staticStyle: { display: "flex", "align-items": "center" } },
+    [
+      _c("crud-button", {
+        attrs: {
+          small: "",
+          color: "secondary",
+          icon: "save",
+          tooltip: _vm.$t("global.details.files.download")
+        },
+        on: {
+          clicked: function($event) {
+            return _vm.download(_vm.field)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          style: {
+            visibility: _vm.isImage(_vm.field.mime) ? "visible" : "hidden"
+          }
+        },
+        [
+          _c("crud-button", {
+            attrs: {
+              small: "",
+              color: "primary",
+              icon: "search",
+              tooltip: _vm.$t("global.details.files.show")
+            },
+            on: {
+              clicked: function($event) {
+                return _vm.showImage(_vm.field)
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticStyle: { "padding-left": "30px" } }, [
+        _c("h4", [_vm._v(_vm._s(_vm.field.filename))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm.field.mime))]),
+        _vm._v(" "),
+        _c("p", [_vm._v(_vm._s(_vm._f("fileSize")(_vm.field.size)))])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
-  var EventElement = function EventElement(element) {
-    this.element = element;
-    this.handlers = {};
-  };
 
-  var prototypeAccessors = { isEmpty: { configurable: true } };
 
-  EventElement.prototype.bind = function bind (eventName, handler) {
-    if (typeof this.handlers[eventName] === 'undefined') {
-      this.handlers[eventName] = [];
-    }
-    this.handlers[eventName].push(handler);
-    this.element.addEventListener(eventName, handler, false);
-  };
+/***/ }),
 
-  EventElement.prototype.unbind = function unbind (eventName, target) {
-      var this$1 = this;
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-    this.handlers[eventName] = this.handlers[eventName].filter(function (handler) {
-      if (target && handler !== target) {
-        return true;
-      }
-      this$1.element.removeEventListener(eventName, handler, false);
-      return false;
-    });
-  };
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { staticStyle: { "white-space": "nowrap" } },
+    [
+      _vm.editButton && _vm.editMode
+        ? _c("crud-button", {
+            attrs: {
+              small: "",
+              color: "orange",
+              icon: "edit",
+              tooltip: _vm.$t("global.datatable.buttons.edit")
+            },
+            on: {
+              clicked: function($event) {
+                return _vm.edit(_vm.item.meta.id)
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.customButtons, function(customButton) {
+        return _c("crud-button", {
+          key: customButton.name,
+          attrs: {
+            disabled: !_vm.item.meta.buttons[customButton.name],
+            small: "",
+            color: customButton.color,
+            icon: customButton.icon,
+            tooltip: customButton.text
+          },
+          on: {
+            clicked: function($event) {
+              return _vm.custom(customButton.name, _vm.item)
+            }
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.itemElements, function(button, key) {
+        return _c("crud-button", {
+          key: key,
+          attrs: {
+            small: "",
+            color: button.color,
+            icon: button.icon,
+            tooltip: button.buttonText
+          },
+          on: {
+            clicked: function($event) {
+              return _vm.editItemElements(key, _vm.item.meta.id)
+            }
+          }
+        })
+      }),
+      _vm._v(" "),
+      ["soft", "both"].includes(_vm.deleteMode)
+        ? [
+            _vm.item.meta.active == "1"
+              ? _c("crud-button", {
+                  attrs: {
+                    small: "",
+                    color: "red",
+                    icon: "undo",
+                    tooltip: _vm.$t("global.datatable.buttons.suspend")
+                  },
+                  on: {
+                    clicked: function($event) {
+                      return _vm.suspend(_vm.item.meta.id)
+                    }
+                  }
+                })
+              : _c("crud-button", {
+                  attrs: {
+                    small: "",
+                    color: "green",
+                    icon: "redo",
+                    tooltip: _vm.$t("global.datatable.buttons.restore")
+                  },
+                  on: {
+                    clicked: function($event) {
+                      return _vm.restore(_vm.item.meta.id)
+                    }
+                  }
+                })
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      ["hard", "both"].includes(_vm.deleteMode)
+        ? _c("crud-button", {
+            attrs: {
+              small: "",
+              color: "black",
+              icon: "delete",
+              tooltip: _vm.$t("global.datatable.buttons.delete")
+            },
+            on: {
+              clicked: function($event) {
+                return _vm.destroy(_vm.item.meta.id)
+              }
+            }
+          })
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
-  EventElement.prototype.unbindAll = function unbindAll () {
-    var this$1 = this;
 
-    for (var name in this$1.handlers) {
-      this$1.unbind(name);
-    }
-  };
 
-  prototypeAccessors.isEmpty.get = function () {
-      var this$1 = this;
+/***/ }),
 
-    return Object.keys(this.handlers).every(
-      function (key) { return this$1.handlers[key].length === 0; }
-    );
-  };
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-  Object.defineProperties( EventElement.prototype, prototypeAccessors );
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _vm.textMode === "html"
+      ? _c("span", { domProps: { innerHTML: _vm._s(_vm.value) } })
+      : _vm.textMode === "cropped"
+      ? _c("span", { staticClass: "cell-nowrap" }, [
+          _vm._v("\n    " + _vm._s(_vm._f("cropped")(_vm.value)) + "\n  ")
+        ])
+      : _vm.textMode === "text"
+      ? _c("span", [_vm._v("\n    " + _vm._s(_vm.value) + "\n  ")])
+      : _vm.textMode === "file"
+      ? _c(
+          "span",
+          [
+            _c("file-details", {
+              attrs: { fieldInfo: _vm.fieldInfoToJSON(_vm.value) }
+            })
+          ],
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
 
-  var EventManager = function EventManager() {
-    this.eventElements = [];
-  };
 
-  EventManager.prototype.eventElement = function eventElement (element) {
-    var ee = this.eventElements.filter(function (ee) { return ee.element === element; })[0];
-    if (!ee) {
-      ee = new EventElement(element);
-      this.eventElements.push(ee);
-    }
-    return ee;
-  };
 
-  EventManager.prototype.bind = function bind (element, eventName, handler) {
-    this.eventElement(element).bind(eventName, handler);
-  };
+/***/ }),
 
-  EventManager.prototype.unbind = function unbind (element, eventName, handler) {
-    var ee = this.eventElement(element);
-    ee.unbind(eventName, handler);
+/***/ "./resources/js/components/crud/components/Controls.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/crud/components/Controls.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-    if (ee.isEmpty) {
-      // remove
-      this.eventElements.splice(this.eventElements.indexOf(ee), 1);
-    }
-  };
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Controls.vue?vue&type=template&id=5c47c9a9&scoped=true& */ "./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true&");
+/* harmony import */ var _Controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Controls.vue?vue&type=script&lang=js& */ "./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& */ "./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-  EventManager.prototype.unbindAll = function unbindAll () {
-    this.eventElements.forEach(function (e) { return e.unbindAll(); });
-    this.eventElements = [];
-  };
 
-  EventManager.prototype.once = function once (element, eventName, handler) {
-    var ee = this.eventElement(element);
-    var onceHandler = function (evt) {
-      ee.unbind(eventName, onceHandler);
-      handler(evt);
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5c47c9a9",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/crud/components/Controls.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Controls.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--7-2!../../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=style&index=0&id=5c47c9a9&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_style_index_0_id_5c47c9a9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Controls.vue?vue&type=template&id=5c47c9a9&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/Controls.vue?vue&type=template&id=5c47c9a9&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Controls_vue_vue_type_template_id_5c47c9a9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/FileDetails.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/crud/components/FileDetails.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FileDetails.vue?vue&type=template&id=6018c383& */ "./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383&");
+/* harmony import */ var _FileDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FileDetails.vue?vue&type=script&lang=js& */ "./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FileDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/crud/components/FileDetails.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FileDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FileDetails.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/FileDetails.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FileDetails_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FileDetails.vue?vue&type=template&id=6018c383& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/FileDetails.vue?vue&type=template&id=6018c383&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FileDetails_vue_vue_type_template_id_6018c383___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemActions.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemActions.vue ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListItemActions.vue?vue&type=template&id=22ca37c9& */ "./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9&");
+/* harmony import */ var _ListItemActions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListItemActions.vue?vue&type=script&lang=js& */ "./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListItemActions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/crud/components/ListItemActions.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemActions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListItemActions.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemActions.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemActions_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListItemActions.vue?vue&type=template&id=22ca37c9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemActions.vue?vue&type=template&id=22ca37c9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemActions_vue_vue_type_template_id_22ca37c9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemField.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemField.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListItemField.vue?vue&type=template&id=2f0b6646& */ "./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646&");
+/* harmony import */ var _ListItemField_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListItemField.vue?vue&type=script&lang=js& */ "./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListItemField_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/crud/components/ListItemField.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemField_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListItemField.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemField.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemField_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListItemField.vue?vue&type=template&id=2f0b6646& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/crud/components/ListItemField.vue?vue&type=template&id=2f0b6646&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListItemField_vue_vue_type_template_id_2f0b6646___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/crud/mixins/controls-handler.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/crud/mixins/controls-handler.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: '',
+      selectedStatuses: [1],
+      columnFilters: [],
+      excelLoading: false
     };
-    ee.bind(eventName, onceHandler);
-  };
-
-  function createEvent(name) {
-    if (typeof window.CustomEvent === 'function') {
-      return new CustomEvent(name);
-    } else {
-      var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(name, false, false, undefined);
-      return evt;
+  },
+  methods: {
+    updateColumnFilterMode: function updateColumnFilterMode(val, index) {
+      var obj = this.columnFilters;
+      obj[index].mode = val;
+      this.$set(this, 'columnFilters', obj);
+      this.startSearching();
+    },
+    updateColumnFilterValue: function updateColumnFilterValue(val, index) {
+      var obj = this.columnFilters;
+      obj[index].value = val;
+      this.$set(this, 'columnFilters', obj);
+      this.startSearching();
+    },
+    updateColumnFilters: function updateColumnFilters(columnFilters) {
+      this.$set(this, 'columnFilters', columnFilters);
+      this.startSearching();
+    },
+    updateSearch: function updateSearch(search) {
+      this.search = search;
+      this.startSearching();
+    },
+    updateSelectedStatuses: function updateSelectedStatuses(statuses) {
+      this.selectedStatuses = statuses;
+      this.startSearching();
     }
-  }
-
-  function processScrollDiff(
-    i,
-    axis,
-    diff,
-    useScrollingClass,
-    forceFireReachEvent
-  ) {
-    if ( useScrollingClass === void 0 ) { useScrollingClass = true; }
-    if ( forceFireReachEvent === void 0 ) { forceFireReachEvent = false; }
-
-    var fields;
-    if (axis === 'top') {
-      fields = [
-        'contentHeight',
-        'containerHeight',
-        'scrollTop',
-        'y',
-        'up',
-        'down' ];
-    } else if (axis === 'left') {
-      fields = [
-        'contentWidth',
-        'containerWidth',
-        'scrollLeft',
-        'x',
-        'left',
-        'right' ];
-    } else {
-      throw new Error('A proper axis should be provided');
-    }
-
-    processScrollDiff$1(i, diff, fields, useScrollingClass, forceFireReachEvent);
-  }
-
-  function processScrollDiff$1(
-    i,
-    diff,
-    ref,
-    useScrollingClass,
-    forceFireReachEvent
-  ) {
-    var contentHeight = ref[0];
-    var containerHeight = ref[1];
-    var scrollTop = ref[2];
-    var y = ref[3];
-    var up = ref[4];
-    var down = ref[5];
-    if ( useScrollingClass === void 0 ) { useScrollingClass = true; }
-    if ( forceFireReachEvent === void 0 ) { forceFireReachEvent = false; }
-
-    var element = i.element;
-
-    // reset reach
-    i.reach[y] = null;
-
-    // 1 for subpixel rounding
-    if (element[scrollTop] < 1) {
-      i.reach[y] = 'start';
-    }
-
-    // 1 for subpixel rounding
-    if (element[scrollTop] > i[contentHeight] - i[containerHeight] - 1) {
-      i.reach[y] = 'end';
-    }
-
-    if (diff) {
-      element.dispatchEvent(createEvent(("ps-scroll-" + y)));
-
-      if (diff < 0) {
-        element.dispatchEvent(createEvent(("ps-scroll-" + up)));
-      } else if (diff > 0) {
-        element.dispatchEvent(createEvent(("ps-scroll-" + down)));
-      }
-
-      if (useScrollingClass) {
-        setScrollingClassInstantly(i, y);
-      }
-    }
-
-    if (i.reach[y] && (diff || forceFireReachEvent)) {
-      element.dispatchEvent(createEvent(("ps-" + y + "-reach-" + (i.reach[y]))));
-    }
-  }
-
-  function toInt(x) {
-    return parseInt(x, 10) || 0;
-  }
-
-  function isEditable(el) {
-    return (
-      matches(el, 'input,[contenteditable]') ||
-      matches(el, 'select,[contenteditable]') ||
-      matches(el, 'textarea,[contenteditable]') ||
-      matches(el, 'button,[contenteditable]')
-    );
-  }
-
-  function outerWidth(element) {
-    var styles = get(element);
-    return (
-      toInt(styles.width) +
-      toInt(styles.paddingLeft) +
-      toInt(styles.paddingRight) +
-      toInt(styles.borderLeftWidth) +
-      toInt(styles.borderRightWidth)
-    );
-  }
-
-  var env = {
-    isWebKit:
-      typeof document !== 'undefined' &&
-      'WebkitAppearance' in document.documentElement.style,
-    supportsTouch:
-      typeof window !== 'undefined' &&
-      ('ontouchstart' in window ||
-        ('maxTouchPoints' in window.navigator &&
-          window.navigator.maxTouchPoints > 0) ||
-        (window.DocumentTouch && document instanceof window.DocumentTouch)),
-    supportsIePointer:
-      typeof navigator !== 'undefined' && navigator.msMaxTouchPoints,
-    isChrome:
-      typeof navigator !== 'undefined' &&
-      /Chrome/i.test(navigator && navigator.userAgent),
-  };
-
-  function updateGeometry(i) {
-    var element = i.element;
-    var roundedScrollTop = Math.floor(element.scrollTop);
-    var rect = element.getBoundingClientRect();
-
-    i.containerWidth = Math.ceil(rect.width);
-    i.containerHeight = Math.ceil(rect.height);
-    i.contentWidth = element.scrollWidth;
-    i.contentHeight = element.scrollHeight;
-
-    if (!element.contains(i.scrollbarXRail)) {
-      // clean up and append
-      queryChildren(element, cls.element.rail('x')).forEach(function (el) { return remove(el); }
-      );
-      element.appendChild(i.scrollbarXRail);
-    }
-    if (!element.contains(i.scrollbarYRail)) {
-      // clean up and append
-      queryChildren(element, cls.element.rail('y')).forEach(function (el) { return remove(el); }
-      );
-      element.appendChild(i.scrollbarYRail);
-    }
-
-    if (
-      !i.settings.suppressScrollX &&
-      i.containerWidth + i.settings.scrollXMarginOffset < i.contentWidth
-    ) {
-      i.scrollbarXActive = true;
-      i.railXWidth = i.containerWidth - i.railXMarginWidth;
-      i.railXRatio = i.containerWidth / i.railXWidth;
-      i.scrollbarXWidth = getThumbSize(
-        i,
-        toInt((i.railXWidth * i.containerWidth) / i.contentWidth)
-      );
-      i.scrollbarXLeft = toInt(
-        ((i.negativeScrollAdjustment + element.scrollLeft) *
-          (i.railXWidth - i.scrollbarXWidth)) /
-          (i.contentWidth - i.containerWidth)
-      );
-    } else {
-      i.scrollbarXActive = false;
-    }
-
-    if (
-      !i.settings.suppressScrollY &&
-      i.containerHeight + i.settings.scrollYMarginOffset < i.contentHeight
-    ) {
-      i.scrollbarYActive = true;
-      i.railYHeight = i.containerHeight - i.railYMarginHeight;
-      i.railYRatio = i.containerHeight / i.railYHeight;
-      i.scrollbarYHeight = getThumbSize(
-        i,
-        toInt((i.railYHeight * i.containerHeight) / i.contentHeight)
-      );
-      i.scrollbarYTop = toInt(
-        (roundedScrollTop * (i.railYHeight - i.scrollbarYHeight)) /
-          (i.contentHeight - i.containerHeight)
-      );
-    } else {
-      i.scrollbarYActive = false;
-    }
-
-    if (i.scrollbarXLeft >= i.railXWidth - i.scrollbarXWidth) {
-      i.scrollbarXLeft = i.railXWidth - i.scrollbarXWidth;
-    }
-    if (i.scrollbarYTop >= i.railYHeight - i.scrollbarYHeight) {
-      i.scrollbarYTop = i.railYHeight - i.scrollbarYHeight;
-    }
-
-    updateCss(element, i);
-
-    if (i.scrollbarXActive) {
-      element.classList.add(cls.state.active('x'));
-    } else {
-      element.classList.remove(cls.state.active('x'));
-      i.scrollbarXWidth = 0;
-      i.scrollbarXLeft = 0;
-      element.scrollLeft = i.isRtl === true ? i.contentWidth : 0;
-    }
-    if (i.scrollbarYActive) {
-      element.classList.add(cls.state.active('y'));
-    } else {
-      element.classList.remove(cls.state.active('y'));
-      i.scrollbarYHeight = 0;
-      i.scrollbarYTop = 0;
-      element.scrollTop = 0;
-    }
-  }
-
-  function getThumbSize(i, thumbSize) {
-    if (i.settings.minScrollbarLength) {
-      thumbSize = Math.max(thumbSize, i.settings.minScrollbarLength);
-    }
-    if (i.settings.maxScrollbarLength) {
-      thumbSize = Math.min(thumbSize, i.settings.maxScrollbarLength);
-    }
-    return thumbSize;
-  }
-
-  function updateCss(element, i) {
-    var xRailOffset = { width: i.railXWidth };
-    var roundedScrollTop = Math.floor(element.scrollTop);
-
-    if (i.isRtl) {
-      xRailOffset.left =
-        i.negativeScrollAdjustment +
-        element.scrollLeft +
-        i.containerWidth -
-        i.contentWidth;
-    } else {
-      xRailOffset.left = element.scrollLeft;
-    }
-    if (i.isScrollbarXUsingBottom) {
-      xRailOffset.bottom = i.scrollbarXBottom - roundedScrollTop;
-    } else {
-      xRailOffset.top = i.scrollbarXTop + roundedScrollTop;
-    }
-    set(i.scrollbarXRail, xRailOffset);
-
-    var yRailOffset = { top: roundedScrollTop, height: i.railYHeight };
-    if (i.isScrollbarYUsingRight) {
-      if (i.isRtl) {
-        yRailOffset.right =
-          i.contentWidth -
-          (i.negativeScrollAdjustment + element.scrollLeft) -
-          i.scrollbarYRight -
-          i.scrollbarYOuterWidth -
-          9;
-      } else {
-        yRailOffset.right = i.scrollbarYRight - element.scrollLeft;
-      }
-    } else {
-      if (i.isRtl) {
-        yRailOffset.left =
-          i.negativeScrollAdjustment +
-          element.scrollLeft +
-          i.containerWidth * 2 -
-          i.contentWidth -
-          i.scrollbarYLeft -
-          i.scrollbarYOuterWidth;
-      } else {
-        yRailOffset.left = i.scrollbarYLeft + element.scrollLeft;
-      }
-    }
-    set(i.scrollbarYRail, yRailOffset);
-
-    set(i.scrollbarX, {
-      left: i.scrollbarXLeft,
-      width: i.scrollbarXWidth - i.railBorderXWidth,
-    });
-    set(i.scrollbarY, {
-      top: i.scrollbarYTop,
-      height: i.scrollbarYHeight - i.railBorderYWidth,
+  },
+  created: function created() {
+    this.columnFilters = this.tableFields.map(function (field) {
+      var item = {};
+      item.mode = 'like';
+      item.text = field.text;
+      item.name = field.name.toLowerCase();
+      item.column = field.column;
+      item.value = '';
+      return item;
     });
   }
+});
 
-  function clickRail(i) {
-    var element = i.element;
+/***/ }),
 
-    i.event.bind(i.scrollbarY, 'mousedown', function (e) { return e.stopPropagation(); });
-    i.event.bind(i.scrollbarYRail, 'mousedown', function (e) {
-      var positionTop =
-        e.pageY -
-        window.pageYOffset -
-        i.scrollbarYRail.getBoundingClientRect().top;
-      var direction = positionTop > i.scrollbarYTop ? 1 : -1;
+/***/ "./resources/js/components/crud/mixins/crud-instance.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/crud/mixins/crud-instance.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-      i.element.scrollTop += direction * i.containerHeight;
-      updateGeometry(i);
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-      e.stopPropagation();
-    });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-    i.event.bind(i.scrollbarX, 'mousedown', function (e) { return e.stopPropagation(); });
-    i.event.bind(i.scrollbarXRail, 'mousedown', function (e) {
-      var positionLeft =
-        e.pageX -
-        window.pageXOffset -
-        i.scrollbarXRail.getBoundingClientRect().left;
-      var direction = positionLeft > i.scrollbarXLeft ? 1 : -1;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-      i.element.scrollLeft += direction * i.containerWidth;
-      updateGeometry(i);
 
-      e.stopPropagation();
-    });
-  }
-
-  function dragThumb(i) {
-    bindMouseScrollHandler(i, [
-      'containerWidth',
-      'contentWidth',
-      'pageX',
-      'railXWidth',
-      'scrollbarX',
-      'scrollbarXWidth',
-      'scrollLeft',
-      'x',
-      'scrollbarXRail' ]);
-    bindMouseScrollHandler(i, [
-      'containerHeight',
-      'contentHeight',
-      'pageY',
-      'railYHeight',
-      'scrollbarY',
-      'scrollbarYHeight',
-      'scrollTop',
-      'y',
-      'scrollbarYRail' ]);
-  }
-
-  function bindMouseScrollHandler(
-    i,
-    ref
-  ) {
-    var containerHeight = ref[0];
-    var contentHeight = ref[1];
-    var pageY = ref[2];
-    var railYHeight = ref[3];
-    var scrollbarY = ref[4];
-    var scrollbarYHeight = ref[5];
-    var scrollTop = ref[6];
-    var y = ref[7];
-    var scrollbarYRail = ref[8];
-
-    var element = i.element;
-
-    var startingScrollTop = null;
-    var startingMousePageY = null;
-    var scrollBy = null;
-
-    function mouseMoveHandler(e) {
-      if (e.touches && e.touches[0]) {
-        e[pageY] = e.touches[0].pageY;
-      }
-      element[scrollTop] =
-        startingScrollTop + scrollBy * (e[pageY] - startingMousePageY);
-      addScrollingClass(i, y);
-      updateGeometry(i);
-
-      e.stopPropagation();
-      e.preventDefault();
-    }
-
-    function mouseUpHandler() {
-      removeScrollingClass(i, y);
-      i[scrollbarYRail].classList.remove(cls.state.clicking);
-      i.event.unbind(i.ownerDocument, 'mousemove', mouseMoveHandler);
-    }
-
-    function bindMoves(e, touchMode) {
-      startingScrollTop = element[scrollTop];
-      if (touchMode && e.touches) {
-        e[pageY] = e.touches[0].pageY;
-      }
-      startingMousePageY = e[pageY];
-      scrollBy =
-        (i[contentHeight] - i[containerHeight]) /
-        (i[railYHeight] - i[scrollbarYHeight]);
-      if (!touchMode) {
-        i.event.bind(i.ownerDocument, 'mousemove', mouseMoveHandler);
-        i.event.once(i.ownerDocument, 'mouseup', mouseUpHandler);
-        e.preventDefault();
-      } else {
-        i.event.bind(i.ownerDocument, 'touchmove', mouseMoveHandler);
-      }
-
-      i[scrollbarYRail].classList.add(cls.state.clicking);
-
-      e.stopPropagation();
-    }
-
-    i.event.bind(i[scrollbarY], 'mousedown', function (e) {
-      bindMoves(e);
-    });
-    i.event.bind(i[scrollbarY], 'touchstart', function (e) {
-      bindMoves(e, true);
-    });
-  }
-
-  function keyboard(i) {
-    var element = i.element;
-
-    var elementHovered = function () { return matches(element, ':hover'); };
-    var scrollbarFocused = function () { return matches(i.scrollbarX, ':focus') || matches(i.scrollbarY, ':focus'); };
-
-    function shouldPreventDefault(deltaX, deltaY) {
-      var scrollTop = Math.floor(element.scrollTop);
-      if (deltaX === 0) {
-        if (!i.scrollbarYActive) {
-          return false;
-        }
-        if (
-          (scrollTop === 0 && deltaY > 0) ||
-          (scrollTop >= i.contentHeight - i.containerHeight && deltaY < 0)
-        ) {
-          return !i.settings.wheelPropagation;
-        }
-      }
-
-      var scrollLeft = element.scrollLeft;
-      if (deltaY === 0) {
-        if (!i.scrollbarXActive) {
-          return false;
-        }
-        if (
-          (scrollLeft === 0 && deltaX < 0) ||
-          (scrollLeft >= i.contentWidth - i.containerWidth && deltaX > 0)
-        ) {
-          return !i.settings.wheelPropagation;
-        }
-      }
-      return true;
-    }
-
-    i.event.bind(i.ownerDocument, 'keydown', function (e) {
-      if (
-        (e.isDefaultPrevented && e.isDefaultPrevented()) ||
-        e.defaultPrevented
-      ) {
-        return;
-      }
-
-      if (!elementHovered() && !scrollbarFocused()) {
-        return;
-      }
-
-      var activeElement = document.activeElement
-        ? document.activeElement
-        : i.ownerDocument.activeElement;
-      if (activeElement) {
-        if (activeElement.tagName === 'IFRAME') {
-          activeElement = activeElement.contentDocument.activeElement;
-        } else {
-          // go deeper if element is a webcomponent
-          while (activeElement.shadowRoot) {
-            activeElement = activeElement.shadowRoot.activeElement;
-          }
-        }
-        if (isEditable(activeElement)) {
-          return;
-        }
-      }
-
-      var deltaX = 0;
-      var deltaY = 0;
-
-      switch (e.which) {
-        case 37: // left
-          if (e.metaKey) {
-            deltaX = -i.contentWidth;
-          } else if (e.altKey) {
-            deltaX = -i.containerWidth;
-          } else {
-            deltaX = -30;
-          }
-          break;
-        case 38: // up
-          if (e.metaKey) {
-            deltaY = i.contentHeight;
-          } else if (e.altKey) {
-            deltaY = i.containerHeight;
-          } else {
-            deltaY = 30;
-          }
-          break;
-        case 39: // right
-          if (e.metaKey) {
-            deltaX = i.contentWidth;
-          } else if (e.altKey) {
-            deltaX = i.containerWidth;
-          } else {
-            deltaX = 30;
-          }
-          break;
-        case 40: // down
-          if (e.metaKey) {
-            deltaY = -i.contentHeight;
-          } else if (e.altKey) {
-            deltaY = -i.containerHeight;
-          } else {
-            deltaY = -30;
-          }
-          break;
-        case 32: // space bar
-          if (e.shiftKey) {
-            deltaY = i.containerHeight;
-          } else {
-            deltaY = -i.containerHeight;
-          }
-          break;
-        case 33: // page up
-          deltaY = i.containerHeight;
-          break;
-        case 34: // page down
-          deltaY = -i.containerHeight;
-          break;
-        case 36: // home
-          deltaY = i.contentHeight;
-          break;
-        case 35: // end
-          deltaY = -i.contentHeight;
-          break;
-        default:
-          return;
-      }
-
-      if (i.settings.suppressScrollX && deltaX !== 0) {
-        return;
-      }
-      if (i.settings.suppressScrollY && deltaY !== 0) {
-        return;
-      }
-
-      element.scrollTop -= deltaY;
-      element.scrollLeft += deltaX;
-      updateGeometry(i);
-
-      if (shouldPreventDefault(deltaX, deltaY)) {
-        e.preventDefault();
-      }
-    });
-  }
-
-  function wheel(i) {
-    var element = i.element;
-
-    function shouldPreventDefault(deltaX, deltaY) {
-      var roundedScrollTop = Math.floor(element.scrollTop);
-      var isTop = element.scrollTop === 0;
-      var isBottom =
-        roundedScrollTop + element.offsetHeight === element.scrollHeight;
-      var isLeft = element.scrollLeft === 0;
-      var isRight =
-        element.scrollLeft + element.offsetWidth === element.scrollWidth;
-
-      var hitsBound;
-
-      // pick axis with primary direction
-      if (Math.abs(deltaY) > Math.abs(deltaX)) {
-        hitsBound = isTop || isBottom;
-      } else {
-        hitsBound = isLeft || isRight;
-      }
-
-      return hitsBound ? !i.settings.wheelPropagation : true;
-    }
-
-    function getDeltaFromEvent(e) {
-      var deltaX = e.deltaX;
-      var deltaY = -1 * e.deltaY;
-
-      if (typeof deltaX === 'undefined' || typeof deltaY === 'undefined') {
-        // OS X Safari
-        deltaX = (-1 * e.wheelDeltaX) / 6;
-        deltaY = e.wheelDeltaY / 6;
-      }
-
-      if (e.deltaMode && e.deltaMode === 1) {
-        // Firefox in deltaMode 1: Line scrolling
-        deltaX *= 10;
-        deltaY *= 10;
-      }
-
-      if (deltaX !== deltaX && deltaY !== deltaY /* NaN checks */) {
-        // IE in some mouse drivers
-        deltaX = 0;
-        deltaY = e.wheelDelta;
-      }
-
-      if (e.shiftKey) {
-        // reverse axis with shift key
-        return [-deltaY, -deltaX];
-      }
-      return [deltaX, deltaY];
-    }
-
-    function shouldBeConsumedByChild(target, deltaX, deltaY) {
-      // FIXME: this is a workaround for <select> issue in FF and IE #571
-      if (!env.isWebKit && element.querySelector('select:focus')) {
-        return true;
-      }
-
-      if (!element.contains(target)) {
-        return false;
-      }
-
-      var cursor = target;
-
-      while (cursor && cursor !== element) {
-        if (cursor.classList.contains(cls.element.consuming)) {
-          return true;
-        }
-
-        var style = get(cursor);
-
-        // if deltaY && vertical scrollable
-        if (deltaY && style.overflowY.match(/(scroll|auto)/)) {
-          var maxScrollTop = cursor.scrollHeight - cursor.clientHeight;
-          if (maxScrollTop > 0) {
-            if (
-              (cursor.scrollTop > 0 && deltaY < 0) ||
-              (cursor.scrollTop < maxScrollTop && deltaY > 0)
-            ) {
-              return true;
-            }
-          }
-        }
-        // if deltaX && horizontal scrollable
-        if (deltaX && style.overflowX.match(/(scroll|auto)/)) {
-          var maxScrollLeft = cursor.scrollWidth - cursor.clientWidth;
-          if (maxScrollLeft > 0) {
-            if (
-              (cursor.scrollLeft > 0 && deltaX < 0) ||
-              (cursor.scrollLeft < maxScrollLeft && deltaX > 0)
-            ) {
-              return true;
-            }
-          }
-        }
-
-        cursor = cursor.parentNode;
-      }
-
-      return false;
-    }
-
-    function mousewheelHandler(e) {
-      var ref = getDeltaFromEvent(e);
-      var deltaX = ref[0];
-      var deltaY = ref[1];
-
-      if (shouldBeConsumedByChild(e.target, deltaX, deltaY)) {
-        return;
-      }
-
-      var shouldPrevent = false;
-      if (!i.settings.useBothWheelAxes) {
-        // deltaX will only be used for horizontal scrolling and deltaY will
-        // only be used for vertical scrolling - this is the default
-        element.scrollTop -= deltaY * i.settings.wheelSpeed;
-        element.scrollLeft += deltaX * i.settings.wheelSpeed;
-      } else if (i.scrollbarYActive && !i.scrollbarXActive) {
-        // only vertical scrollbar is active and useBothWheelAxes option is
-        // active, so let's scroll vertical bar using both mouse wheel axes
-        if (deltaY) {
-          element.scrollTop -= deltaY * i.settings.wheelSpeed;
-        } else {
-          element.scrollTop += deltaX * i.settings.wheelSpeed;
-        }
-        shouldPrevent = true;
-      } else if (i.scrollbarXActive && !i.scrollbarYActive) {
-        // useBothWheelAxes and only horizontal bar is active, so use both
-        // wheel axes for horizontal bar
-        if (deltaX) {
-          element.scrollLeft += deltaX * i.settings.wheelSpeed;
-        } else {
-          element.scrollLeft -= deltaY * i.settings.wheelSpeed;
-        }
-        shouldPrevent = true;
-      }
-
-      updateGeometry(i);
-
-      shouldPrevent = shouldPrevent || shouldPreventDefault(deltaX, deltaY);
-      if (shouldPrevent && !e.ctrlKey) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    }
-
-    if (typeof window.onwheel !== 'undefined') {
-      i.event.bind(element, 'wheel', mousewheelHandler);
-    } else if (typeof window.onmousewheel !== 'undefined') {
-      i.event.bind(element, 'mousewheel', mousewheelHandler);
-    }
-  }
-
-  function touch(i) {
-    if (!env.supportsTouch && !env.supportsIePointer) {
-      return;
-    }
-
-    var element = i.element;
-
-    function shouldPrevent(deltaX, deltaY) {
-      var scrollTop = Math.floor(element.scrollTop);
-      var scrollLeft = element.scrollLeft;
-      var magnitudeX = Math.abs(deltaX);
-      var magnitudeY = Math.abs(deltaY);
-
-      if (magnitudeY > magnitudeX) {
-        // user is perhaps trying to swipe up/down the page
-
-        if (
-          (deltaY < 0 && scrollTop === i.contentHeight - i.containerHeight) ||
-          (deltaY > 0 && scrollTop === 0)
-        ) {
-          // set prevent for mobile Chrome refresh
-          return window.scrollY === 0 && deltaY > 0 && env.isChrome;
-        }
-      } else if (magnitudeX > magnitudeY) {
-        // user is perhaps trying to swipe left/right across the page
-
-        if (
-          (deltaX < 0 && scrollLeft === i.contentWidth - i.containerWidth) ||
-          (deltaX > 0 && scrollLeft === 0)
-        ) {
-          return true;
-        }
-      }
-
-      return true;
-    }
-
-    function applyTouchMove(differenceX, differenceY) {
-      element.scrollTop -= differenceY;
-      element.scrollLeft -= differenceX;
-
-      updateGeometry(i);
-    }
-
-    var startOffset = {};
-    var startTime = 0;
-    var speed = {};
-    var easingLoop = null;
-
-    function getTouch(e) {
-      if (e.targetTouches) {
-        return e.targetTouches[0];
-      } else {
-        // Maybe IE pointer
-        return e;
-      }
-    }
-
-    function shouldHandle(e) {
-      if (e.pointerType && e.pointerType === 'pen' && e.buttons === 0) {
-        return false;
-      }
-      if (e.targetTouches && e.targetTouches.length === 1) {
-        return true;
-      }
-      if (
-        e.pointerType &&
-        e.pointerType !== 'mouse' &&
-        e.pointerType !== e.MSPOINTER_TYPE_MOUSE
-      ) {
-        return true;
-      }
-      return false;
-    }
-
-    function touchStart(e) {
-      if (!shouldHandle(e)) {
-        return;
-      }
-
-      var touch = getTouch(e);
-
-      startOffset.pageX = touch.pageX;
-      startOffset.pageY = touch.pageY;
-
-      startTime = new Date().getTime();
-
-      if (easingLoop !== null) {
-        clearInterval(easingLoop);
-      }
-    }
-
-    function shouldBeConsumedByChild(target, deltaX, deltaY) {
-      if (!element.contains(target)) {
-        return false;
-      }
-
-      var cursor = target;
-
-      while (cursor && cursor !== element) {
-        if (cursor.classList.contains(cls.element.consuming)) {
-          return true;
-        }
-
-        var style = get(cursor);
-
-        // if deltaY && vertical scrollable
-        if (deltaY && style.overflowY.match(/(scroll|auto)/)) {
-          var maxScrollTop = cursor.scrollHeight - cursor.clientHeight;
-          if (maxScrollTop > 0) {
-            if (
-              (cursor.scrollTop > 0 && deltaY < 0) ||
-              (cursor.scrollTop < maxScrollTop && deltaY > 0)
-            ) {
-              return true;
-            }
-          }
-        }
-        // if deltaX && horizontal scrollable
-        if (deltaX && style.overflowX.match(/(scroll|auto)/)) {
-          var maxScrollLeft = cursor.scrollWidth - cursor.clientWidth;
-          if (maxScrollLeft > 0) {
-            if (
-              (cursor.scrollLeft > 0 && deltaX < 0) ||
-              (cursor.scrollLeft < maxScrollLeft && deltaX > 0)
-            ) {
-              return true;
-            }
-          }
-        }
-
-        cursor = cursor.parentNode;
-      }
-
-      return false;
-    }
-
-    function touchMove(e) {
-      if (shouldHandle(e)) {
-        var touch = getTouch(e);
-
-        var currentOffset = { pageX: touch.pageX, pageY: touch.pageY };
-
-        var differenceX = currentOffset.pageX - startOffset.pageX;
-        var differenceY = currentOffset.pageY - startOffset.pageY;
-
-        if (shouldBeConsumedByChild(e.target, differenceX, differenceY)) {
-          return;
-        }
-
-        applyTouchMove(differenceX, differenceY);
-        startOffset = currentOffset;
-
-        var currentTime = new Date().getTime();
-
-        var timeGap = currentTime - startTime;
-        if (timeGap > 0) {
-          speed.x = differenceX / timeGap;
-          speed.y = differenceY / timeGap;
-          startTime = currentTime;
-        }
-
-        if (shouldPrevent(differenceX, differenceY)) {
-          e.preventDefault();
-        }
-      }
-    }
-    function touchEnd() {
-      if (i.settings.swipeEasing) {
-        clearInterval(easingLoop);
-        easingLoop = setInterval(function() {
-          if (i.isInitialized) {
-            clearInterval(easingLoop);
-            return;
-          }
-
-          if (!speed.x && !speed.y) {
-            clearInterval(easingLoop);
-            return;
-          }
-
-          if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
-            clearInterval(easingLoop);
-            return;
-          }
-
-          applyTouchMove(speed.x * 30, speed.y * 30);
-
-          speed.x *= 0.8;
-          speed.y *= 0.8;
-        }, 10);
-      }
-    }
-
-    if (env.supportsTouch) {
-      i.event.bind(element, 'touchstart', touchStart);
-      i.event.bind(element, 'touchmove', touchMove);
-      i.event.bind(element, 'touchend', touchEnd);
-    } else if (env.supportsIePointer) {
-      if (window.PointerEvent) {
-        i.event.bind(element, 'pointerdown', touchStart);
-        i.event.bind(element, 'pointermove', touchMove);
-        i.event.bind(element, 'pointerup', touchEnd);
-      } else if (window.MSPointerEvent) {
-        i.event.bind(element, 'MSPointerDown', touchStart);
-        i.event.bind(element, 'MSPointerMove', touchMove);
-        i.event.bind(element, 'MSPointerUp', touchEnd);
-      }
-    }
-  }
-
-  var defaultSettings = function () { return ({
-    handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel', 'touch'],
-    maxScrollbarLength: null,
-    minScrollbarLength: null,
-    scrollingThreshold: 1000,
-    scrollXMarginOffset: 0,
-    scrollYMarginOffset: 0,
-    suppressScrollX: false,
-    suppressScrollY: false,
-    swipeEasing: true,
-    useBothWheelAxes: false,
-    wheelPropagation: true,
-    wheelSpeed: 1,
-  }); };
-
-  var handlers = {
-    'click-rail': clickRail,
-    'drag-thumb': dragThumb,
-    keyboard: keyboard,
-    wheel: wheel,
-    touch: touch,
-  };
-
-  var PerfectScrollbar = function PerfectScrollbar(element, userSettings) {
-    var this$2 = this;
-
-    var this$1 = this;
-    if ( userSettings === void 0 ) { userSettings = {}; }
-
-    if (typeof element === 'string') {
-      element = document.querySelector(element);
-    }
-
-    if (!element || !element.nodeName) {
-      throw new Error('no element is specified to initialize PerfectScrollbar');
-    }
-
-    this.element = element;
-
-    element.classList.add(cls.main);
-
-    this.settings = defaultSettings();
-    for (var key in userSettings) {
-      this$2.settings[key] = userSettings[key];
-    }
-
-    this.containerWidth = null;
-    this.containerHeight = null;
-    this.contentWidth = null;
-    this.contentHeight = null;
-
-    var focus = function () { return element.classList.add(cls.state.focus); };
-    var blur = function () { return element.classList.remove(cls.state.focus); };
-
-    this.isRtl = get(element).direction === 'rtl';
-    if (this.isRtl === true) {
-      element.classList.add(cls.rtl);
-    }
-    this.isNegativeScroll = (function () {
-      var originalScrollLeft = element.scrollLeft;
-      var result = null;
-      element.scrollLeft = -1;
-      result = element.scrollLeft < 0;
-      element.scrollLeft = originalScrollLeft;
-      return result;
-    })();
-    this.negativeScrollAdjustment = this.isNegativeScroll
-      ? element.scrollWidth - element.clientWidth
-      : 0;
-    this.event = new EventManager();
-    this.ownerDocument = element.ownerDocument || document;
-
-    this.scrollbarXRail = div(cls.element.rail('x'));
-    element.appendChild(this.scrollbarXRail);
-    this.scrollbarX = div(cls.element.thumb('x'));
-    this.scrollbarXRail.appendChild(this.scrollbarX);
-    this.scrollbarX.setAttribute('tabindex', 0);
-    this.event.bind(this.scrollbarX, 'focus', focus);
-    this.event.bind(this.scrollbarX, 'blur', blur);
-    this.scrollbarXActive = null;
-    this.scrollbarXWidth = null;
-    this.scrollbarXLeft = null;
-    var railXStyle = get(this.scrollbarXRail);
-    this.scrollbarXBottom = parseInt(railXStyle.bottom, 10);
-    if (isNaN(this.scrollbarXBottom)) {
-      this.isScrollbarXUsingBottom = false;
-      this.scrollbarXTop = toInt(railXStyle.top);
-    } else {
-      this.isScrollbarXUsingBottom = true;
-    }
-    this.railBorderXWidth =
-      toInt(railXStyle.borderLeftWidth) + toInt(railXStyle.borderRightWidth);
-    // Set rail to display:block to calculate margins
-    set(this.scrollbarXRail, { display: 'block' });
-    this.railXMarginWidth =
-      toInt(railXStyle.marginLeft) + toInt(railXStyle.marginRight);
-    set(this.scrollbarXRail, { display: '' });
-    this.railXWidth = null;
-    this.railXRatio = null;
-
-    this.scrollbarYRail = div(cls.element.rail('y'));
-    element.appendChild(this.scrollbarYRail);
-    this.scrollbarY = div(cls.element.thumb('y'));
-    this.scrollbarYRail.appendChild(this.scrollbarY);
-    this.scrollbarY.setAttribute('tabindex', 0);
-    this.event.bind(this.scrollbarY, 'focus', focus);
-    this.event.bind(this.scrollbarY, 'blur', blur);
-    this.scrollbarYActive = null;
-    this.scrollbarYHeight = null;
-    this.scrollbarYTop = null;
-    var railYStyle = get(this.scrollbarYRail);
-    this.scrollbarYRight = parseInt(railYStyle.right, 10);
-    if (isNaN(this.scrollbarYRight)) {
-      this.isScrollbarYUsingRight = false;
-      this.scrollbarYLeft = toInt(railYStyle.left);
-    } else {
-      this.isScrollbarYUsingRight = true;
-    }
-    this.scrollbarYOuterWidth = this.isRtl ? outerWidth(this.scrollbarY) : null;
-    this.railBorderYWidth =
-      toInt(railYStyle.borderTopWidth) + toInt(railYStyle.borderBottomWidth);
-    set(this.scrollbarYRail, { display: 'block' });
-    this.railYMarginHeight =
-      toInt(railYStyle.marginTop) + toInt(railYStyle.marginBottom);
-    set(this.scrollbarYRail, { display: '' });
-    this.railYHeight = null;
-    this.railYRatio = null;
-
-    this.reach = {
-      x:
-        element.scrollLeft <= 0
-          ? 'start'
-          : element.scrollLeft >= this.contentWidth - this.containerWidth
-          ? 'end'
-          : null,
-      y:
-        element.scrollTop <= 0
-          ? 'start'
-          : element.scrollTop >= this.contentHeight - this.containerHeight
-          ? 'end'
-          : null,
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['itemsViewConfig', 'tableFields', 'deleteMode', 'customButtons', 'itemElements', 'editButton', 'meta', 'primaryKey', 'activeColumnName', 'createMode', 'editMode', 'mainFilter', 'fieldFilters', 'exportButton', 'refreshButton', 'selectManyMode', 'updateManyMode', 'removeManyMode'],
+  data: function data() {
+    return {
+      selected: []
     };
-
-    this.isAlive = true;
-
-    this.settings.handlers.forEach(function (handlerName) { return handlers[handlerName](this$1); });
-
-    this.lastScrollTop = Math.floor(element.scrollTop); // for onScroll only
-    this.lastScrollLeft = element.scrollLeft; // for onScroll only
-    this.event.bind(this.element, 'scroll', function (e) { return this$1.onScroll(e); });
-    updateGeometry(this);
-  };
-
-  PerfectScrollbar.prototype.update = function update () {
-    if (!this.isAlive) {
-      return;
-    }
-
-    // Recalcuate negative scrollLeft adjustment
-    this.negativeScrollAdjustment = this.isNegativeScroll
-      ? this.element.scrollWidth - this.element.clientWidth
-      : 0;
-
-    // Recalculate rail margins
-    set(this.scrollbarXRail, { display: 'block' });
-    set(this.scrollbarYRail, { display: 'block' });
-    this.railXMarginWidth =
-      toInt(get(this.scrollbarXRail).marginLeft) +
-      toInt(get(this.scrollbarXRail).marginRight);
-    this.railYMarginHeight =
-      toInt(get(this.scrollbarYRail).marginTop) +
-      toInt(get(this.scrollbarYRail).marginBottom);
-
-    // Hide scrollbars not to affect scrollWidth and scrollHeight
-    set(this.scrollbarXRail, { display: 'none' });
-    set(this.scrollbarYRail, { display: 'none' });
-
-    updateGeometry(this);
-
-    processScrollDiff(this, 'top', 0, false, true);
-    processScrollDiff(this, 'left', 0, false, true);
-
-    set(this.scrollbarXRail, { display: '' });
-    set(this.scrollbarYRail, { display: '' });
-  };
-
-  PerfectScrollbar.prototype.onScroll = function onScroll (e) {
-    if (!this.isAlive) {
-      return;
-    }
-
-    updateGeometry(this);
-    processScrollDiff(this, 'top', this.element.scrollTop - this.lastScrollTop);
-    processScrollDiff(
-      this,
-      'left',
-      this.element.scrollLeft - this.lastScrollLeft
-    );
-
-    this.lastScrollTop = Math.floor(this.element.scrollTop);
-    this.lastScrollLeft = this.element.scrollLeft;
-  };
-
-  PerfectScrollbar.prototype.destroy = function destroy () {
-    if (!this.isAlive) {
-      return;
-    }
-
-    this.event.unbindAll();
-    remove(this.scrollbarX);
-    remove(this.scrollbarY);
-    remove(this.scrollbarXRail);
-    remove(this.scrollbarYRail);
-    this.removePsClasses();
-
-    // unset elements
-    this.element = null;
-    this.scrollbarX = null;
-    this.scrollbarY = null;
-    this.scrollbarXRail = null;
-    this.scrollbarYRail = null;
-
-    this.isAlive = false;
-  };
-
-  PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
-    this.element.className = this.element.className
-      .split(' ')
-      .filter(function (name) { return !name.match(/^ps([-_].+|)$/); })
-      .join(' ');
-  };
-
-  var PerfectScrollbar$1 = {
-    name: 'PerfectScrollbar',
-    props: {
-      options: {
-        type: Object,
-        required: false,
-        default: function () {}
-      },
-      tag: {
-        type: String,
-        required: false,
-        default: 'div'
-      },
-      watchOptions: {
-        type: Boolean,
-        required: false,
-        default: false
-      }
-    },
-    data: function data () {
-      return {
-        ps: null
-      }
-    },
-    watch: {
-      watchOptions: function watchOptions (shouldWatch) {
-        if (!shouldWatch && this.watcher) {
-          this.watcher();
-        } else {
-          this.createWatcher();
-        }
-      }
-    },
-    mounted: function mounted () {
-      this.create();
-
-      if (this.watchOptions) {
-        this.createWatcher();
-      }
-    },
-    updated: function updated () {
-      var this$1 = this;
-
-      this.$nextTick(function () {
-        this$1.update();
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('app', ['page'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('crud', ['prefix', 'path', 'currentItemIndex', 'currentItemId'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('crud', ['itemsList'])), {}, {
+    selectedIds: function selectedIds() {
+      return this.selected.map(function (item) {
+        return item.meta.id;
       });
     },
-    beforeDestroy: function beforeDestroy () {
-      this.destroy();
+    items: function items() {
+      return this.itemsList(this.tableFields, this.meta, this.primaryKey, this.customButtons, this.activeColumnName);
     },
-    methods: {
-      create: function create () {
-        if (!(this.ps && this.$isServer)) {
-          this.ps = new PerfectScrollbar(this.$refs.container, this.options);
-        }
-      },
-      createWatcher: function createWatcher () {
-        var this$1 = this;
+    excelName: function excelName() {
+      return this.$t("global.routes.".concat(this.page));
+    }
+  }),
+  methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])('crud', ['showItemDetailsDialog', 'setCurrentItem', 'resetItems', 'resetItem', 'editItemDialog', 'createItemDialog', 'multipleEditDialog', 'setItemElementsInfo', 'editItemElementsDialog', 'setSelectedIds'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('crud', ['getItem', 'updateItem', 'storeItem', 'deleteItem', 'getItemElements', 'mulitipleItemsUpdate', 'mulitipleItemsDelete', 'getItemDetails', 'runItemsViewRefreshing'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['openAlertBox'])), {}, {
+    refreshItemsView: function refreshItemsView() {
+      this.runItemsViewRefreshing();
+    },
+    edit: function edit(id) {
+      var _this = this;
 
-        this.watcher = this.$watch('options', function () {
-          this$1.destroy();
-          this$1.create();
-        }, {
-          deep: true
-        });
-      },
-      update: function update () {
-        if (this.ps) {
-          this.ps.update();
-        }
-      },
-      destroy: function destroy () {
-        if (this.ps) {
-          this.ps.destroy();
-          this.ps = null;
-        }
+      this.beforeGetItem(id);
+      this.getItem([id]).then(function () {
+        _this.editItemDialog(id);
+      });
+    },
+    create: function create() {
+      this.resetItem();
+      this.createItemDialog();
+    },
+    suspend: function suspend(id) {
+      var obj = {};
+      obj[this.activeColumnName] = 0;
+      this.updateItem([id, obj, this.$t('global.alerts.suspended'), this.$t('global.alerts.suspendError')]);
+    },
+    restore: function restore(id) {
+      var obj = {};
+      obj[this.activeColumnName] = 1;
+      this.updateItem([id, obj, this.$t('global.alerts.restored'), this.$t('global.alerts.restoreError')]);
+    },
+    destroy: function destroy(id) {
+      if (confirm(this.$t('global.alerts.confirm'))) {
+        this.deleteItem([id, this.$t('global.alerts.deleted'), this.$t('global.alerts.deleteError')]);
       }
     },
-    render: function render (h) {
-      return h(this.tag,
-        {
-          ref: 'container',
-          class: 'ps',
-          on: this.$listeners
-        },
-        this.$slots.default)
+    checkSelected: function checkSelected() {
+      if (this.selected.length === 0) {
+        this.openAlertBox(['alertError', this.$t('global.datatable.noItemsSelected')]);
+        return false;
+      }
+
+      if (confirm(this.$t('global.datatable.confirm'))) {
+        return true;
+      }
+
+      return false;
+    },
+    editSelected: function editSelected() {
+      if (this.selected.length === 0) {
+        this.openAlertBox(['alertError', this.$t('global.datatable.noItemsSelected')]);
+        return false;
+      }
+
+      this.setSelectedIds(this.selected);
+      this.resetItem();
+      this.multipleEditDialog();
+    },
+    suspendSelected: function suspendSelected() {
+      if (this.checkSelected()) {
+        this.mulitipleItemsUpdate([{
+          ids: this.selectedIds,
+          request: {
+            active: 0
+          }
+        }, this.$t('global.alerts.suspended'), this.$t('global.alerts.suspendError')]);
+      }
+    },
+    restoreSelected: function restoreSelected() {
+      if (this.checkSelected()) {
+        this.mulitipleItemsUpdate([{
+          ids: this.selectedIds,
+          request: {
+            active: 1
+          }
+        }, this.$t('global.alerts.restored'), this.$t('global.alerts.restoreError')]);
+      }
+    },
+    destroySelected: function destroySelected() {
+      if (this.checkSelected()) {
+        this.mulitipleItemsDelete([{
+          ids: this.selectedIds
+        }, this.$t('global.alerts.deleted'), this.$t('global.alerts.deleteError')]);
+      }
+    },
+    custom: function custom(name, item) {
+      var index = this.getItemIndex(item.meta.id);
+      this.$parent.custom(name, item, index);
+    },
+    editItemElements: function editItemElements(name, id) {
+      var obj = this.itemElements[name];
+      this.setItemElementsInfo([id, obj]);
+      this.getItemElements();
     }
-  };
+  })
+});
 
-  function install (Vue, settings) {
-    if (settings) {
-      if (settings.name && typeof settings.name === 'string') {
-        PerfectScrollbar$1.name = settings.name;
+/***/ }),
+
+/***/ "./resources/js/components/crud/mixins/items-view.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/crud/mixins/items-view.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_ListItemActions_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ListItemActions.vue */ "./resources/js/components/crud/components/ListItemActions.vue");
+/* harmony import */ var _components_ListItemField_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ListItemField.vue */ "./resources/js/components/crud/components/ListItemField.vue");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    ListItemActions: _components_ListItemActions_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ListItemField: _components_ListItemField_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  methods: {
+    setColumnTextModes: function setColumnTextModes(props) {
+      var columnTextModes = {};
+
+      var _iterator = _createForOfIteratorHelper(this.tableFields),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var field = _step.value;
+          var textMode = 'cropped';
+
+          if (field.textMode) {
+            textMode = field.textMode;
+          }
+
+          if (field.type === 'dynamic') {
+            if (field.textModes) {
+              var refField = props.item[field.typeField];
+
+              if (field.textModes[refField]) {
+                textMode = field.textModes[refField];
+              }
+            }
+          }
+
+          columnTextModes[field.name.toLowerCase()] = textMode;
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
 
-      if (settings.options && typeof settings.options === 'object') {
-        PerfectScrollbar$1.props.options.default = function () {
-          return settings.options
-        };
+      return columnTextModes;
+    },
+    textMode: function textMode(item, key) {
+      var field = this.tableFields.find(function (field) {
+        return field.name === key;
+      }) || {};
+      var textMode = field.textMode || 'cropped';
+
+      if (field.type === 'dynamic' && field.textModes) {
+        var refField = item[field.typeField];
+
+        if (field.textModes[refField]) {
+          textMode = field.textModes[refField];
+        }
       }
 
-      if (settings.tag && typeof settings.tag === 'string') {
-        PerfectScrollbar$1.props.tag.default = settings.tag;
-      }
-
-      if (settings.watchOptions && typeof settings.watchOptions === 'boolean') {
-        PerfectScrollbar$1.props.watchOptions = settings.watchOptions;
-      }
+      return textMode;
     }
-
-    Vue.component(
-      PerfectScrollbar$1.name,
-      PerfectScrollbar$1
-    );
   }
-
-  exports.install = install;
-  exports.PerfectScrollbar = PerfectScrollbar$1;
-  exports.default = install;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
+});
 
 /***/ })
 

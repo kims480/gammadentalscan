@@ -18,6 +18,10 @@ export const mutations = {
     SET_Notification: (state, notif) => {
         state.notifications = notif;
         state.show = notif.show;
+      },
+    CLEAR_Notification: (state) => {
+        state.notifications = {};
+        state.show = false;
       }
 };
 export const actions = {
@@ -29,9 +33,13 @@ export const actions = {
             show:true
         }
         console.log(data);
-        commit("SET_Notification", data);
+            commit("SET_Notification", data);
+
+        setTimeout(() => {
+            commit("CLEAR_Notification", {});
+        }, 1000*2);
       },
       clearNotif({ commit }) {
-        commit("SET_Notification", {});
+        commit("CLEAR_Notification", {});
       }
 };

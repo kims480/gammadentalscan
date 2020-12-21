@@ -11,6 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -95,13 +96,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // middleware: "guest",
   data: function data() {
@@ -110,7 +105,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         email: "",
         name: "",
         password: "",
+        confirm_password: "",
         phone: ""
+      },
+      errors: {
+        name: null,
+        password: null,
+        email: null,
+        phone: null
       },
       show: true
     };
@@ -119,7 +121,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onSubmit: function onSubmit(evt) {
       evt.preventDefault();
     }
-  }, mapActions("auth", ["login"])), {}, {
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("auth", ["login"])), {}, {
     register: function register() {
       var _this = this;
 
@@ -132,30 +134,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               case 0:
                 _this.loading = true;
                 data = {
-                  email: _this.email,
-                  password: _this.password,
-                  name: _this.name,
-                  phone: _this.phone
+                  email: _this.form.email,
+                  password: _this.form.password,
+                  confirm_password: _this.form.confirm_password,
+                  name: _this.form.name,
+                  phone: _this.form.phone
                 };
                 _context.prev = 2;
                 _context.next = 5;
                 return _this.$store.dispatch('auth/register', data);
 
               case 5:
-                _context.next = 7;
-                return _this.$store.dispatch('auth/user').then(function () {
-                  //   console.log(res)
-                  _this.$router.push({
-                    name: "home"
-                  });
-                });
+                //   await this.$store.dispatch('auth/user').then(()=>{
+                //   console.log(res)
+                _this.$router.push({
+                  name: "home"
+                }); //   })
 
-              case 7:
-                _context.next = 14;
+
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context["catch"](2);
                 console.log(_context.t0);
                 _data = {
@@ -166,15 +167,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 _this.$store.dispatch("validation/setErrors", _data); // this.$swal.fire(data);
 
 
-              case 14:
+              case 13:
                 _this.loading = false;
 
-              case 15:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[2, 9]]);
+        }, _callee, null, [[2, 8]]);
       }))();
     },
 
@@ -280,21 +281,60 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container register col-md-6 offset-md-3" },
-    [
-      _c(
-        "b-card",
-        { staticClass: "text-center", attrs: { header: "Sign UP" } },
-        [
+  return _c("div", { staticClass: "container register col-md-6 offset-md-3" }, [
+    _c("div", { staticClass: "auth-content" }, [
+      _c("div", { staticClass: "card o-hidden" }, [
+        _c("div", { staticClass: "row" }, [
           _c(
-            "b-card-text",
-            { staticClass: "text-left" },
+            "div",
+            {
+              staticClass: "col-md-6 text-center",
+              staticStyle: {
+                "background-size": "cover",
+                "background-image":
+                  "url(../../dist-assets/images/photo-long-3.jpg)"
+              }
+            },
             [
+              _c("div", { staticClass: "pl-3 auth-right" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex-grow-1" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "w-100 mb-4" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass:
+                          "btn btn-outline-primary btn-block btn-icon-text btn-rounded",
+                        attrs: { to: "/signin" }
+                      },
+                      [
+                        _c("i", { staticClass: "i-Mail-with-At-Sign" }),
+                        _vm._v(" Sign in with Email")
+                      ]
+                    ),
+                    _vm._m(1),
+                    _vm._m(2)
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex-grow-1" })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "p-4" }, [
+              _c("h1", { staticClass: "mb-3 text-18" }, [_vm._v("Sign Up")]),
+              _vm._v(" "),
               _vm.show
                 ? _c(
-                    "b-form",
+                    "form",
                     {
                       on: {
                         submit: function($event) {
@@ -305,185 +345,266 @@ var render = function() {
                       }
                     },
                     [
-                      _c(
-                        "b-form-group",
-                        {
-                          attrs: {
-                            id: "input-group-2",
-                            label: "Your Name:",
-                            "label-for": "name"
-                          }
-                        },
-                        [
-                          _c("b-form-input", {
-                            class: { "is-invalid": _vm.errors.name },
-                            attrs: { id: "name", placeholder: "Enter name" },
-                            model: {
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "username" } }, [
+                          _vm._v("Your name")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.form.name,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "name", $$v)
-                              },
                               expression: "form.name"
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.name
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(_vm.errors.name[0]) +
-                                    "\n          "
-                                )
-                              ])
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-form-group",
-                        {
+                          ],
+                          staticClass: "form-control form-control-rounded",
+                          class: { "is-invalid": _vm.errors.name },
                           attrs: {
-                            id: "input-group-2",
-                            label: "Your phone:",
-                            "label-for": "phone"
+                            placeholder: "Enter name",
+                            id: "username",
+                            type: "text"
+                          },
+                          domProps: { value: _vm.form.name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "name", $event.target.value)
+                            }
                           }
-                        },
-                        [
-                          _c("b-form-input", {
-                            class: { "is-invalid": _vm.errors.phone },
-                            attrs: { id: "phone", placeholder: "Enter phone" },
-                            model: {
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "phone" } }, [
+                          _vm._v("Your Phone")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.form.phone,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "phone", $$v)
-                              },
                               expression: "form.phone"
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.phone
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(_vm.errors.phone[0]) +
-                                    "\n          "
-                                )
-                              ])
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-form-group",
-                        {
+                          ],
+                          staticClass: "form-control form-control-rounded",
+                          class: { "is-invalid": _vm.errors.phone },
                           attrs: {
-                            id: "input-group-1",
-                            label: "Email address:",
-                            "label-for": "input-1",
-                            description:
-                              "We'll never share your email with anyone else."
+                            placeholder: "Enter phone",
+                            id: "phone",
+                            type: "text"
+                          },
+                          domProps: { value: _vm.form.phone },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "phone", $event.target.value)
+                            }
                           }
-                        },
-                        [
-                          _c("b-form-input", {
-                            class: { "is-invalid": _vm.errors.email },
-                            attrs: {
-                              id: "input-1",
-                              type: "email",
-                              placeholder: "Enter email"
-                            },
-                            model: {
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "email" } }, [
+                          _vm._v("Email address")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.form.email,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "email", $$v)
-                              },
                               expression: "form.email"
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.email
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(_vm.errors.email[0]) +
-                                    "\n          "
-                                )
-                              ])
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-form-group",
-                        {
+                          ],
+                          staticClass: "form-control form-control-rounded",
+                          class: { "is-invalid": _vm.errors.email },
                           attrs: {
-                            id: "input-group-2",
-                            label: "Password:",
-                            "label-for": "password"
+                            type: "email",
+                            placeholder: "Enter email",
+                            id: "email"
+                          },
+                          domProps: { value: _vm.form.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "email", $event.target.value)
+                            }
                           }
-                        },
-                        [
-                          _c("b-form-input", {
-                            class: { "is-invalid": _vm.errors.password },
-                            attrs: {
-                              id: "password",
-                              type: "password",
-                              placeholder: "Password"
-                            },
-                            model: {
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.email
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                "\n                                  " +
+                                  _vm._s(_vm.errors.email[0]) +
+                                  "\n                                  "
+                              )
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "password" } }, [
+                          _vm._v("Password")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.form.password,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "password", $$v)
-                              },
                               expression: "form.password"
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.password
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  "\n            " +
-                                    _vm._s(_vm.errors.password[0]) +
-                                    "\n          "
-                                )
-                              ])
-                            : _vm._e()
-                        ],
-                        1
+                          ],
+                          staticClass: "form-control form-control-rounded",
+                          class: { "is-invalid": _vm.errors.password },
+                          attrs: {
+                            type: "password",
+                            placeholder: "Password",
+                            id: "password"
+                          },
+                          domProps: { value: _vm.form.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "confirm_password" } }, [
+                          _vm._v("confirm_type password")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.confirm_password,
+                              expression: "form.confirm_password"
+                            }
+                          ],
+                          staticClass: "form-control form-control-rounded",
+                          attrs: { id: "confirm_password", type: "password" },
+                          domProps: { value: _vm.form.confirm_password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "confirm_password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-primary btn-block btn-rounded mt-3"
+                        },
+                        [_vm._v("Sign Up")]
                       ),
                       _vm._v(" "),
                       _c(
-                        "b-button",
-                        { attrs: { type: "submit", variant: "primary" } },
-                        [_vm._v("Submit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-button",
+                        "button",
                         { attrs: { type: "reset", variant: "danger" } },
                         [_vm._v("Reset")]
                       )
-                    ],
-                    1
+                    ]
                   )
                 : _vm._e()
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "auth-logo text-center mt-4" }, [
+      _c("img", {
+        attrs: { src: __webpack_require__(/*! @/assets/images/logo.png */ "./resources/js/assets/images/logo.png"), alt: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "btn btn-outline-google btn-block btn-icon-text btn-rounded"
+      },
+      [
+        _c("i", { staticClass: "i-Google-Plus" }),
+        _vm._v(" Sign in with Google")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "btn btn-outline-facebook btn-block btn-icon-text btn-rounded"
+      },
+      [
+        _c("i", { staticClass: "i-Facebook-2" }),
+        _vm._v(" Sign in with Facebook")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "./resources/js/assets/images/logo.png":
+/*!*********************************************!*\
+  !*** ./resources/js/assets/images/logo.png ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/logo.png?e660834951733a562ed0271a46516b9a";
 
 /***/ }),
 

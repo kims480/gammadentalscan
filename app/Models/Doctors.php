@@ -18,21 +18,18 @@ class Doctors extends Model
      */
     protected $hidden = [
         'remember_token',
-    ];
-    //
-    protected $fillable = [
-        'user_id',
-        "name",
-        "name_ar",
-
         "telephone",
-        "whatsapp",
-
-        "points",
         "photo",
         "interstedToRecvMails",
         "interstedToRecvNot",
-        "active",
+        'user_id', "whatsapp","points", 'created_at','updated_at'
+    ];
+    //
+    protected $fillable = [
+        "active", "name", "name_ar", 'user_id', "whatsapp","points",
+        "photo",
+        "interstedToRecvMails",
+        "interstedToRecvNot"
 
     ];
     protected static function booted()

@@ -16,7 +16,8 @@ import Breadcumb from "./components/breadcumb";
 // import firebase from "firebase/app";
 // import "firebase/auth";
 // import { firebaseSettings } from "@/data/config";
-import i18n from "./lang/lang";
+// import i18n from "./lang/lang";
+import i18n from './locales/index'
 import DateRangePicker from "vue2-daterange-picker";
 //you need to import the CSS manually (in case you want to override it)
 import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
@@ -73,6 +74,12 @@ gamma-dental-scan-development
 gamma-dental-scan-staging
 gamma-dental-scan-production
 */
+Vue.prototype.$reverseText = function(propertyName) {
+  this[propertyName] = this[propertyName]
+    .split('')
+    .reverse()
+    .join('')
+}
 
 const app = new Vue({
     el: "#gamma-dental-scan",

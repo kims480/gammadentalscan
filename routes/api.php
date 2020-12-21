@@ -15,9 +15,9 @@ use Illuminate\Validation\ValidationException;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('/register',['App\\Http\\Controllers\\Api\\Auth\\RegisterController','register']);
 Route::post('/login',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','login']);
@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','user']); // this not work without middleware
     Route::post('/logout',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','logout']);
     Route::get('/get-users', 'Api\\UserController@getUsers');
+    Route::get('/getUserRolesById/{id}', 'Api\\UserController@getUserRolesById');
+    Route::get('/getUserPermissionsById/{id}', 'Api\\UserController@getUserPermissionsById');
+    Route::get('/getAllPermissions', 'Api\\UserController@getAllPermissions');
+    Route::get('/getAllRoles', 'Api\\UserController@getAllRoles');
     Route::apiResources([
 
             'notifications' => 'Api\\NotificationsController',

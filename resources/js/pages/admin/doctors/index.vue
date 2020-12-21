@@ -2,7 +2,8 @@
     <div class="main-content">
         <v-card>
             <v-card-title>
-                Doctors List
+                Doctors list
+                <!-- {{$reverseText('pageTitle')}} -->
                 <v-spacer></v-spacer>
                 <v-text-field
                     v-model="search"
@@ -33,7 +34,7 @@
             }"
             >{{ item.name }}</nuxt-link
           >-->
-                    <nuxt-link
+                    <router-link
                         :to="{
                             name: 'admin-doctors-name',
                             params: {
@@ -42,7 +43,7 @@
                                 doctor: item
                             }
                         }"
-                        >{{ item.name }}</nuxt-link
+                        >{{ item.name }}</router-link
                     >
                     <!-- ,
                 query:{doctor: item }-->
@@ -95,6 +96,7 @@ export default {
         selected: [],
         search: "",
         loading: true,
+        pageTitle:'Doctors List',
         headers: [
             {
                 text: "Doctor Name",
@@ -141,13 +143,14 @@ export default {
         }
     },
     created() {
+        this.$toasted.global.Not_Authorized();
         // this.$toast.show("Loading table in...");
         this.$store
             .dispatch("doctor/getDoctors")
             .then(res => {
                 this.fetchUsers(res.data.doctors);
                 this.loading = false;
-                this.$toast
+                this.$toasted
                     .success("users table loaded", {
                         position: "top-center",
                         className: "mytoast",

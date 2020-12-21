@@ -43,8 +43,7 @@
               {{ errors.password }}
             </div>
           </div>
-
-          <button class="btn btn-primary" type="submit" variant="primary">Submit</button>
+                      <button class="btn btn-primary" type="submit" variant="primary">Submit</button>
           <button class="btn btn-danger" type="reset" variant="danger">Reset</button>
         </form>
         <footer id="footer">

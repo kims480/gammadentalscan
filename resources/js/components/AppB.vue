@@ -13,7 +13,7 @@ import Notifications from '@/components/Notifications.vue';
 const default_layout="large-sidebar"
 import { mapGetters, mapActions } from "vuex";
 // import store from "@/store";
-
+import ServicesConst from '@/services/ServicesConst.js'
 export default {
     name: "GammaDental",
     components: {
@@ -24,6 +24,9 @@ export default {
         MainPage: null,
         SubPage: null
     }),
+    created(){
+        ServicesConst.apiClient.get('/sanctum/csrf-cookie');
+    },
     methods: {
         getBread() {
             let currentParentUrl = this.$route.path

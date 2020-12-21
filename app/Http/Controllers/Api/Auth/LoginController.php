@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as MyAuth;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 class LoginController extends Controller
 {
@@ -62,7 +64,9 @@ class LoginController extends Controller
 
     }
     public function user(Request $request){
-        return $request->user();
+        $roles= $request->user()->roles->pluck('name');
+        return response()->json(["user" => $request->user()->only('id','name','email','active','phone','whatsapp'),"roles" =>$roles, "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
     }
 
     public function logout(Request $request){
@@ -100,6 +104,42 @@ class LoginController extends Controller
         // // Revoke current user token
         // $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
         return response()->json(['Message'=>'Logged Out Sucessfully'],HttpFoundationResponse::HTTP_ACCEPTED)->withCookie($cookie);
+    }
+
+
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return response
+     * @param Request
+     */
+    public function register(Request $data) //RegisterRequest
+    {
+        $validator = $this->validator($data->all());
+        if (!$validator->fails()) {
+            return response()->json([
+                'success' => true, 'data'=>$data->all()],200);
+
+            $user = $this->create($data->only('name','phone','email', 'password'));
+            $token = auth($this->guard)->attempt($data->only('email', 'password'));
+            // if($token){
+                return response()->json([
+                    'success' => true,
+                    'Message' => 'User '.$user->name.' Registered Successfully',
+                    'user' => $user,
+                    'token' => $token
+                ], HttpFoundationResponse::HTTP_CREATED);
+            // }else{
+                return response()->json([
+                    'success' => false,
+                    'Message' => 'Failed to register',
+                    'error' =>$data->validated(), //$validator->errors()
+                ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+            // } */
+
+        }
     }
 
 

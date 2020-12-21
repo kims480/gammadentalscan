@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User as Authinticated;
 use App\Models\User;
 // use Illuminate\Http\Client\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
+use PDO;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class UserController extends Controller
 {
@@ -229,7 +234,7 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json(["user" => $request->user(), "success" => true]);
+        return response()->json(["user" => $request->user(),"roles" => $request->user()->roles, "success" => true]);
     }
     /**
      * Get All Users
@@ -237,7 +242,10 @@ class UserController extends Controller
      */
     public function getUsers(Request $request)
     {
-        $users = User::get(); //Isdoctor()->
+        $users = User::with(['roles'=>function($q){
+            $q->select('name','guard_name');
+        }])->get(); //Isdoctor()->
+
         if (is_object($users)) {
             return response()->json(["users" => $users, "message" => "Users collected successfuly", 'success' => true], 200);
         } else {
@@ -323,6 +331,130 @@ class UserController extends Controller
      */
     public function getUserRoles(Request $request)
     {
-        return response()->json(["roles" => $request->user()->role['role'], 'message' => 'My Roles Successfuly Collected', "success" => true]);
+        return response()->json(["roles" => $request->user()->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true]);
+    }
+    /**
+     * Get the authenticated User Roles
+     *
+     * @return [json] roles object
+     */
+    public function getUserRolesById(Request $request,$id)
+    {
+
+        $user=User::find($id);
+        if(!$user){
+            return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        }
+        if(!$request->user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        return response()->json(["roles" => $user->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+    }
+    public function getAllRoles(Request $request){
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+            $roles= collect(Role::select('id','name','guard_name')->get());
+
+            $tranformedRoles=$roles->transform(function($value,$key){
+                return $value['name'];
+            });
+
+                return response()->json(["AllRoles" => $tranformedRoles, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
+    }
+    public function getAllPermissions(Request $request){
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+            $permissions= collect(Permission::get());
+
+            $GroupedPermission=$permissions->groupBy('guard_name');
+            $tranformedPermission=$permissions->transform(function($value,$key){
+                return $value['name'];
+            });
+
+                return response()->json(["AllPermissionTransform" => $tranformedPermission,'groupedPermission'=>$GroupedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
     }
 }
+################ Spatie methods ############################################
+// or at least one role from an array of roles:
+// $user->hasRole(['editor', 'moderator']);
+
+// All current roles will be removed from the user and replaced by the array given
+//$user->syncRoles(['writer', 'admin']);
+
+//A role can be removed from a user:
+//$user->removeRole('writer');
+
+// $user->assignRole('writer');
+
+// // You can also assign multiple roles at once
+// $user->assignRole('writer', 'admin');
+// // or as an array
+// $user->assignRole(['writer', 'admin']);
+
+// $user->givePermissionTo('edit articles');
+
+// // You can also give multiple permission at once
+// $user->givePermissionTo('edit articles', 'delete articles');
+
+// // You may also pass an array
+// $user->givePermissionTo(['edit articles', 'delete articles']);
+
+//A permission can be revoked from a user:
+//$user->revokePermissionTo('edit articles');
+
+//Or revoke & add new permissions in one go:
+//$user->syncPermissions(['edit articles', 'delete articles']);
+
+// You can check if a user has a permission:
+
+//     Or you may pass an integer representing the permission id
+
+// $user->hasPermissionTo('1');
+// $user->hasPermissionTo(Permission::find(1)->id);
+// $user->hasPermissionTo($somePermission->id);
+
+// You can check if a user has Any of an array of permissions:
+
+//     $user->hasAnyPermission(['edit articles', 'publish articles', 'unpublish articles']);
+
+// ...or if a user has All of an array of permissions:
+//     $user->hasAllPermissions(['edit articles', 'publish articles', 'unpublish articles']);
+
+// You may also pass integers to lookup by permission id
+// $user->hasAnyPermission(['edit articles', 1, 5]);
+
+// So you can check if a user has a permission with Laravel's default can function:
+// $user->can('edit articles');
+
+
+################## Collections #############
+
+// $x=collect([1,2,3,5,54,5,69,6]);
+// return $x->duplicates();
+// return $x->countBy(); // counts the repeatation for each element and return non duplicated array
+
+/*
+public function complexFilter(){
+$categ=MainCateg::get();
+$categ= collect($categ);
+$resultOfFilter=$categ->filter(function($value,$key){
+    return $value['active']==1;
+}); // return result which has key of active with value 1
+return array_values($resultOfFilter->all());
+}
+
+public function complexTrans(){
+$categ=MainCateg::get();
+$categ= collect($categ);
+$resultOfFilter=$categ->tranform(function($value,$key){
+    return $value['name'];
+}); // return only name property from the whole object
+
+return $categ;
+}
+//each
+//filter
+//search
+//transform

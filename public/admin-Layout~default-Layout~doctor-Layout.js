@@ -670,6 +670,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["mainSection", "MainPage", "SubPage"]
 });
@@ -697,516 +709,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2364,7 +1866,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ":root {\n  --shadow: 3px 4px 20px 0px rgba(17, 87, 0, 0.34);\n}\n#brand {\n  background-position: center;\n  font-size: 16px;\n  padding: 0;\n  margin: 0;\n  height: 67px;\n  width: 185px;\n  border: 1px solid red;\n}\n.v-speed-dial {\n  position: absolute;\n}\n.v-btn--floating {\n  position: relative;\n}\n.topnav {\n  padding: 0 12px;\n  background-color: #69c31f;\n  color: #ffffff;\n  font-weight: bold;\n}\n.topnav.navbar-expand-lg.main-header {\n  box-shadow: var(--shadow);\n}\n.layout-sidebar-large .main-header {\n  background-color: #69c31f;\n  padding: 0;\n}\n.navbar-dark .navbar-nav .nav-link {\n  color: white;\n}\n.navbar-dark .navbar-nav .nav-link:hover {\n  color: #0c0aa7;\n}\n.container {\n  padding: 0;\n}\n.navbar-dark .navbar-nav .nav-link:hover,\n.navbar-dark .navbar-nav .nav-link:active {\n  color: rgba(0, 24, 197, 0.75);\n}\n.navbar-brand {\n  padding: 0;\n}\n.btn.dropdown-toggle.btn-link.text-decoration-none.dropdown-toggle-no-caret {\n  padding: 0;\n}\n.layout-sidebar-large .main-header .header-part-right {\n  margin: 0 10px 0 0;\n}\n@media (max-width: 576px) {\n.navbar-brand {\n    width: 25%;\n}\n.navbar-nav .nav-item {\n    display: none;\n}\n}\n@media (max-width: 768px) {\n.navbar-brand {\n    width: 25%;\n}\n}", ""]);
+exports.push([module.i, ":root {\n  --shadow: 3px 4px 20px 0px rgba(17, 87, 0, 0.34);\n}\n#brand {\n  background-position: center;\n  font-size: 16px;\n  padding: 0;\n  margin: 0;\n  height: 67px;\n  width: 185px;\n  border: 1px solid red;\n}\n.v-speed-dial {\n  position: absolute;\n}\n.v-btn--floating {\n  position: relative;\n}\n.topnav {\n  padding: 0 12px;\n  background-color: #69c31f;\n  color: #ffffff;\n  font-weight: bold;\n}\n.topnav.navbar-expand-lg.main-header {\n  box-shadow: var(--shadow);\n}\n.layout-sidebar-large .main-header {\n  background-color: #69c31f;\n  padding: 0;\n}\n.navbar-dark .navbar-nav .nav-link {\n  color: white;\n}\n.navbar-dark .navbar-nav .nav-link:hover {\n  color: #0c0aa7;\n}\n.container {\n  padding: 0;\n}\n.navbar-dark .navbar-nav .nav-link:hover,\n.navbar-dark .navbar-nav .nav-link:active {\n  color: rgba(0, 24, 197, 0.75);\n}\n.navbar-brand {\n  padding: 0;\n}\n.btn.dropdown-toggle.btn-link.text-decoration-none.dropdown-toggle-no-caret {\n  padding: 0;\n}\n.layout-sidebar-large .main-header .header-part-right {\n  margin: 0 10px 0 0;\n}\n@media (max-width: 576px) {\n.navbar-brand {\n    width: 25%;\n}\n.navbar-nav .nav-item {\n    display: none;\n}\n}\n@media (max-width: 768px) {\n.navbar-brand {\n    width: 25%;\n}\n}\n.menu-icon-grid {\n  background: #ffffffa2;\n  border-radius: 1rem;\n}\n.menu-icon-grid:hover {\n  background: #ffffff;\n}", ""]);
 
 // exports
 
@@ -3513,47 +3015,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "breadcrumb" },
-      [
-        _vm._t("header", [
-          _c("h5", [
-            _c("i", { staticClass: "i-Folder" }),
-            _vm._v(" " + _vm._s(_vm.mainSection))
-          ]),
-          _vm._v(" "),
-          _vm.MainPage == null
-            ? void 0
-            : [
-                _c("ul", [
-                  _c("li", [
-                    _c(
-                      "h5",
-                      [
-                        _c("i", { staticClass: "i-Arrow-Right-2" }),
-                        _vm._v(" "),
-                        _c("router-link", { attrs: { to: "" } }, [
-                          _vm._v(" " + _vm._s(_vm.MainPage))
-                        ])
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  !_vm.SubPage == null
-                    ? _c("li", [_c("h5", [_vm._v(_vm._s(_vm.SubPage))])])
-                    : _vm._e()
-                ])
-              ]
-        ])
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "separator-breadcrumb border-top" })
-  ])
+  return _c(
+    "div",
+    { staticClass: "breadcrumb" },
+    [
+      _vm._t("header", [
+        _c("h1", { staticClass: "mr-2" }, [_vm._v(_vm._s(_vm.mainSection))]),
+        _vm._v(" "),
+        _vm.MainPage == null
+          ? void 0
+          : [
+              _c("ul", [
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: "" } }, [
+                      _vm._v(" " + _vm._s(_vm.MainPage))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                !_vm.SubPage == null
+                  ? _c("li", [_vm._v(_vm._s(_vm.SubPage))])
+                  : _vm._e()
+              ])
+            ]
+      ])
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -3627,7 +3118,10 @@ var render = function() {
                           _c("i", { staticClass: "nav-icon i-Bar-Chart" }),
                           _vm._v(" "),
                           _c("span", { staticClass: "nav-text" }, [
-                            _vm._v(_vm._s(/*$t("dashboard") */))
+                            _vm._v(
+                              "\n              Dashboard" +
+                                _vm._s(/*$t("dashboard") */)
+                            )
                           ])
                         ]
                       ),
@@ -3717,8 +3211,8 @@ var render = function() {
                     "li",
                     {
                       staticClass: "nav-item",
-                      class: { active: _vm.selectedParentMenu == "charts" },
-                      attrs: { "data-item": "charts", "data-submenu": true },
+                      class: { active: _vm.selectedParentMenu == "storage" },
+                      attrs: { "data-item": "storage", "data-submenu": true },
                       on: { mouseenter: _vm.toggleSubMenu }
                     },
                     [
@@ -3729,7 +3223,7 @@ var render = function() {
                           _c("i", { staticClass: "nav-icon i-Pie-Chart-2" }),
                           _vm._v(" "),
                           _c("span", { staticClass: "nav-text" }, [
-                            _vm._v("Charts")
+                            _vm._v("Storage")
                           ])
                         ]
                       ),
@@ -3939,88 +3433,7 @@ var render = function() {
                             _c("i", { staticClass: "nav-icon i-Clock-3" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "\n                            users\n                        "
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/dashboards/v1" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Clock-4" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                _vm
-                                  ._s /* $t("dashboardItems.versionTwo") */
-                                  /* JSON.parse($auth.user.role).role.filter(
-                value => value == "Admin"
-              ) == "Admin" */
-                                  () +
-                                  "\n                            V1\n                        "
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "a",
-                              to: "/app/dashboards/dashboard.v3"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Over-Time" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                _vm._s(/* $t("dashboardItems.versionThree") */)
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "a",
-                              to: "/app/dashboards/dashboard.v4"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Clock" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                _vm._s(/* $t("dashboardItems.versionFour") */)
-                              )
+                              _vm._v("\n            users\n          ")
                             ])
                           ]
                         )
@@ -4058,166 +3471,6 @@ var render = function() {
                         )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/forms/formLayouts" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Split-Vertical"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Form Layouts")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/forms/basicActionBar" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Receipt-4" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Basic Action Bar")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/forms/formComponent" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Close-Window" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Form Validation")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/forms/formWizard" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Width-Window" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Form Wizard")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/forms/tagInput" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Tag-2" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Tag Input")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/forms/mask" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Pen-2" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Form Mask")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/forms/datepicker" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Calendar-4" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Datepicker")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/forms/V2Datepicker" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Calendar-4" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("V2Datepicker")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
                     )
                   ]
                 ),
@@ -4246,74 +3499,6 @@ var render = function() {
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
                               _vm._v("Paging")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/datatables/filter" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Split-Vertical"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Filter")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/datatables/list" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Split-Vertical"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("List")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "a",
-                              to: "/app/datatables/vue-good-table"
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Split-Horizontal"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Vue Good Table")
                             ])
                           ]
                         )
@@ -4443,9 +3628,7 @@ var render = function() {
                           _c("i", { staticClass: "nav-icon i-File-CSV" }),
                           _vm._v(" "),
                           _c("span", { staticClass: "item-name" }, [
-                            _vm._v(
-                              "\n                            Contacts\n                            "
-                            ),
+                            _vm._v("\n            Contacts\n            "),
                             _c(
                               "span",
                               {
@@ -4483,56 +3666,6 @@ var render = function() {
                               )
                             ],
                             1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/apps/contact-grid"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-File-CSV"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Contact Grid")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/apps/contact-details"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-File-CSV"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Contact Details")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
                           )
                         ])
                       ]
@@ -4549,7 +3682,7 @@ var render = function() {
                             _c("i", { staticClass: "nav-icon i-Add-File" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Ecommerce\n                            "),
+                              _vm._v("Ecommerce\n            "),
                               _c(
                                 "span",
                                 {
@@ -4595,7 +3728,7 @@ var render = function() {
                             _c("i", { staticClass: "nav-icon i-Add-File" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Todo App\n                            "),
+                              _vm._v("Todo App\n            "),
                               _c(
                                 "span",
                                 {
@@ -4627,9 +3760,7 @@ var render = function() {
                             _c("i", { staticClass: "nav-icon i-Add-File" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "Contacts Table\n                            "
-                              ),
+                              _vm._v("Contacts Table\n            "),
                               _c(
                                 "span",
                                 {
@@ -4715,9 +3846,7 @@ var render = function() {
                             _c("i", { staticClass: "nav-icon i-Add-File" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "scrumboard\n                            "
-                              ),
+                              _vm._v("scrumboard\n            "),
                               _c(
                                 "span",
                                 {
@@ -4773,107 +3902,6 @@ var render = function() {
                           {
                             attrs: {
                               tag: "a",
-                              to: "/app/extraKits/imageCropper"
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Crop-2" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Image Cropper")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/loaders" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Loading-3" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Loaders")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/sidebar" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Two-Windows" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Sidebar")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/extraKits/spinners" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Two-Windows" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Spinners")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "a",
                               to: "/app/extraKits/vueDraggable"
                             }
                           },
@@ -4882,186 +3910,6 @@ var render = function() {
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
                               _vm._v("Vue Draggable")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/avatar" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Two-Windows" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Avatar")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/extraKits/calendar" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Calendar" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Calendar")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/rating" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Circular-Point"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Rating")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/extraKits/spinButton" }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Circular-Point"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Spinbutton")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/extraKits/datePicker" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Time-Window" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Datepicker")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "ml-2 badge badge-pill badge-danger"
-                              },
-                              [_vm._v("New")]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/extraKits/timePicker" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Over-Time" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("TimePicker")
                             ]),
                             _vm._v(" "),
                             _c(
@@ -5100,70 +3948,6 @@ var render = function() {
                               },
                               [_vm._v("New")]
                             )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/toasts" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Bell" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Toastr")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              tag: "a",
-                              to: "/app/extraKits/sweetAlerts"
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Approved-Window"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Sweet Alerts")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/extraKits/tour" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Plane" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("User Tour")
-                            ])
                           ]
                         )
                       ],
@@ -5227,166 +4011,6 @@ var render = function() {
                       [
                         _c(
                           "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/badges" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Medal-2" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Badges")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/buttons" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Cursor-Click" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Buttons")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/cards" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Line-Chart-2" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Cards")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/carousel" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Video-Photographer"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Carousels")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/list" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Belt-3" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Lists")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/ui-kits/pagination" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Arrow-Next" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Paginations")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/popover" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Speach-Bubble-2"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Popover")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/ui-kits/progressbar" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Loading" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Progressbar")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
                           {
                             attrs: {
                               tag: "a",
@@ -5403,69 +4027,6 @@ var render = function() {
                         )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/ui-kits/modals" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Duplicate-Window"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Modals")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/ui-kits/collapsible" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Width-Window" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Collapsible")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/ui-kits/typography" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Width-Window" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Typography")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
                     )
                   ]
                 ),
@@ -5474,8 +4035,8 @@ var render = function() {
                   "ul",
                   {
                     staticClass: "childNav d-none",
-                    class: { "d-block": _vm.selectedParentMenu == "charts" },
-                    attrs: { "data-parent": "charts" }
+                    class: { "d-block": _vm.selectedParentMenu == "storage" },
+                    attrs: { "data-parent": "storage" }
                   },
                   [
                     _c(
@@ -5484,12 +4045,12 @@ var render = function() {
                       [
                         _c(
                           "router-link",
-                          { attrs: { tag: "a", to: "/app/charts/eChart" } },
+                          { attrs: { tag: "a", to: "/admin/gdrive" } },
                           [
                             _c("i", { staticClass: "nav-icon i-Line-Chart-2" }),
                             _vm._v(" "),
                             _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Echart")
+                              _vm._v("Google Drive")
                             ])
                           ]
                         )
@@ -5513,7 +4074,7 @@ var render = function() {
                           _c("i", { staticClass: "nav-icon i-Line-Chart" }),
                           _vm._v(" "),
                           _c("span", { staticClass: "item-name" }, [
-                            _vm._v("Apex Charts")
+                            _vm._v("Apex storage")
                           ]),
                           _vm._v(" "),
                           _c("i", { staticClass: "dd-arrow i-Arrow-Down" })
@@ -5528,7 +4089,7 @@ var render = function() {
                                 {
                                   attrs: {
                                     tag: "a",
-                                    to: "/app/charts/apexAreaChart"
+                                    to: "/app/storage/apexAreaChart"
                                   }
                                 },
                                 [
@@ -5553,82 +4114,7 @@ var render = function() {
                                 {
                                   attrs: {
                                     tag: "a",
-                                    to: "/app/charts/apexBarChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Bar Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexLineChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Line Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexMixChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Mix Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexColumnChart"
+                                    to: "/app/storage/apexColumnChart"
                                   }
                                 },
                                 [
@@ -5653,7 +4139,7 @@ var render = function() {
                                 {
                                   attrs: {
                                     tag: "a",
-                                    to: "/app/charts/apexPieDonutsChart"
+                                    to: "/app/storage/apexPieDonutsChart"
                                   }
                                 },
                                 [
@@ -5678,82 +4164,7 @@ var render = function() {
                                 {
                                   attrs: {
                                     tag: "a",
-                                    to: "/app/charts/apexRadarChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Radar Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexRadialBarChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Radial Bar Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexScatterChart"
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "nav-icon i-Line-Chart-2"
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", { staticClass: "item-name" }, [
-                                    _vm._v("Scatter Chart")
-                                  ])
-                                ]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "li",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    tag: "a",
-                                    to: "/app/charts/apexSparklineChart"
+                                    to: "/app/storage/apexSparklineChart"
                                   }
                                 },
                                 [
@@ -5772,7 +4183,7 @@ var render = function() {
                                 {
                                   attrs: {
                                     tag: "a",
-                                    to: "/app/charts/apexAreaChart"
+                                    to: "/app/storage/apexAreaChart"
                                   }
                                 },
                                 [
@@ -5977,162 +4388,11 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "ul",
-                  {
-                    staticClass: "childNav d-none",
-                    class: { "d-block": _vm.selectedParentMenu == "pages" },
-                    attrs: { "data-parent": "others" }
-                  },
-                  [
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/pages/error" } },
-                          [
-                            _c("i", {
-                              staticClass: "nav-icon i-Error-404-Window"
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("Not Found")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/pages/profile" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Male" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("User Profile")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/pages/icons" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Male" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v("icons")
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/pages/search-result" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-File-Search" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "\n                            Search Result\n                            "
-                              ),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-pill badge-danger"
-                                },
-                                [_vm._v("New")]
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            attrs: { tag: "a", to: "/app/pages/pricing-table" }
-                          },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Billing" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "\n                            Pricing Table\n                            "
-                              ),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-pill badge-danger"
-                                },
-                                [_vm._v("New")]
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "li",
-                      { staticClass: "nav-item" },
-                      [
-                        _c(
-                          "router-link",
-                          { attrs: { tag: "a", to: "/app/pages/faq" } },
-                          [
-                            _c("i", { staticClass: "nav-icon i-Billing" }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "item-name" }, [
-                              _vm._v(
-                                "\n                            Faq\n                            "
-                              ),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "badge badge-pill badge-danger"
-                                },
-                                [_vm._v("New")]
-                              )
-                            ])
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                )
+                _c("ul", {
+                  staticClass: "childNav d-none",
+                  class: { "d-block": _vm.selectedParentMenu == "pages" },
+                  attrs: { "data-parent": "others" }
+                })
               ])
             ]
           ),

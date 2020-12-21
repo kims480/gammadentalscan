@@ -3,6 +3,7 @@
                 :value="show"
                 absolute
                 :class="myclass"
+                style="z-index:999"
                 >
                 <span>{{ text }}</span>
                 <code>{{extra}}</code>
@@ -13,7 +14,7 @@
                     v-bind="attrs"
                     @click="snackbar = false"
                     >
-                    <i>mdi-close</i>
+                    <i class="text-20 fa fa-close"></i>
                     </v-btn>
                 </template>
     </v-snackbar>

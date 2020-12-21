@@ -22,7 +22,18 @@ try {
 window.axios = require("axios");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.defaults.withCredentials = true;
-
+window.axios.interceptors.request.use((request, next) => {
+    if (localStorage.getItem('token')) {
+      request.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+    }
+    next(response => {
+      if (response.status === 400 || response.status === 401 || response.status === 403) {
+        store.dispatch('auth/logout')
+        router.push({ name: 'signin' })
+      }
+    })
+    return (request,next)
+  });
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

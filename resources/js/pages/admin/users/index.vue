@@ -50,17 +50,15 @@
                 }}</v-chip>
             </template>
 
-            <template v-slot:item.created="{ item }">
-                {{ new Date(item.created_at).toDateString() }}
-            </template>
-            <template class="action roles" v-slot:item.role="{ item }">
+
+            <template class="action roles" v-slot:item.roles="{ item }">
                 <v-chip
                     small
-                    v-for="(role, index) in item.role.role"
+                    v-for="(role, index) in item.roles"
                     :key="index"
                     color="info"
                     dark
-                    >{{ role }}</v-chip
+                    >{{ role.name }}</v-chip
                 >
             </template>
             <template v-slot:item.action="{ item }">
@@ -107,9 +105,9 @@ export default {
             },
             { text: "Email", value: "email" },
             { text: "Active", value: "active" },
-            { text: "Created At", value: "created" },
 
-            { text: "role", value: "role" },
+
+            { text: "Roles", value: "roles" },
             { text: "Action", value: "action", width: "15%" }
         ],
         desserts: []
@@ -148,13 +146,17 @@ export default {
             .then(res => {
                 this.fetchUsers(res.data.users);
                 this.loading = false;
-                this.$toast
+                this.$toasted
                     .success("users table loaded", {
+
+                        theme: "bubble",
                         position: "top-center",
+                        duration : 5000,
                         className: "mytoast",
                         type: "success",
+                        iconPack:'i-Business-Mens',
                         icon: {
-                            name: "check",
+                            name: "Business-Mens",
                             after: true
                         }
                     })

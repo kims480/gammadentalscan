@@ -15,7 +15,9 @@ import * as scanRequest from "@/store/modules/scanrequest";
 import * as doctor from "@/store/modules/doctor";
 import * as validation from "@/store/modules/validation";
 import * as notifications from "@/store/modules/notifications";
-
+// crud
+import crud from '@/store/modules/crud/'
+import app from '@/store/modules/app/'
 // Load Vuex
 Vue.use(Vuex);
 
@@ -37,7 +39,8 @@ export default new Vuex.Store({
         // cart,
         // verticalSidebar,
         validation,
-        scrumboard
+        scrumboard,
+        crud,app
     },
     state:{
         isLoggedIn:false,
@@ -45,7 +48,9 @@ export default new Vuex.Store({
         loggedInUserID:null,
         loggedInUser:{},
         user:{},
-        error:null
+        error:null,
+        roles: localStorage.getItem('permissions'),
+        token: localStorage.getItem('token'),
     },
     mutations: {
         setUser(state, data) {
@@ -85,5 +90,18 @@ export default new Vuex.Store({
         loggedUserID:state=>{ return state.loggedInUserID},
         loggedUser:state=>{ return state.loggedInUser},
         User:state=>{ return state.user},
+        userPermissions: state => JSON.parse(state.roles) || [],
+        checkPermission: (state, getters) => (roleCode) => {
+            const result = !!(roleCode === undefined || getters.userPermissions.filter(el => el === roleCode).length > 0)
+            return result
+        },
+        token:state=>{return state.token},
+        userInfo: state => {
+            return JSON.parse(state.user) || {
+            active: null,
+            email: null,
+            name: null,
+            }
+        },
     }
 });

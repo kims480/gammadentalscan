@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth as MyAuth;
 
 class RegisterController extends Controller
 {
@@ -39,7 +40,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = ""; //RouteServiceProvider::HOME;
+    protected $redirectTo = "App_Login";
     // protected $auth;
     protected $guard = "";
     /**
@@ -65,9 +66,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required','string'],
             'password' => ['required', 'string', 'min:8'],
+            'confirm_password' => ['required', 'string', 'same:password'],
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -80,29 +84,39 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
         return response()->json(['Message' => 'user Registered Successfully'], HttpFoundationResponse::HTTP_CREATED);
     }
-    public function register(RegisterRequest $data)
+    public function register(Request $data)
     {
-        // $validator = $this->validator($data->all());
-        // if (!$validator->fails()) {
-        if($data->validated()){
-            $user = $this->create($data->only('name','email', 'password'));
+        $validator = $this->validator($data->all());
+        if (!$validator->fails()) {
+            // return response()->json([
+            //     'success' => true, 'data'=>$data->all()],200);
+
+            $user = $this->create($data->only('name','phone','email', 'password'));
             $token = auth($this->guard)->attempt($data->only('email', 'password'));
-            return response()->json([
-                'success' => true,
-                'Message' => 'User '.$user->name.' Registered Successfully',
-                'user' => $user,
-                'token' => $token
-            ], HttpFoundationResponse::HTTP_CREATED);
-        } else {
-            return response()->json([
-                'success' => false,
-                'Message' => 'Failed to register',
-                'error' =>$data->validated(), //$validator->errors()
-            ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
-        }
+            if($token){
+                $user=MyAuth::user();
+                $jwt=$user->createToken('token')->plainTextToken;
+                $cookie=Cookie('cookie-token',$jwt,60*24);
+            }
+                return response()->json([
+                    'success' => true,
+                    'Message' => 'User '.$user->name.' Registered Successfully',
+                    'user' => $user,
+                    'jwt' => $jwt
+                ], HttpFoundationResponse::HTTP_CREATED);
+             }else{
+                return response()->json([
+                    'success' => false,
+                    'Message' => 'Failed to register',
+                    'error' =>$validator->errors()//$data->validated(), //$validator->errors()
+                ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+            }
+
     }
 }

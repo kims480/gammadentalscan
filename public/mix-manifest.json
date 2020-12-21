@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/Not-Found.js": "/Not-Found.js",
     "/admin-Layout.js": "/admin-Layout.js",
     "/admin-Layout~dashboard~doctor-Layout.js": "/admin-Layout~dashboard~doctor-Layout.js",
     "/admin-doctors.js": "/admin-doctors.js",
@@ -9,13 +10,13 @@
     "/admin-notification.js": "/admin-notification.js",
     "/admin-offers.js": "/admin-offers.js",
     "/admin-patients.js": "/admin-patients.js",
-    "/admin-rating.js": "/admin-rating.js",
     "/admin-requests.js": "/admin-requests.js",
     "/admin-services.js": "/admin-services.js",
     "/admin-storage.js": "/admin-storage.js",
     "/admin-users.js": "/admin-users.js",
     "/auth.js": "/auth.js",
     "/auth-Layout.js": "/auth-Layout.js",
+    "/crud-test.js": "/crud-test.js",
     "/dashboard.js": "/dashboard.js",
     "/doctor-Layout.js": "/doctor-Layout.js",
     "/home.js": "/home.js",
@@ -23,8 +24,7 @@
     "/v-errors.js": "/v-errors.js",
     "/vendors~admin-Layout~dashboard~doctor-Layout.js": "/vendors~admin-Layout~dashboard~doctor-Layout.js",
     "/vendors~admin-Layout~dashboard~doctor-Layout~perfect-scrollbar.js": "/vendors~admin-Layout~dashboard~doctor-Layout~perfect-scrollbar.js",
-    "/xyz-Layout.js": "/xyz-Layout.js",
-    "/dashboard~doctor-Layout.js": "/dashboard~doctor-Layout.js",
-    "/vendors~dashboard~doctor-Layout.js": "/vendors~dashboard~doctor-Layout.js",
-    "/vendors~dashboard~doctor-Layout~perfect-scrollbar.js": "/vendors~dashboard~doctor-Layout~perfect-scrollbar.js"
+    "/vendors~admin-doctors.js": "/vendors~admin-doctors.js",
+    "/vendors~admin-users.js": "/vendors~admin-users.js",
+    "/xyz-Layout.js": "/xyz-Layout.js"
 }

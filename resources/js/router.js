@@ -1,5 +1,7 @@
 // import Vue from "vue";
 import VueRouter from "vue-router";
+import store from '@/store/index'
+
 // import ExampleComponent from "./components/ExampleComponent.vue";
 // import Example2Component from "./components/Example2Component.vue";
 // import Default from "./layouts/default.vue";
@@ -12,6 +14,20 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: 'home' */ "@/pages/admin/index"),
         name: "home",
+        beforeEnter: (to, from, next) => {
+            var auth = localStorage.getItem('token')
+            if (!auth) {
+              store.dispatch('auth/logout')
+              next('/signin')
+            } else {
+                store.dispatch('auth/user')
+                .then(response => {
+                      next()
+                    }, response => {
+                      next('/signin')
+                })
+            }
+          },
 
     },
 
@@ -60,7 +76,7 @@ const routes = [
     },
     {
         path: "/register", //auth/sign-in
-        meta:{layout:require( "@/pages/auth/signin").default.layout},
+        meta:{layout:'auth'},
         component: () =>
             import(/* webpackChunkName: 'auth' */ "@/pages/auth/register"),
         name: "register",
@@ -81,7 +97,19 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/index.vue"
             ),
+        meta: { guard: 'SUPER_ADMIN' },
+        // children: administrationRoutes,
         name: "users"
+    },
+    {
+        path: "/admin/users/add",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
+            ),
+        meta: { guard: 'SUPER_ADMIN' },
+        // children: administrationRoutes,
+        name: "add-user"
     },
     {
         path: "/admin/users/:name/:id",
@@ -100,12 +128,20 @@ const routes = [
         name: "doctors"
     },
     {
+        path: "/admin/doctors/show",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-doctors' */ "@/pages/admin/doctors/show.vue"
+            ),
+        name: "doctor-show"
+    },
+    {
         path: "/admin/doctors/:name/:id",
         component: () =>
             import(
                 /* webpackChunkName: 'admin-doctors' */ "@/pages/admin/doctors/_name/_id"
             ),
-        name: "admin-doctors"
+        name: "admin-doctors-name"
     },
     {
         path: "/admin/patients",
@@ -186,6 +222,23 @@ const routes = [
                 /* webpackChunkName: 'admin-gdrive' */ "@/pages/admin/storage/gdrive.vue"
             ),
         name: "gdrive"
+    },
+    {
+        path: "/points",
+        component: () =>
+            import(
+                /* webpackChunkName: 'crud-test' */ "@/pages/admin/points/index.vue"
+            ),
+        name: "points-crud"
+    },
+    {
+        path: "/404",
+        meta:{layout:""},
+        component: () =>
+            import(
+                /* webpackChunkName: 'Not-Found' */ "@/pages/error/404.vue"
+            ),
+        name: "404"
     }
 
 ];
@@ -194,4 +247,29 @@ const router = new VueRouter({
     base:  "app",
     routes
 });
+
+router.beforeEach(function (to, from, next) {
+    let middleware
+    store.state.page = null
+    to.matched.some(m => {
+      middleware = m.meta.guard
+    })
+    if (typeof middleware === 'undefined') {
+      next()
+    } else {
+      if (store.getters['checkPermission'](middleware)) {
+          console.log('checkPermission:',store.getters['checkPermission'])
+          console.log('checkPermission-middleware:',store.getters['checkPermission'](middleware))
+            window.scrollTo(0, 0)
+        next()
+      } else if (store.getters['isAuth']) {
+            store.dispatch('notifications/pushNotif','You are not Authorized','error')
+            toasted.global.Not_Authorized();
+        next({name:'home'})
+
+      } else {
+        next({name:'signin'})
+      }
+    }
+  })
 export default router;
