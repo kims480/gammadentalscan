@@ -1,8 +1,10 @@
 <template>
     <div id="purpose" class="card-text d-flex justify-content-around align-items-center">
-       <purpose name="Impaction" caption="Impaction" :storedValue="purposes.Impaction">
-           <template v-slot:purpose="{purposeData}">
+       <purpose purposeName="Impaction" caption="Impaction" v-model="purposeInfo.Impaction" value="purposes.Impaction"
+       >
+           <template v-slot:purposeimage>
                <!--we can use old slot scoped props
+           <template v-slot:purpose="{purposeData}">
            <template v-slot:purpose="{bookTitle}">
                v-slot:purpose="slotProps"
                <p> this is slot props {{slotProps.bookTitle}}</p>
@@ -15,40 +17,44 @@
                 <!-- {{purposesData=purposeData}} -->
            </template>
        </purpose>
-        <d-print></d-print>
+       <purpose purposeName="threeDPrint" caption="3D Print" v-model="purposeInfo.threeDPrint" :storedValue="purposes.threeDPrint">
+            <template v-slot:purposeimage>
+                <d-print></d-print>
+            </template>
+        </purpose>
 
-        <purpose name="EndoTTT" caption="Endo-TTT" :storedValue="purposes.EndoTTT">
-            <template v-slot:purpose>
+        <purpose purposeName="EndoTTT" caption="Endo-TTT" v-model="purposeInfo.EndoTTT" :storedValue="purposes.EndoTTT">
+            <template v-slot:purposeimage>
                 <endo-ttt></endo-ttt>
             </template>
         </purpose>
-        <purpose name="GuidedSurgery" caption="Guided Surgery" :storedValue="purposes.GuidedSurgery">
-            <template v-slot:purpose>
+        <purpose purposeName="GuidedSurgery" caption="Guided Surgery" v-model="purposeInfo.GuidedSurgery" :storedValue="purposes.GuidedSurgery">
+            <template v-slot:purposeimage>
                 <guided-surgery></guided-surgery>
             </template>
         </purpose>
-        <purpose name="Implant" caption="Implant" :storedValue="purposes.Implant" >
-            <template v-slot:purpose>
+        <purpose purposeName="Implant" caption="Implant"  v-model="purposeInfo.Implant" :storedValue="purposes.Implant" >
+            <template v-slot:purposeimage>
                 <implant></implant>
             </template>
         </purpose>
-        <purpose name="Lesion" caption="Lesion" :storedValue="purposes.Lesion">
-            <template v-slot:purpose>
+        <purpose purposeName="Lesion" caption="Lesion" v-model="purposeInfo.Lesion" :storedValue="purposes.Lesion">
+            <template v-slot:purposeimage>
                 <lesion></lesion>
             </template>
         </purpose>
-        <purpose name="Orthodontics" caption="Orthodontics" :storedValue="purposes.Orthodontics">
-            <template v-slot:purpose>
+        <purpose purposeName="Orthodontics" caption="Orthodontics" v-model="purposeInfo.Orthodontics" :storedValue="purposes.Orthodontics">
+            <template v-slot:purposeimage>
                 <orthodontics></orthodontics>
             </template>
         </purpose>
-        <purpose name="PhotoDSD" caption="Photo DSD" :storedValue="purposes.PhotoDSD">
-            <template v-slot:purpose>
+        <purpose purposeName="PhotoDSD" caption="Photo DSD" v-model="purposeInfo.PhotoDSD" :storedValue="purposes.PhotoDSD">
+            <template v-slot:purposeimage>
                 <photo-dsd></photo-dsd>
             </template>
         </purpose>
-        <purpose name="TMJ" caption="TMJ" :storedValue="purposes.TMJ">
-            <template v-slot:purpose>
+        <purpose purposeName="TMJ" caption="TMJ" v-model="purposeInfo.TMJ" :storedValue="purposes.TMJ">
+            <template v-slot:purposeimage>
                 <tmj></tmj>
             </template>
         </purpose>
@@ -70,7 +76,7 @@
 </template>
 
 <script>
-import DPrint from './DPrint.vue'
+import DPrint from './3DPrint.vue'
 
 import EndoTTT from './EndoTTT.vue'
 import GuidedSurgery from './GuidedSurgery.vue'
@@ -84,7 +90,9 @@ import TMJ from './TMJ.vue'
 import {mapGetters} from 'vuex'
 export default {
     computed:{
-        ...mapGetters({purposes:'scanRequest/purposesFinal'})
+        ...mapGetters({purposes:'scanRequest/getPurposesFinal'}),
+
+
     },
   components: {
        purpose, Impaction, DPrint,
@@ -92,6 +100,14 @@ export default {
         Lesion, Orthodontics,
         "photo-dsd":PhotoDSD, "tmj":TMJ,
     "endo-ttt":EndoTTT
+    },
+    methods:{
+
+    },
+    created(){
+
+            console.log(this.purposes)
+
     },
     data(){
         return{
@@ -107,7 +123,17 @@ export default {
                 "Photo-DSD",
                 "TMJ"
             ],
-            purposesData:{}
+            purposeInfo: {
+                'Impaction':false,
+                'threeDPrint':false,
+                'EndoTTT':false,
+                'GuidedSurgery':false,
+                'Implant':false,
+                'Lesion':false,
+                'Orthodontics':false,
+                'PhotoDSD':false,
+                'TMJ':false
+            },
         }
     },
 }

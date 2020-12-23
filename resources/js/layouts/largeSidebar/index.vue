@@ -21,8 +21,8 @@
                 {{ get }}
                 <separator></separator>
                 <v-sheet
-                    color="#FaFaFa"
-                    elevation="1"
+                    color="#f5f5f5"
+                    elevation="0"
                     style="padding:1px;margin-bottom:60px"
                     width="100%"
                     >

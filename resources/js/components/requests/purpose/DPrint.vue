@@ -1,6 +1,6 @@
 <template>
 <div class="inner">
-    <input type="checkbox" name="dprint" id="dprint">
+    <input type="checkbox" v-model="dprint" name="dprint" id="dprint">
     <label for="dprint">
         <svg viewBox="0 0 13.93 25.99">
             <title>Gamma_3DPrinting</title>
@@ -31,6 +31,13 @@
 
 <script>
     export default {
+        props:{
+            dprint:{
+                type:Boolean,
+                default:false
+            },
+
+        }
 
     }
 </script>

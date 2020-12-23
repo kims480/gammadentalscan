@@ -1,14 +1,16 @@
 <template>
     <div class="inner" >
 
-        <input type="checkbox" v-model="purpValue" :name="name" :id="name" @change="changePurp" :checked="purposeData">
-        <label :for="name">
+        <input type="checkbox"  @change="changePurp"
+        :name="purposeName"  :id="purposeName"  :value="value"
+        :checked="value"  v-bind="$attrs" >
+        <label :for="purposeName">
 
 
-            <slot name="purpose" :purposeData="purposeData" ></slot>
+            <slot name="purposeimage" ></slot>
 
 <!--
-    <slot name="purpose" :bookTitle="bookTitle"></slot>
+    <slot name="purpose" :bookTitle="bookTitle"></slot>v-model="purpValue"
      bookTitle is comming scopped slot props passed from child component -->
             <svg  viewBox="-5 -5 48 48">
                 <circle class="cls-1 circle" cx="19.07" cy="19.07" r="18.57"/>
@@ -26,8 +28,9 @@
 <script>
 import {mapActions} from 'vuex'
     export default {
+        inheritAttrs:false,
         props:{
-            name:{
+            purposeName:{
                 type:String,
                 default:"",
                 required:true
@@ -37,48 +40,60 @@ import {mapActions} from 'vuex'
                 default:"",
                 required:true
             },
-            storedValue:{
-                type:Boolean,
-                default:null,
 
-            },
+            // storedValue:{
+            //     type:Boolean,
+            //     default:false,
+
+            // },
+            value:{
+                type:Boolean,
+                default:false,
+                }
         },
         data(){
-                return{
-                    purpose:this.name,
-                    purpValue:null
-                }
-            }
-        ,
-        created(){
+            return{
 
+            }
         },
         computed:{
-            purposeData(){
-                const data = {
-                    purpose:this.name,
-                    value:this.purpValue
-                };
 
-                return data.value;
-            }
         },
         methods:{
-            changePurp(){
-                console.log(this.name+":"+this.purpValue)
-                if(this.purpValue){
+            changePurp(event){
+                // this.value=!this.value
+                // console.log(this.name+":"+this.purpValue)
+                if(typeof event !=='undefined'){
+                    if(event.target.checked ){
 
-                    this.$store.dispatch("scanRequest/setPurpose",this.name)
-                }
-                else{
-                    this.$store.dispatch("scanRequest/removePurpose",this.name)
+                        this.$store.dispatch("scanRequest/setPurpose",this.purposeName)
+                    }
+                    else{
+                        this.$store.dispatch("scanRequest/removePurpose",this.purposeName)
+                    }
+
+
+                    // this.value=event.target.checked
+                    this.$emit('input',event.target.checked)
+
+                    // console.log(event.target.name +'/'+event.target.checked)
                 }
 
+            },
+            setValue(){
+                if(this.value ){
+                        this.$store.dispatch("scanRequest/setPurpose",this.purposeName)
+
+                    }
             }
+
+            //     return this.value=this.storedValue
+            // }
         },
         created(){
-            this.purpValue=this.storedValue? this.storedValue:this.purpValue;
-            this.changePurp()
+
+            /* [`${this.purposeName}`] */
+             this.setValue()
         }
     }
 </script>

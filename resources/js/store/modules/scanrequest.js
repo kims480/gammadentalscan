@@ -16,8 +16,12 @@ export const state = () => ({
 });
 export const getters = {
     purposesFinal: state => {
-        return state.purposes
+         //state.purposes=JSON.parse(localStorage.getItem("currentPurposes"));
+         return state.purposes;
     },
+    getPurposesFinal:()=>{
+        return JSON.parse(localStorage.getItem("currentPurposes"));
+    }
 
 };
 export const mutations = {

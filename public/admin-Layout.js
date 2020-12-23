@@ -544,7 +544,7 @@ var render = function() {
               "v-sheet",
               {
                 staticStyle: { padding: "1px", "margin-bottom": "60px" },
-                attrs: { color: "#FaFaFa", elevation: "1", width: "100%" }
+                attrs: { color: "#f5f5f5", elevation: "0", width: "100%" }
               },
               [
                 _c(
