@@ -241,19 +241,19 @@
           <v-row class="d-flex flex-wrap justify-space-around align-content-center ">
             <v-col>
                     <v-switch
-                        v-model="ThreeDPringing.SurgicalGuid"
+                        v-model="ThreeDPrinting.SurgicalGuid"
                         color="success"
                         label="Surgical Guid"
                         dense
                         ></v-switch>
                     <v-switch
-                        v-model="ThreeDPringing.DSDModel"
+                        v-model="ThreeDPrinting.DSDModel"
                         color="success"
                         label="DSD Model"
                         dense
                         ></v-switch>
                     <v-switch
-                        v-model="ThreeDPringing.BoneModel"
+                        v-model="ThreeDPrinting.BoneModel"
                         color="success"
                         label="Bone Model"
                         dense
