@@ -4,12 +4,11 @@
 /public/drive
 /storage/*.key
 /vendor
-/resources/js/services/ServicesConst.js
 .env
 .env.backup
 .phpunit.result.cache
 Homestead.json
 npm-debug.log
 yarn-error.log
-resources/js/services/ServicesConst.js
 /public
+/resources/js/services/ServicesConst.js
