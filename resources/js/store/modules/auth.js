@@ -219,9 +219,10 @@ firebase
         return new Promise((resolve, reject) =>
             {
                 try{
+
+                    //;                UserServices.logout()
                     localStorage.removeItem("userInfo");
-                    ServicesConst.apiClient.post( "/logout");
-                    UserServices.logout().then( (res)=>{
+                    ServicesConst.apiClient.post( "/logout").then( (res)=>{
                         console.log(res);
                         delCookies();
                         // this.$cookie.delete('cookie-token');

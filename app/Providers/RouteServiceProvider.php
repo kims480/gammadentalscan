@@ -28,14 +28,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const APP_HOME = '/app';
+    public const APP_HOME = '/dashboard';
 
     /**
      * The path to the "App_Home" route for your application.
      *
      * @var string
      */
-    public const APP_LOGIN = '/app/signin';
+    public const APP_LOGIN = '/dashboard/signin';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -57,7 +57,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-        $this->mapAppRoutes();
+        $this->mapDashboardRoutes();
 
         $this->mapWebRoutes();
 
@@ -99,11 +99,11 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapAppRoutes()
+    protected function mapDashboardRoutes()
     {
-        Route::prefix('app')
+        Route::prefix('dashboard')
              ->middleware('api')
              ->namespace($this->namespace)
-             ->group(base_path('routes/app.php'));
+             ->group(base_path('routes/dashboard.php'));
     }
 }

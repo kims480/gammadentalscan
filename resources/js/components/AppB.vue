@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <v-app class="app-admin-wrap layout-sidebar-large clearfix">
         <component :is="forceLayoutIfNotLoggedIn"></component>
         <!--<router-view></router-view>-->
         <template v-if="show">
             <notifications :snackbar="notifications.show" :text="notifications.message" ></notifications>
         </template>
-    </div>
+    </v-app >
 </template>
 
 <script>
@@ -127,7 +127,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
 html {
     font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -138,22 +145,23 @@ html {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
+
 }
 body {
-    background: #f1f1f1;
+    background: #fcfcfc;
     overflow-y: hidden;
 }
 .main-content-wrap {
-    background: #f5f5f5;
+
+    margin-top: 60px;
 }
 .icon-font {
     font-size: 18px;
     /* font-weight: bolder; */
 }
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-    margin: 0;
-}
+
+
+
+
+
 </style>

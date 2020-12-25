@@ -21,7 +21,7 @@ import DateRangePicker from "vue2-daterange-picker";
 import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
 // import "v2-datepicker/lib/index.css"; // v2 need to improt css
 // import V2Datepicker from "v2-datepicker";
-
+import AuthLayout from '@/layouts/auth'
 // locale.use(lang);
 // register the plugin on vue
 import Toasted from 'vue-toasted';
@@ -55,12 +55,8 @@ export default {
                 )
         );
         Vue.component(
-            "auth-layout",
-            // The `import` function returns a Promise.
-            () =>
-                import(
-                    /* webpackChunkName: 'auth-Layout' */ "@/layouts/auth"
-                )
+            'AuthLayout',AuthLayout
+
         );
         Vue.component(
             "doctor-layout",
@@ -94,8 +90,8 @@ export default {
         //     // The `import` function returns a Promise.
         //     () => import("../components/common/customizer.vue")
         // );
-        Vue.component("vue-perfect-scrollbar", () =>
-            import(/* webpackChunkName: 'perfect-scrollbar' */ "vue2-perfect-scrollbar")
+        Vue.component("vue-perfect-scrollbar", (rfe) =>
+            import("vue2-perfect-scrollbar")
         );
         Vue.component("v-errors", () =>
             import(/* webpackChunkName: 'v-errors' */ "@/components/vErrors")

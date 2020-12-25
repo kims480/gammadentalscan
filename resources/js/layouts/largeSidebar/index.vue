@@ -1,5 +1,5 @@
 <template>
-    <v-app class="app-admin-wrap layout-sidebar-large clearfix">
+    <div>
         <TopNav />
 
         <template v-if="isAuth /* $auth.hasScope('super_admin') */">
@@ -79,7 +79,7 @@
                 <appFooter />
             </div>
         </main>
-    </v-app>
+    </div>
 </template>
 
 <script>
@@ -236,32 +236,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-html {
-    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
-    word-spacing: 1px;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    box-sizing: border-box;
-}
-body {
-    background: #f1f1f1;
-}
-.main-content-wrap {
-    background: #f5f5f5;
-    margin-top: 60px;
-}
-.icon-font {
-    font-size: 18px;
-    /* font-weight: bolder; */
-}
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-    margin: 0;
-}
+
 </style>

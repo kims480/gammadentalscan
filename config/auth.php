@@ -46,7 +46,7 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        'app' => [
+        'dashboard' => [
             'driver' => 'token',
             'provider' => 'users',
             'hash' => false,

@@ -1,7 +1,8 @@
 // import Vue from "vue";
 import VueRouter from "vue-router";
 import store from '@/store/index'
-
+import Home from '@/pages/admin/index'
+import Signin from '@/pages/auth/signin'
 // import ExampleComponent from "./components/ExampleComponent.vue";
 // import Example2Component from "./components/Example2Component.vue";
 // import Default from "./layouts/default.vue";
@@ -11,8 +12,7 @@ const routes = [
     {
         path: "/", //auth/sign-in
         meta:{layout:"large-sidebar"},
-        component: () =>
-            import(/* webpackChunkName: 'home' */ "@/pages/admin/index"),
+        component: Home,
         name: "home",
         beforeEnter: (to, from, next) => {
             var auth = localStorage.getItem('token')
@@ -61,8 +61,7 @@ const routes = [
     {
         path: "/signin", //auth/sign-in
         meta:{layout:require( "@/pages/auth/signin").default.layout},
-        component: () =>
-            import(/* webpackChunkName: 'auth' */ "@/pages/auth/signin"),
+        component: Signin,
         name: "sign-in",
 
     },
@@ -244,7 +243,7 @@ const routes = [
 ];
 const router = new VueRouter({
     mode: "history",
-    base:  "app",
+    base:  "dashboard",
     routes
 });
 

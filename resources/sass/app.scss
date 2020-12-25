@@ -2,13 +2,12 @@
 // @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,600');
 
-// Variables
-@import 'variables';
+@import './variables';
 // Bootstrap
 
-// @import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/bootstrap.scss";
+
 
 // Variables
-
 // @import 'bootstrap-rtl';
-@import './themes/lite-purple.scss';
+
