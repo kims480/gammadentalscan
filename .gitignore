@@ -4,7 +4,7 @@
 /public/drive
 /storage/*.key
 /vendor
-
+/resources/js/services/ServicesConst.js
 .env
 .env.backup
 .phpunit.result.cache
