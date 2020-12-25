@@ -344,7 +344,7 @@ export default {
           cdPlusFilm:false,
           report:false
       },
-      ThreeDPringing:{
+      ThreeDPrinting:{
           SurgicalGuid:false,
           DSDModel:false,
           BoneModel:false

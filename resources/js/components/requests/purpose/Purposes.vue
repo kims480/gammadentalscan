@@ -1,6 +1,6 @@
 <template>
     <div id="purpose" class="card-text d-flex justify-content-around align-items-center">
-       <purpose purposeName="Impaction" caption="Impaction" v-model="purposeInfo.Impaction" :storedValue="purposes.Impaction"
+       <purpose purposeName="Impaction" caption="Impaction" v-model="purposeInfo.Impaction" :storedValue="purposeInfo.Impaction"
        >
            <template v-slot:purposeimage>
                <!--we can use old slot scoped props
@@ -17,43 +17,43 @@
                 <!-- {{purposesData=purposeData}} -->
            </template>
        </purpose>
-       <purpose purposeName="threeDPrint" caption="3D Print" v-model="purposeInfo.threeDPrint" :storedValue="purposes.threeDPrint">
+       <purpose purposeName="threeDPrint" caption="3D Print" v-model="purposeInfo.threeDPrint" :storedValue="purposeInfo.threeDPrint">
             <template v-slot:purposeimage>
                 <d-print></d-print>
             </template>
         </purpose>
 
-        <purpose purposeName="EndoTTT" caption="Endo-TTT" v-model="purposeInfo.EndoTTT" :storedValue="purposes.EndoTTT">
+        <purpose purposeName="EndoTTT" caption="Endo-TTT" v-model="purposeInfo.EndoTTT" :storedValue="purposeInfo.EndoTTT">
             <template v-slot:purposeimage>
                 <endo-ttt></endo-ttt>
             </template>
         </purpose>
-        <purpose purposeName="GuidedSurgery" caption="Guided Surgery" v-model="purposeInfo.GuidedSurgery" :storedValue="purposes.GuidedSurgery">
+        <purpose purposeName="GuidedSurgery" caption="Guided Surgery" v-model="purposeInfo.GuidedSurgery" :storedValue="purposeInfo.GuidedSurgery">
             <template v-slot:purposeimage>
                 <guided-surgery></guided-surgery>
             </template>
         </purpose>
-        <purpose purposeName="Implant" caption="Implant"  v-model="purposeInfo.Implant" :storedValue="purposes.Implant" >
+        <purpose purposeName="Implant" caption="Implant"  v-model="purposeInfo.Implant" :storedValue="purposeInfo.Implant" >
             <template v-slot:purposeimage>
                 <implant></implant>
             </template>
         </purpose>
-        <purpose purposeName="Lesion" caption="Lesion" v-model="purposeInfo.Lesion" :storedValue="purposes.Lesion">
+        <purpose purposeName="Lesion" caption="Lesion" v-model="purposeInfo.Lesion" :storedValue="purposeInfo.Lesion">
             <template v-slot:purposeimage>
                 <lesion></lesion>
             </template>
         </purpose>
-        <purpose purposeName="Orthodontics" caption="Orthodontics" v-model="purposeInfo.Orthodontics" :storedValue="purposes.Orthodontics">
+        <purpose purposeName="Orthodontics" caption="Orthodontics" v-model="purposeInfo.Orthodontics" :storedValue="purposeInfo.Orthodontics">
             <template v-slot:purposeimage>
                 <orthodontics></orthodontics>
             </template>
         </purpose>
-        <purpose purposeName="PhotoDSD" caption="Photo DSD" v-model="purposeInfo.PhotoDSD" :storedValue="purposes.PhotoDSD">
+        <purpose purposeName="PhotoDSD" caption="Photo DSD" v-model="purposeInfo.PhotoDSD" :storedValue="purposeInfo.PhotoDSD">
             <template v-slot:purposeimage>
                 <photo-dsd></photo-dsd>
             </template>
         </purpose>
-        <purpose purposeName="TMJ" caption="TMJ" v-model="purposeInfo.TMJ" :storedValue="purposes.TMJ">
+        <purpose purposeName="TMJ" caption="TMJ" v-model="purposeInfo.TMJ" :storedValue="purposeInfo.TMJ">
             <template v-slot:purposeimage>
                 <tmj></tmj>
             </template>
