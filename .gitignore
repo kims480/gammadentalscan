@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 /public
 /resources/js/services/ServicesConst.js
+resources/js/services/ServicesConst.js
