@@ -1,6 +1,6 @@
 <template>
     <div id="purpose" class="card-text d-flex justify-content-around align-items-center">
-       <purpose purposeName="Impaction" caption="Impaction" v-model="purposeInfo.Impaction" value="purposes.Impaction"
+       <purpose purposeName="Impaction" caption="Impaction" v-model="purposeInfo.Impaction" :storedValue="purposes.Impaction"
        >
            <template v-slot:purposeimage>
                <!--we can use old slot scoped props
