@@ -20,9 +20,7 @@ import Breadcumb from "./components/breadcumb";
 import i18n from './locales/index'
 import DateRangePicker from "vue2-daterange-picker";
 //you need to import the CSS manually (in case you want to override it)
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
-//import material-icon scss
-import "font-awesome/css/font-awesome.min.css";
+
 
 //defined as global component
 Vue.component(

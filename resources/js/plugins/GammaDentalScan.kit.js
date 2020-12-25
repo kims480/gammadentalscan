@@ -18,7 +18,7 @@ import "../plugins/echarts";
 import "../plugins/apexChart.js";
 import "../plugins/sweetalert2.js";
 import DateRangePicker from "vue2-daterange-picker";
-import "vue2-daterange-picker/dist/vue2-daterange-picker.css";
+
 // import "v2-datepicker/lib/index.css"; // v2 need to improt css
 // import V2Datepicker from "v2-datepicker";
 import AuthLayout from '@/layouts/auth'
