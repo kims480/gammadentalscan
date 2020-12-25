@@ -34,7 +34,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'ui-kits' }"
+            :class="{ active: selectedParentMenu == 'Users' }"
             data-item="ui-kits"
             :data-submenu="true"
           >
@@ -47,7 +47,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'extrakits' }"
+            :class="{ active: selectedParentMenu == 'Doctors' }"
             data-item="extrakits"
             :data-submenu="true"
           >
@@ -60,7 +60,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'apps' }"
+            :class="{ active: selectedParentMenu == 'Patients' }"
             data-item="apps"
             :data-submenu="true"
           >
@@ -86,7 +86,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'widgets' }"
+            :class="{ active: selectedParentMenu == 'Requests' }"
             data-item="widgets"
             :data-submenu="true"
           >
@@ -99,7 +99,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'forms' }"
+            :class="{ active: selectedParentMenu == 'Results' }"
             data-item="forms"
             :data-submenu="true"
           >
@@ -112,7 +112,7 @@
           <li
             class="nav-item"
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'datatables' }"
+            :class="{ active: selectedParentMenu == 'Points' }"
             data-item="datatables"
             :data-submenu="true"
           >
@@ -125,7 +125,7 @@
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'sessions' }"
+            :class="{ active: selectedParentMenu == 'Complaints' }"
             data-item="sessions"
             :data-submenu="true"
           >
@@ -135,9 +135,10 @@
             </a>
             <div class="triangle"></div>
           </li>
+
           <li
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'pages' }"
+            :class="{ active: selectedParentMenu == 'Notifications' }"
             class="nav-item"
             data-item="pages"
             :data-submenu="true"
@@ -148,6 +149,21 @@
             </a>
             <div class="triangle"></div>
           </li>
+
+          <li
+            @mouseenter="toggleSubMenu"
+            :class="{ active: selectedParentMenu == 'Settings' }"
+            class="nav-item"
+            data-item="pages"
+            :data-submenu="true"
+          >
+            <a class="nav-item-hold" href="#">
+              <i class="nav-icon i-Double-Tap"></i>
+              <span class="nav-text">Pages</span>
+            </a>
+            <div class="triangle"></div>
+          </li>
+
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
