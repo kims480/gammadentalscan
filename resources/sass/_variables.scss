@@ -24,6 +24,7 @@ $solid-colors: (
   "orange": #e97d23,
   "yellow": #ffc107,
   "green": #4caf61,
+  "greeny": #138412,
   "teal": #20c997,
   "cyan": #9c27b0,
   "gray": #2d2d33,
@@ -37,12 +38,13 @@ $red: map-get($solid-colors, "red") !default;
 $orange: map-get($solid-colors, "orange") !default;
 $yellow: map-get($solid-colors, "yellow") !default;
 $green: map-get($solid-colors, "green") !default;
+$greeny: map-get($solid-colors, "greeny") !default;
 $teal: map-get($solid-colors, "teal") !default;
 $cyan: map-get($solid-colors, "cyan") !default;
 
 $body-bg: #f8fafc;
 
-$primary-base: $green;
+$primary-base: $greeny;
 
 $white: #fff !default;
 $gray-100: #f8f9fa !default;
@@ -66,7 +68,7 @@ $dark: $gray-900 !default;
 $background: $white !default;
 $foreground: $gray-900 !default;
 $heading: darken($foreground, 8%);
-$dark-forground: #1c3f25;
+$dark-forground: #ffffff;
 $dark-heading: #c2dcca;
 $dark-bg: #0e2e1a;
 
@@ -147,6 +149,15 @@ $gradient-colors: (
   )
 );
 
+// LAYOUT VARS
+$topbar-height: 60px;
+$topbar-height-mobile: 70px;
+
+$sidebar-left-width: 120px;
+$sidebar-left-width-mobile: 90px;
+$sidebar-left-secondary-width: 220px;
+$sidebar-left-secondary-width-mobile: 190px;
+$side-clearance: 20px;
 
 
 // blue dark

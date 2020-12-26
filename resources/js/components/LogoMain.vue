@@ -1,7 +1,7 @@
 <template>
   <svg
 
-    viewBox="0 0 186 66.29"
+    viewBox="0 0 186 60"
     class="NuxtLogo"
   >
     <defs>

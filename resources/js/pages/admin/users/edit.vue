@@ -68,6 +68,7 @@
               </v-col>
 
               <v-col cols="12" sm="6">
+
                 <v-select
                     v-model="userRole"
                     :items="roles"
@@ -116,7 +117,7 @@ export default {
             'ADMIN',
             'DOCTOR',
             'SUPER_ADMIN',
-            'DEVELPER'
+            'DEVELOPER'
           ],
     created_at: '',
     updated_at: '',
@@ -167,7 +168,7 @@ export default {
                 this.userRoles.push(input.name);
             }
             console.log(this.userRoles)
-
+            return this.userRoles;
     },
     userCreatedAt(){
       this.created_at=this.user.created_at

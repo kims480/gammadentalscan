@@ -5,7 +5,7 @@
         <template v-if="isAuth /* $auth.hasScope('super_admin') */">
             <Sidebar />
         </template>
-
+        <notifications></notifications>
         <main>
             <div
                 :class="{
@@ -75,7 +75,7 @@
                         <v-icon>mdi-delete</v-icon>
                     </v-btn>
                 </v-speed-dial>
-                <notifications></notifications>
+
                 <appFooter />
             </div>
         </main>

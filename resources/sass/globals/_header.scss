@@ -19,7 +19,7 @@
     div {
       width: 24px;
       height: 1px;
-      background: $foreground;
+      background: $dark-forground;
       margin: 3px 0;
     }
   }
@@ -86,6 +86,10 @@
   .header-part-right {
     display: flex;
     align-items: center;
+
+    .v-btn:hover{
+        color: whitesmoke;
+      }
     .user {
       margin-right: 2rem;
       img {

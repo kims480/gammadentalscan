@@ -17,9 +17,9 @@
 
         <div class="navbar-nav">
             <!-- Navbar dropdowns -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <router-link class="nav-link" to="/">Dashboard</router-link>
-            </li>
+            </li> -->
             <template v-if="false /* $auth.loggedIn */">
                 <div class="search-bar" @click="toggleSearch">
                     <input type="text" placeholder="Search" />
@@ -44,7 +44,7 @@
             <!-- Grid menu Dropdown -->
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="teal" v-bind="attrs" v-on="on" icon>
+                    <v-btn color="#e0ffff"   v-bind="attrs" v-on="on" icon>
                         <v-avatar size="36">
                             <v-icon dark>mdi-package-variant</v-icon>
                         </v-avatar>
@@ -99,7 +99,7 @@
             <!-- Notificaiton -->
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="teal" v-bind="attrs" v-on="on" icon>
+                    <v-btn color="#e0ffff" v-bind="attrs" v-on="on" icon>
                         <v-badge
                             color="primary"
                             dark
@@ -136,7 +136,7 @@
                                 >
                             </p>
                             <p class="text-small text-muted m-0">
-                                James: Hey! are you busy?
+                                Lorem ipsum dolor sit amet.
                             </p>
                         </div>
                     </div>
@@ -146,15 +146,15 @@
                         </div>
                         <div class="notification-details flex-grow-1">
                             <p class="m-0 d-flex align-items-center">
-                                <span>New order received</span>
+                                <span>Lorem, ipsum dolor.</span>
                                 <!-- <span class="badge badge-pill badge-success ml-1 mr-1">new</span> -->
                                 <span class="flex-grow-1"></span>
                                 <span class="text-small text-muted ml-auto"
-                                    >2 hours ago</span
+                                    >2 hrs ago</span
                                 >
                             </p>
                             <p class="text-small text-muted m-0">
-                                1 Headphone, 3 iPhone x
+                                Lorem ipsum dolor sit amet.
                             </p>
                         </div>
                     </div>
@@ -164,15 +164,15 @@
                         </div>
                         <div class="notification-details flex-grow-1">
                             <p class="m-0 d-flex align-items-center">
-                                <span>Product out of stock</span>
+                                <span>Lorem, ipsum dolor.</span>
                                 <!-- <span class="badge badge-pill badge-danger ml-1 mr-1">3</span> -->
                                 <span class="flex-grow-1"></span>
                                 <span class="text-small text-muted ml-auto"
-                                    >10 hours ago</span
+                                    >10 hrs ago</span
                                 >
                             </p>
                             <p class="text-small text-muted m-0">
-                                Headphone E67, R98, XL90, Q77
+                                Lorem ipsum dolor sit amet.
                             </p>
                         </div>
                     </div>
@@ -203,13 +203,14 @@
 
             <!-- User avatar dropdown -->
             <template v-if="isAuth       /* $auth.loggedIn */">
-                <v-menu offset-y>
+                <v-menu class="user" offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="teal" v-bind="attrs" v-on="on" icon>
                             <v-avatar size="36">
                                 <img
                                     src="@/assets/images/faces/20.jpg"
                                     :alt="username "
+                                    class="img"
                                 />
                             </v-avatar>
                         </v-btn>
@@ -410,6 +411,8 @@ watch: {
 <style lang="scss">
 :root {
     --shadow: 3px 4px 20px 0px rgba(17, 87, 0, 0.34);
+    --primarybg:#69c31f;
+    --secondarybg:#138412;
 }
 #brand {
     // background-image: url("/_nuxt/assets/svg/logo/Gamma_Logo_Full.svg");
@@ -418,7 +421,7 @@ watch: {
     font-size: 16px;
     padding: 0;
     margin: 0;
-    height: 67px;
+    height: 60px;
     width: 185px;
     border: 1px solid red;
     // fill: white;
@@ -432,7 +435,7 @@ watch: {
   }
 .topnav {
     padding: 0 12px;
-    background-color: #69c31f;
+    background-color:   var(--secondarybg);
     color: #ffffff;
     font-weight: bold;
 }
@@ -440,8 +443,11 @@ watch: {
     box-shadow: var(--shadow);
 }
 .layout-sidebar-large .main-header {
-    background-color: #69c31f;
+    background-color: var(--secondarybg);
     padding: 0;
+}
+.layout-sidebar-large v-icon {
+    color:var(--white);
 }
 .navbar-dark .navbar-nav .nav-link {
     color: rgb(255, 255, 255);
@@ -462,19 +468,24 @@ watch: {
 .btn.dropdown-toggle.btn-link.text-decoration-none.dropdown-toggle-no-caret {
     padding: 0;
 }
-.layout-sidebar-large .main-header .header-part-right {
-    margin: 0 10px 0 0;
+.layout-sidebar-large .main-header div.header-part-right {
+    display :flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 15vw;
+
 }
 // Small devices (landscape phones, 576px and up)
 @media (max-width: 576px) {
     .navbar-brand{
         width: 25%;
-
     }
-
-        .navbar-nav .nav-item{
+    .navbar-nav .nav-item{
             display: none;
         }
+    div.header-part-right{
+          display: none;
+     }
  }
 
 // Medium devices (tablets, 768px and up)
@@ -486,12 +497,16 @@ watch: {
 
  }
  .menu-icon-grid{
-     background: #ffffffa2;
+     background: #ffffffd8;
      border-radius: 1rem;
-
+    top:60px;
  }
  .menu-icon-grid:hover{
      background: #ffffff;
 
  }
+ div.topnav.navbar-expand-lg.main-header{
+     padding : 0 1.25rem 0 1.25rem;
+ }
+
 </style>

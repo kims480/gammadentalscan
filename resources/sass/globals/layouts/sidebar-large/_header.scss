@@ -1,6 +1,10 @@
 
 /* Large-sidebar CSS */
+#app .layout-sidebar-large a:hover{
+    text-decoration: none;
+}
 .layout-sidebar-large {
+
   .main-header {
     position: fixed;
     width: 100%;
@@ -22,7 +26,7 @@
       div {
         width: 24px;
         height: 1px;
-        background: $foreground;
+        background:$dark-forground;
         margin: 3px 0;
       }
     }

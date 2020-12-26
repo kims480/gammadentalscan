@@ -111,6 +111,26 @@ const routes = [
         name: "add-user"
     },
     {
+        path: "/admin/users/profile",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/profile.vue"
+            ),
+        meta: { guard: 'SUPER_ADMIN' },
+        // children: administrationRoutes,
+        name: "admin-user-profile"
+    },
+    {
+        path: "/user/profile",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-users' */ "@/pages/admin/user/myProfile.vue"
+            ),
+        // meta: { guard: 'SUPER_ADMIN' },
+        // children: administrationRoutes,
+        name: "user-profile"
+    },
+    {
         path: "/admin/users/:name/:id",
         component: () =>
             import(
