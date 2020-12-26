@@ -14,62 +14,72 @@
     >
       <div>
         <ul class="navigation-left">
+
+<!-- Dashboard Menu -->
           <li
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'dashboards' }"
+            :class="{ active: selectedParentMenu == 'dashboard' }"
             class="nav-item"
-            data-item="dashboards"
+            data-item="dashboard"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Bar-Chart"></i>
               <span class="nav-text">
                   Dashboard{{
                 /*$t("dashboard") */
               }}</span>
-            </a>
+            </router-link>
 
             <div class="triangle"></div>
           </li>
+
+<!-- Users Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Users' }"
-            data-item="ui-kits"
+            :class="{ active: selectedParentMenu == 'users' }"
+            data-item="users"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Library"></i>
-              <span class="nav-text">UI kits</span>
-            </a>
+              <span class="nav-text">Users</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Doctors Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Doctors' }"
-            data-item="extrakits"
+            :class="{ active: selectedParentMenu == 'doctors' }"
+            data-item="doctors"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Suitcase"></i>
-              <span class="nav-text">Extra kits</span>
-            </a>
+              <span class="nav-text">Doctors</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Doctors Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Patients' }"
-            data-item="apps"
+            :class="{ active: selectedParentMenu == 'patients' }"
+            data-item="patients"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Computer-Secure"></i>
-              <span class="nav-text">Apps</span>
-            </a>
+              <span class="nav-text">Patients</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Storage Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -77,110 +87,128 @@
             data-item="storage"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Pie-Chart-2"></i>
               <span class="nav-text">Storage</span>
-            </a>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Requests Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Requests' }"
-            data-item="widgets"
+            :class="{ active: selectedParentMenu == 'requests' }"
+            data-item="requests"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Windows-2"></i>
-              <span class="nav-text">Widgets</span>
-            </a>
+              <span class="nav-text">Requests</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Results Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Results' }"
-            data-item="forms"
+            :class="{ active: selectedParentMenu == 'results' }"
+            data-item="results"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-File-Clipboard-File--Text"></i>
-              <span class="nav-text">Forms</span>
-            </a>
+              <span class="nav-text">Results</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Points Menu -->
           <li
             class="nav-item"
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'Points' }"
-            data-item="datatables"
+            :class="{ active: selectedParentMenu == 'points' }"
+            data-item="points"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-File-Horizontal-Text"></i>
-              <span class="nav-text">Datatables</span>
-            </a>
+              <span class="nav-text">Points</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Ads Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            :class="{ active: selectedParentMenu == 'Complaints' }"
-            data-item="sessions"
+            :class="{ active: selectedParentMenu == 'ads' }"
+            data-item="ads"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Administrator"></i>
-              <span class="nav-text">Sessions</span>
-            </a>
+              <span class="nav-text">Ads</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
 
+<!-- Complaints Menu -->
           <li
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'Notifications' }"
+            :class="{ active: selectedParentMenu == 'complaints' }"
             class="nav-item"
-            data-item="pages"
+            data-item="complaints"
             :data-submenu="true"
           >
-            <a class="nav-item-hold" href="#">
+            <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Double-Tap"></i>
-              <span class="nav-text">Pages</span>
-            </a>
+              <span class="nav-text">Complaints</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
 
-          <li
-            @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'Settings' }"
-            class="nav-item"
-            data-item="pages"
-            :data-submenu="true"
-          >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon i-Double-Tap"></i>
-              <span class="nav-text">Pages</span>
-            </a>
-            <div class="triangle"></div>
-          </li>
-
+<!-- Settings Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
-            data-item="doc"
-            :class="{ active: selectedParentMenu == 'doc' }"
+            data-item="settings"
+            :class="{ active: selectedParentMenu == 'settings' }"
             :data-submenu="false"
           >
-            <a
-              class="nav-item-hold"
-              href="http://demos.ui-lib.com/gull-vue-doc/"
-              target="_blank"
-            >
+            <router-link class="nav-item-hold" to="{name:'settings'}" >
               <i class="nav-icon i-Safe-Box1"></i>
-              <span class="nav-text">Doc</span>
-            </a>
+              <span class="nav-text">Settings</span>
+            </router-link>
             <div class="triangle"></div>
           </li>
+
+<!-- Points main Menu -->
+          <li
+            @mouseenter="toggleSubMenu"
+            :class="{ active: selectedParentMenu == 'points' }"
+            class="nav-item"
+            data-item="points"
+            :data-submenu="true"
+          >
+            <router-link class="nav-item-hold" to="#">
+              <i class="nav-icon i-Double-Tap"></i>
+              <span class="nav-text">Points</span>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+
+<!-- Points Docs Menu -->
+          <li   @mouseenter="toggleSubMenu" class="nav-item"    data-item="doc"
+               :class="{ active: selectedParentMenu == 'doc' }" :data-submenu="false">
+            <router-link class="nav-item-hold"  to="" >
+              <i class="nav-icon i-Safe-Box1"></i>
+              <span class="nav-text">Doc</span>
+            </router-link>
+            <div class="triangle"></div>
+          </li>
+
         </ul>
       </div>
     </vue-perfect-scrollbar>
@@ -191,40 +219,135 @@
       class="sidebar-left-secondary ps rtl-ps-none"
     >
       <div ref="sidebarChild">
-        <!-- Submenu Dashboards -->
-
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
-          data-parent="dashboards"
-          :class="{ 'd-block': selectedParentMenu == 'dashboards' }"
+          data-parent="dashboard"
+          :class="{ 'd-block': selectedParentMenu == 'dashboard' }"
         >
           <li class="nav-item">
-            <router-link tag="a" class to="/admin/users/list">
+            <router-link tag="a" class to="/admin/users">
               <i class="nav-icon i-Clock-3"></i>
               <span class="item-name">
-                users
+                users List
+              </span>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link tag="a" class to="/admin/users/add">
+              <i class="nav-icon i-Clock-3"></i>
+              <span class="item-name">
+                Add user
               </span>
             </router-link>
           </li>
         </ul>
+ <!-- Submenu Users -->
         <ul
           class="childNav d-none"
-          data-parent="forms"
-          :class="{ 'd-block': selectedParentMenu == 'forms' }"
+          data-parent="users"
+          :class="{ 'd-block': selectedParentMenu == 'users' }"
         >
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/forms/basicForms">
-              <i class="nav-icon i-File-Clipboard-Text--Image"></i>
-              <span class="item-name">Basic Elements</span>
+        <!-- Users-list -->
+          <li
+            @click.prevent="toggleSidebarDropdwon($event)"
+            class="nav-item dropdown-sidemenu"
+          >
+            <router-link to="#">
+              <i class="nav-icon i-File"></i>
+              <span class="item-name">Users</span>
+              <i class="dd-arrow i-Arrow-Down"></i>
             </router-link>
+            <ul class="submenu">
+              <li>
+                <router-link tag="a" class to="/app/apps/invoice">
+                  <i class="nav-icon i-Files"></i>
+                  <span class="item-name">Users List</span>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name">
+                    Add user
+                  </span>
+                </router-link>
+              </li>
+
+            </ul>
+          </li>
+         <!-- Roles-list -->
+          <li
+            @click.prevent="toggleSidebarDropdwon($event)"
+            class="nav-item dropdown-sidemenu"
+          >
+            <router-link to="#">
+              <i class="nav-icon i-File"></i>
+              <span class="item-name">Roles</span>
+              <i class="dd-arrow i-Arrow-Down"></i>
+            </router-link>
+            <ul class="submenu">
+              <li>
+                <router-link tag="a" class to="/app/apps/invoice">
+                  <i class="nav-icon i-Files"></i>
+                  <span class="item-name">Roles List</span>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name">Add Roles </span>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name">
+                    Assign Roles
+                  </span>
+                </router-link>
+              </li>
+
+            </ul>
+          </li>
+         <!-- Permission-list -->
+          <li
+            @click.prevent="toggleSidebarDropdwon($event)"
+            class="nav-item dropdown-sidemenu"
+          >
+            <router-link to="#">
+              <i class="nav-icon i-File"></i>
+              <span class="item-name">Permisisons</span>
+              <i class="dd-arrow i-Arrow-Down"></i>
+            </router-link>
+            <ul class="submenu">
+              <li>
+                <router-link tag="a" class to="/app/apps/invoice">
+                  <i class="nav-icon i-Files"></i>
+                  <span class="item-name">Permissions List</span>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name"> Add Permissions</span>
+                </router-link>
+              </li>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name">Assign Permissions</span>
+                </router-link>
+              </li>
+            </ul>
           </li>
 
         </ul>
-
+ <!-- Submenu Doctors -->
         <ul
           class="childNav d-none"
-          data-parent="forms"
-          :class="{ 'd-block': selectedParentMenu == 'datatables' }"
+          data-parent="doctors"
+          :class="{ 'd-block': selectedParentMenu == 'doctors' }"
         >
           <li class="nav-item">
             <router-link tag="a" class to="/app/datatables/paging">
@@ -234,58 +357,27 @@
           </li>
 
         </ul>
-
+ <!-- Submenu Patients -->
         <ul
           class="childNav d-none"
-          data-parent="apps"
-          :class="{ 'd-block': selectedParentMenu == 'apps' }"
+          data-parent="patients"
+          :class="{ 'd-block': selectedParentMenu == 'patients' }"
         >
-          <!-- invoice-list -->
 
-          <li
-            @click.prevent="toggleSidebarDropdwon($event)"
-            class="nav-item dropdown-sidemenu"
-          >
-            <a href="#">
-              <i class="nav-icon i-File"></i>
-              <span class="item-name">Invoice</span>
-              <i class="dd-arrow i-Arrow-Down"></i>
-            </a>
-            <ul class="submenu">
-              <li>
-                <router-link tag="a" class to="/app/apps/invoice">
-                  <i class="nav-icon i-Files"></i>
-                  <span class="item-name">Invoice List</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link tag="a" class to="/app/apps/createInvoice">
-                  <i class="nav-icon i-Add-File"></i>
-                  <span class="item-name">Create Invoice</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link tag="a" class to="/app/apps/printInvoice">
-                  <i class="nav-icon i-File-JPG"></i>
-                  <span class="item-name">Print Invoice</span>
-                </router-link>
-              </li>
-            </ul>
-          </li>
 
           <!-- contact app -->
           <li
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
-            <a href="#">
+            <router-link to="#">
               <i class="nav-icon i-File-CSV"></i>
               <span class="item-name">
                 Contacts
                 <span class="ml-2 badge badge-pill badge-danger">New</span>
               </span>
               <i class="dd-arrow i-Arrow-Down"></i>
-            </a>
+            </router-link>
             <ul class="submenu">
               <li>
                 <router-link tag="a" class to="/app/apps/contact-list">
@@ -368,13 +460,14 @@
             </router-link>
           </li>
         </ul>
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
-          data-parent="extrakits"
-          :class="{ 'd-block': selectedParentMenu == 'extrakits' }"
+          data-parent="doctors"
+          :class="{ 'd-block': selectedParentMenu == 'doctors' }"
         >
           <li class="nav-item">
-            <router-link tag="a" class to="/app/extraKits/dropdown">
+            <router-link tag="a" class to="/app/doctors/dropdown">
               <i class="nav-icon i-Arrow-Down"></i>
               <span class="item-name">Dropdown</span>
             </router-link>
@@ -382,7 +475,7 @@
 
 
           <li class="nav-item">
-            <router-link tag="a" class to="/app/extraKits/vueDraggable">
+            <router-link tag="a" class to="/app/doctors/vueDraggable">
               <i class="nav-icon i-Two-Windows"></i>
               <span class="item-name">Vue Draggable</span>
               <span class="ml-2 badge badge-pill badge-danger">New</span>
@@ -392,20 +485,21 @@
 
 
           <li class="nav-item">
-            <router-link tag="a" class to="/app/extraKits/vueTree">
+            <router-link tag="a" class to="/app/doctors/vueTree">
               <i class="nav-icon i-Up---Down-3"></i>
               <span class="item-name">Vue Tree</span>
               <span class="ml-2 badge badge-pill badge-danger">New</span>
             </router-link>
           </li>
           <!-- <li class="nav-item">
-            <a href="ladda.button.html">
+            <router-link to="ladda.button.html">
               <i class="nav-icon i-Loading-2"></i>
               <span class="item-name">Ladda Buttons</span>
-            </a>
+            </router-link>
           </li>-->
 
         </ul>
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="ui-kits"
@@ -421,20 +515,20 @@
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
-            <a href="accordion.html">
+            <router-link to="accordion.html">
               <i class="nav-icon i-Split-Horizontal-2-Window"></i>
               <span class="item-name">Accordion</span>
               <i class="dd-arrow i-Arrow-Down"></i>
-            </a>
+            </router-link>
             <ul class="submenu">
               <li>
-                <a href>Sub menu item 1</a>
+                <router-link href>Sub menu item 1</router-link>
               </li>
               <li>
-                <a href>Sub menu item 1</a>
+                <router-link href>Sub menu item 1</router-link>
               </li>
               <li>
-                <a href>Sub menu item 1</a>
+                <router-link href>Sub menu item 1</router-link>
               </li>
             </ul>
           </li>-->
@@ -449,10 +543,10 @@
 
 
           <!-- <li class="nav-item">
-            <a href="tables.html">
+            <router-link to="tables.html">
               <i class="nav-icon i-File-Horizontal-Text"></i>
               <span class="item-name">Tables</span>
-            </a>
+            </router-link>
           </li>-->
           <li class="nav-item">
             <router-link tag="a" class to="/app/ui-kits/bootstrap-tab">
@@ -461,15 +555,15 @@
             </router-link>
           </li>
           <!-- <li class="nav-item">
-            <a href="tooltip.html">
+            <router-link to="tooltip.html">
               <i class="nav-icon i-Speach-Bubble-8"></i>
               <span class="item-name">Tooltip</span>
-            </a>
+            </router-link>
           </li>-->
 
 
         </ul>
-
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="storage"
@@ -485,11 +579,11 @@
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
-            <a href="#">
+            <router-link to="#">
               <i class="nav-icon i-Line-Chart"></i>
               <span class="item-name">Apex storage</span>
               <i class="dd-arrow i-Arrow-Down"></i>
-            </a>
+            </router-link>
             <ul class="submenu">
               <li>
                 <router-link tag="a" class to="/app/storage/apexAreaChart">
@@ -526,7 +620,7 @@
             </ul>
           </li>
         </ul>
-
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="widgets"
@@ -564,7 +658,7 @@
             </router-link>
           </li>
         </ul>
-
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="sessions"
@@ -589,6 +683,7 @@
             </router-link>
           </li>
         </ul>
+ <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="others"
@@ -599,10 +694,10 @@
 
 
           <!-- <li class="nav-item">
-            <a href="blank.html" class="open">
+            <router-link to="blank.html" class="open">
               <i class="nav-icon i-File-Horizontal"></i>
               <span class="item-name">Blank Page</span>
-            </a>
+            </router-link>
           </li>-->
         </ul>
       </div>
@@ -705,7 +800,7 @@ export default {
             const currentParentUrl = this.$route.path
                 .split("/")
                 .filter(x => x !== "")[1];
-
+                console.log(currentParentUrl);
             if (currentParentUrl !== undefined && currentParentUrl !== null) {
                 // console.log(currentParentUrl);
                 this.selectedParentMenu = currentParentUrl.toLowerCase();
