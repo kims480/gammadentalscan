@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone','active','whatsapp'
+        'name', 'email', 'password','phone','active','whatsapp','photo'
     ];
 
     /**
@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','created_at','updated_at','pivot'
+        'password', 'remember_token','created_at','updated_at','pivot','photo'
     ];
 
     /**
@@ -40,4 +40,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function doctors()
+    {
+        return $this->hasMany(Doctors::class, 'user_id');
+    }
+    public function patients()
+    {
+        return $this->hasMany(Patient::class, 'user_id');
+    }
+    public function scanrequests()
+    {
+        return $this->hasMany(ScanRequests::class, 'user_id');
+    }
+    public function points()
+    {
+        return $this->hasMany(Points::class, 'user_id');
+    }
+    public function notifications()
+    {
+        return $this->hasMany('APP\Models\Notifications', 'user_id');
+
+    }
+    public function usersocial()
+    {
+        return $this->hasMany(UserSocial::class, 'user_id');
+
+    }
+
+
 }

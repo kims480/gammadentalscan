@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User as Authinticated;
 use App\Models\User;
+use App\Traits\UserTrait;
+use Illuminate\Http\Client\Request as ClientRequest;
+use Illuminate\Support\Facades\Validator;
 // use Illuminate\Http\Client\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use PDO;
@@ -18,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class UserController extends Controller
 {
+    use UserTrait;
     protected $guard = '';
     /**
      * Display a listing of the resource.
@@ -158,6 +163,45 @@ class UserController extends Controller
             )->toDateTimeString()
         ]);
     }
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required','string'],
+            'password' => ['required', 'string', 'min:8'],
+            'confirm_password' => ['required', 'string', 'same:password'],
+            // 'photo'=>'image|null|max:1999'
+        ]);
+    }
+
+     /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \App\Models\User
+     */
+    protected function create(Request $request)
+    {
+        $imageName = $this->saveImage($request->file('image'),'uploads/users');
+        return User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request['phone'],
+            'password' => Hash::make($request['password']),
+            'active' => $request['active']?1:0,
+            'whatsapp' => $request['whatsapp'],
+            'photo' => $imageName,
+        ]);
+        return response()->json(['Message' => 'user Registered Successfully'], HttpFoundationResponse::HTTP_CREATED);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -173,6 +217,57 @@ class UserController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createWithRolesPremissions(Request $request)
+    {
+        if(!$request->user()->hasRole('SUPER_ADMIN'))
+             return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+            //  return    response()->json([
+            //     'success' => true,
+            //    // 'Message' => 'User '.$user->name.' Registered Successfully',
+            //     'myRequest' => $request->all(),
+            //     //'image' => $request->file('image')->getClientOriginalName(),
+            //     'photo' => $request->file('image')?$request->file('photo')->getClientOriginalName():'NoImage.jpg'
+            // ], HttpFoundationResponse::HTTP_CREATED);
+
+        $validator = $this->validator($request->all());
+
+
+
+        if ($validator->fails())
+            return response()->json([
+                'success' => false,
+                'Message' => 'Failed to register',
+                'error' =>$validator->errors()//$data->validated(), //$validator->errors()
+            ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+            // return response()->json([
+            //     'success' => true, 'data'=>$data->all()],200);
+
+        $user = $this->create($request);//only('name','phone','email', 'password','active','whatsapp','image')
+        $roles= $user->syncRoles($request->only('userRoles'));
+        $permissions= $user->syncPermissions($request->only('userPermissions'));
+
+        if($user && $roles && $permissions)
+            return response()->json([
+                'success' => true,
+                'Message' => 'User '.$user->name.' Registered Successfully',
+                'user' => $user,
+
+            ], HttpFoundationResponse::HTTP_CREATED);
+
+        return response()->json([
+            'success' => false,
+            'Message' => 'General Error',], HttpFoundationResponse::HTTP_CREATED);
+
+
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -181,10 +276,19 @@ class UserController extends Controller
     public function show($id)
     {
         //
-        $myUser = User::find($id);
-        $doctors = $myUser->doctors;
+        // return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        $myUser = User::with('doctors')->find($id);
+        // $doctors = $myUser->doctors;
+        // $user=User::find($id);
+        if(!$myUser){
+            return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        }
+        if(!Auth::user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
 
-        return response()->json(['user' => $myUser, 'doctors' => $doctors], 200);
+        return response()->json(['user'=>$myUser,"roles" => $myUser->getRoleNames(),'permissions'=> $myUser->getPermissionNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+        // return response()->json(["roles" => $myUser->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
     }
 
 
@@ -373,6 +477,25 @@ class UserController extends Controller
             });
 
                 return response()->json(["AllPermissionTransform" => $tranformedPermission,'groupedPermission'=>$GroupedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
+    }
+    public function getAllRolesPremissions(Request $request){
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        $roles= collect(Role::select('id','name','guard_name')->where('guard_name','web')->get());
+
+        $tranformedRoles=$roles->transform(function($value,$key){
+            return $value['name'];
+        });
+        $permissions= collect(Permission::get());
+
+            $GroupedPermission=$permissions->groupBy('guard_name');
+            $tranformedPermission=$permissions->transform(function($value,$key){
+                return $value['name'];
+            });
+
+                return response()->json(["allRoles" => $tranformedRoles,'allPermissions'=>$tranformedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
 
     }
 }

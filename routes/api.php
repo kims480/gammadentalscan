@@ -32,6 +32,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getUserPermissionsById/{id}', 'Api\\UserController@getUserPermissionsById');
     Route::get('/getAllPermissions', 'Api\\UserController@getAllPermissions');
     Route::get('/getAllRoles', 'Api\\UserController@getAllRoles');
+    Route::get('/getAllRolesPremissions', 'Api\\UserController@getAllRolesPremissions');
+
+    Route::post('/createWithRolesPremissions', 'Api\\UserController@createWithRolesPremissions');
     Route::apiResources([
 
             'notifications' => 'Api\\NotificationsController',

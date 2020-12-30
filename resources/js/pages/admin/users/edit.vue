@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center"  >
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
        <!--  <v-icon small  class="mr-2 action-btn" color="success" dark  rounded v-bind="attrs" v-on="on">
@@ -7,7 +7,7 @@
         </v-icon> -->
         <i class="nav-icon i-Pen-2 font-weight-bold" v-bind="attrs" v-on="on"></i>
       </template>
-      <v-card>
+      <v-card class="edituser" dense dark>
         <v-card-title>
           <span class="headline">User Profile {{ user.id }}</span>
         </v-card-title>
@@ -42,6 +42,7 @@
                   :value="userEmail"
                   v-model="email"
                   required
+                  disabled
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
@@ -122,24 +123,24 @@ export default {
     created_at: '',
     updated_at: '',
     passShow:false,
-     disabled: false,
-      readonly: false,
-      chips: true,
-      multiple: true,
-      appendIcon: false,
-      appendSlot: false,
-      appendItemSlot: false,
-      prependIcon: false,
-      prependSlot: false,
-      prependItemSlot: false,
-      selectSlot: false,
-      userRoles: [],
+    disabled: false,
+    readonly: false,
+    chips: true,
+    multiple: true,
+    appendIcon: false,
+    appendSlot: false,
+    appendItemSlot: false,
+    prependIcon: false,
+    prependSlot: false,
+    prependItemSlot: false,
+    selectSlot: false,
+    userRoles: [],
 
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => !v?? (v.length >= 8 || 'Min 8 characters'),
-          emailMatch: () => ('The email and password you entered don\'t match'),
-        },
+    rules: {
+        required: value => !!value || 'Required.',
+        min: v => !v?? (v.length >= 8 || 'Min 8 characters'),
+        emailMatch: () => ('The email and password you entered don\'t match'),
+    },
   }),
   computed: {
       ...mapGetters(['userPermissions']),
@@ -190,6 +191,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.edituser{
+    // background: #001122;
+}
 .action-btn {
   padding: 5px;
   border-radius: 50%;

@@ -2,47 +2,24 @@ import axios from "@/plugins/axios";
 import ServicesConst from "@/services/ServicesConst";
 import UserServices from "@/services/UserServices";
 export const namespaced = true;
-export const getters = {
-    authenticated: store => {
-        // console.log(store);
-        return store.loggedIn;
-    },
-    loggedIn: store => {
-        // console.log(store);
-        return store.loggedIn;
-    },
-    user: state => {
-        return state.auth.user;
-    }
-};
+
 export const state = () => ({
-    // busy: false,
-    loggedIn: false,
-    token: null,
-    // strategy: "local",
-    user: {},
-    users: []
+    permissions:null,
+    roles:null
 });
+
+
+
 export const mutations = {
-    SET_VALIDATIONS_ERRORS: (state, errors) => {
-        state.errors = errors;
+    SET_ALL_PERMISSIONS:(state,data)=>{
+        state.permissions = data
     },
-    SET_TOKEN: (state, data) => {
-        // console.log(data.user);
-        state.user = data.user;
-        state.loggedIn = !(state.user == null);
-        state.token = data.token;
-        // localStorage.setItem("access_token", token.access_token);
+    SET_ALL_ROLES:(state,data)=>{
+        state.roles = data
     },
-    REMOVE_TOKEN: state => {
-        localStorage.removeItem("access_token");
-        state.token = null;
-    },
-    SET_USER_LIST: (state, data) => {
-        state.users.length = 0;
-        state.users.push(data);
-    },
-    SET_USER_CREATE: (state, data) => {}
+    SET_USER_CREATE:(state,data)=>{
+        state.user=data
+    }
 };
 export const actions = {
     retriveToken({ commit, rootState }) {
@@ -85,29 +62,34 @@ export const actions = {
             // console.log(data);
         });
     },
-    createUser({ commit, rootState }, data) {
-        this.$axios.defaults.headers.common["Authorization"] =
-            "" + this.$auth.getToken("local");
-
+    userRegister({ commit, rootState }, data) {
+        // axios.defaults.headers.common["Content-Type"] =
+        //     "multipart/form-data";
+     console.log(data)
+    //  let form= new FormData()
+    //  form.append('file',data.image)
         return new Promise((resolve, reject) => {
-            this.$axios
-                .post("register", data)
-                .then(res => {
+            ServicesConst.myApiClient
+                .post("createWithRolesPremissions", data
+                ,{
+                    headers: {
+                        // 'enctype': 'multipart/form-data',
+                        // 'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2)
+                    }
+                  }
+                ).then(res => {
                     // console.log(res);
                     commit("SET_USER_CREATE", res.data);
                     /* this.$auth.setUserToken(res.data.access_token);
           // rootState.auth.token = this.$auth.getToken("local");
           rootState.auth.loggedIn = true;
           rootState.auth.user = this.$auth.getToken("local"); */
-                    resolve(res);
+                    resolve(res.data);
                     //
                     // console.log(this.$store.state.auth.loggedIn);
                     // console.log(this.$store.state.auth.user);
                 })
                 .catch(err => {
-                    console.log("------------------------------------");
-                    console.log(err);
-                    console.log("------------------------------------");
                     reject(err);
                 });
 
@@ -162,5 +144,33 @@ export const actions = {
             // await this.$axios.post("api/auth/login", this.form);
             // console.log(data);
         });
+    },
+    getRolesPermissions({commit}){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.get('getAllRolesPremissions').then(res=>{
+                if(res)
+                commit('SET_ALL_PERMISSIONS',res.data.allPermissions)
+                commit('SET_ALL_ROLES',res.data.allRoles)
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+
+        });
     }
+};
+
+
+/* GETTERS */
+export const getters = {
+    allRoles: state => {
+        // console.log(store);
+        return state.permissions;
+    },
+    allPermissions: state => {
+        // console.log(store);
+        return state.roles;
+    },
+
 };
