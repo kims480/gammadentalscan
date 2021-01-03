@@ -124,7 +124,7 @@
                     </label>
                 </div>
             </div>
-            <button class="btn btn-primary float-right" type="submit">Add user</button>
+            <button class="btn btn-primary float-right" type="submit">{{$route.params.id ? 'Update Patient': 'Add patient' }}</button>
                 <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your submission!</p>
                 <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
                 <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>

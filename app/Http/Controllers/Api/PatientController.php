@@ -156,7 +156,7 @@ class PatientController extends Controller
     {
         return Validator::make($data, [
             'name_en' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['string', 'email', 'max:255', 'unique:patients'],
             'phone' => ['required','string'],
             // 'photo'=>'image|null|max:1999'
         ]);
