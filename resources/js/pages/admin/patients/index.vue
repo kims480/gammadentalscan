@@ -4,6 +4,19 @@
       <v-card-title>
         Patients List
         <v-spacer></v-spacer>
+         <v-btn
+            class="mx-2"
+            fab
+            dark
+            small
+            color="indigo"
+            @click=" $router.push({ name: 'add-patient' }) "
+            >
+            <v-icon dark>
+                mdi-plus
+            </v-icon>
+        </v-btn>
+        <br/>
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
