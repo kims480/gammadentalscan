@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\patient;
-
+use App\Models\Patient;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+use Illuminate\Support\Facades\Validator;
 class PatientController extends Controller
 {
     /**
@@ -16,7 +18,9 @@ class PatientController extends Controller
     public function index()
     {
         //
-        $Patient = Patient::get();
+        $Patient = Patient::with(['user'=>function($q){
+            $q->select('id','name');
+        }])->get();
         return response()->json($Patient);
     }
 
@@ -28,7 +32,44 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //      return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+            //  return    response()->json([
+            //     'success' => true,
+            //    // 'Message' => 'User '.$user->name.' Registered Successfully',
+            //     'myRequest' => $request->all(),
+            //     //'image' => $request->file('image')->getClientOriginalName(),
+
+            // ], HttpFoundationResponse::HTTP_CREATED);
+
+        $validator = $this->validator($request->all());
+
+
+
+        if ($validator->fails())
+            return response()->json([
+                'success' => false,
+                'Message' => 'Failed to register',
+                'error' =>$validator->errors()//$data->validated(), //$validator->errors()
+            ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+            // return response()->json([
+            //     'success' => true, 'data'=>$data->all()],200);
+
+        $myPatient = $this->create($request);//only('name','phone','email', 'password','active','whatsapp','image')
+
+
+        if($myPatient)
+            return response()->json([
+                'success' => true,
+                'Message' => 'Patient '.$myPatient->name_en.' Registered Successfully',
+
+
+            ], HttpFoundationResponse::HTTP_CREATED);
+
+        return response()->json([
+            'success' => false,
+            'Message' => 'General Error',], HttpFoundationResponse::HTTP_CREATED);
     }
 
     /**
@@ -39,7 +80,23 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        //
+         //
+        // return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        $myPatient= Patient::with(['user'=>function($q){
+            $q->select('id','name');
+        }])->find($id);
+        $myPatient->makeVisible(['dob']);
+        // $doctors = $myUser->doctors;
+        // $user=User::find($id);
+        if(!$myPatient){
+            return response()->json(['message'=>'Patient Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        }
+        // if(!Auth::user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        return response()->json(['patient'=>$myPatient, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+        // return response()->json(["roles" => $myUser->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+
     }
 
     /**
@@ -64,4 +121,45 @@ class PatientController extends Controller
     {
         //
     }
+
+     /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return \App\Models\User
+     */
+    protected function create(Request $request)
+    {
+
+        return Patient::create([
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'email' => $request->email,
+            'telephone' => $request['phone'],
+            'dob'=>$request->dob,
+            'gender' => $request['gender'],
+            'whatsapp' => $request['whatsapp'],
+            'refered_by'=>Auth::user()->id
+
+        ]);
+        return response()->json(['Message' => 'Patient Added Successfully'], HttpFoundationResponse::HTTP_CREATED);
+    }
+
+     /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name_en' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required','string'],
+            // 'photo'=>'image|null|max:1999'
+        ]);
+    }
+
 }

@@ -108,7 +108,19 @@ const routes = [
             ),
         meta: { guard: 'SUPER_ADMIN' },
         // children: administrationRoutes,
-        name: "add-user"
+        name: "add-user",
+
+    },
+    {
+        path: "/admin/user/:name/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
+            ),
+        meta: { guard: 'SUPER_ADMIN' },
+        // children: administrationRoutes,
+        name: "edit-user",
+        props:true
     },
     {
         path: "/admin/users/profile",
@@ -136,7 +148,8 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/_name/_id.vue"
             ),
-        name: "admin-users-name"
+        name: "admin-users-name",
+        props:true
     },
     {
         path: "/admin/doctors",
@@ -162,6 +175,7 @@ const routes = [
             ),
         name: "admin-doctors-name"
     },
+//////////////////////Patients Routes///////////////////////////
     {
         path: "/admin/patients",
         component: () =>
@@ -169,6 +183,23 @@ const routes = [
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/index.vue"
             ),
         name: "patients"
+    },
+    {
+        path: "/admin/patients/add",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
+            ),
+        name: "add-patient"
+    },
+    {
+        path: "/admin/patient/:name/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
+            ),
+        name: "edit-patient",
+        props:true
     },
     {
         path: "/admin/patients/:name/:id",

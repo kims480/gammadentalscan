@@ -46,11 +46,11 @@ class User extends Authenticatable
     }
     public function patients()
     {
-        return $this->hasMany(Patient::class, 'user_id');
+        return $this->hasMany(Patient::class, 'refered_by');
     }
     public function scanrequests()
     {
-        return $this->hasMany(ScanRequests::class, 'user_id');
+        return $this->hasMany(ScanRequests::class, 'refered_by');
     }
     public function points()
     {

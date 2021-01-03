@@ -23,6 +23,6 @@
     "/js/v-errors.js": "/js/v-errors.js",
     "/js/vendors~admin-Layout~dashboard~doctor-Layout.js": "/js/vendors~admin-Layout~dashboard~doctor-Layout.js",
     "/js/vendors~admin-doctors.js": "/js/vendors~admin-doctors.js",
-    "/js/vendors~admin-users.js": "/js/vendors~admin-users.js",
+    "/js/vendors~admin-patients~admin-users.js": "/js/vendors~admin-patients~admin-users.js",
     "/js/xyz-Layout.js": "/js/xyz-Layout.js"
 }

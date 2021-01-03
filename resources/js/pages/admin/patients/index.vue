@@ -23,7 +23,7 @@
         class="elevation-1"
         :search="search"
         :loading="loading"
-        loading-text="Loading Users... Please wait"
+        loading-text="Loading Patients... Please wait"
       >
         <template v-slot:item.name="{ item }">
           <!--<nuxt-link
@@ -33,13 +33,17 @@
             }"
             >{{ item.name }}</nuxt-link
           >-->
-          <router-link :to="{
-                path: '/admin/patients/'+item.name_en,
-                params: { id:item.id,name:item.name_en },
-                query:{patient: item}
-              }">{{ item.name_en }}</router-link>
+          <span class="username" @click="
+                        $router.push({
+                            name: 'edit-patient',
+                            //path:'/admin/patient/edit/'+item.id,
+                            params: { id: item.id, name: item.name_en }
+                        })">
+                 {{ item.name_en }}
+                </span>
 <!-- ,
-                query:{doctor: item }-->
+                query:{doctor: item }
+                query:{patient: item}-->
         </template>
         <template v-slot:item.active="{ item }">
           <v-chip small :color="getActive(item.active)">{{
@@ -50,8 +54,37 @@
         <template class="name-ar" v-slot:item.arabic="{ item }">
           {{ item.name_ar }}
         </template>
-        <template v-slot:item.created="{ item }">
-          {{ new Date(item.created_at).toDateString() }}
+        <template v-slot:item.refered_by="{ item }">
+                <!--<nuxt-link
+            :to="{
+              path: '/admin/users/' + item.name + '?',
+              params: { id: item.id, name: item.name }
+            }"
+            >{{ item.name }}</nuxt-link
+            name: 'admin-users-name',
+          >-->
+                <span
+                    class="username"
+                    @click="
+                        $router.push({
+                            name: 'edit-user',
+
+                            params: { id: item.user.id, name: item.user.name }
+                        })
+                    "
+                >
+                    {{ item.user.name }}
+                </span>
+            </template>
+        <template v-slot:item.gender="{ item }">
+          {{ //new Date(item.created_at).toDateString()
+          item.gender=='1'?'Male':item.gender=='2'?'Female':'NA'
+          }}
+        </template>
+        <template v-slot:item.telephone="{ item }">
+         <a :href="`tel: ${ item.telephone }`"> {{ //new Date(item.created_at).toDateString()
+          item.telephone
+          }}</a>
         </template>
 
         <template v-slot:item.action="{ item }">
@@ -99,7 +132,7 @@ export default {
       },
       { text: "Arabic Name", value: "name_ar", width: "15%" },
       { text: "Refered By", value: "refered_by" },
-      { text: "Created At", value: "created" },
+      { text: "Gender", value: "gender" },
 
       { text: "telephone", value: "telephone" },
       { text: "Action", value: "action", width: "15%" }

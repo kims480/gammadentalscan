@@ -1,3 +1,4 @@
+import ServicesConst from "@/services/ServicesConst";
 import PatientServices from "@/services/PatientServices";
 // import Storage from "./storage";
 export const namespaced = true;
@@ -25,6 +26,13 @@ export const mutations = {
         state.patients.push(patients);
 
         // localStorage.setItem("access_token", token.access_token);
+    },
+    SET_PATIRNT_CREATE: (state, patient) => {
+        // console.log(token.access_token);
+        state.patient = patient;
+        // state.patients.push(patients);
+
+        // localStorage.setItem("access_token", token.access_token);
     }
 };
 
@@ -50,6 +58,33 @@ export const actions = {
 
                     reject(err);
                 });
+        });
+    },
+    addPatient({ commit, rootState }, data) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .post("patient", data
+                ).then(res => {
+                    commit("SET_PATIRNT_CREATE", res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
+    getPatientById({commit},id){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .get("patient/"+ id)
+                    .then(res => {
+                        console.log(res)
+                        commit("SET_PATIENT_CREATE", res.data);
+                        resolve(res.data);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
         });
     },
     clearErrors({ commit }) {

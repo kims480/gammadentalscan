@@ -158,6 +158,19 @@ export const actions = {
                 });
 
         });
+    },
+    getUserById({commit},id){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .get("users/"+ id)
+                    .then(res => {
+                        commit("SET_USER_CREATE", res.data);
+                        resolve(res.data);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+        });
     }
 };
 

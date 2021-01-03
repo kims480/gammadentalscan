@@ -16,8 +16,8 @@ class ADDCOLDocIDTODOCTORPROFILE extends Migration
         //
         Schema::table('doctor_profiles', function (Blueprint $table) {
             // $table->dropForeign(['Doc_id']);
-            $table->bigInteger('Doc_id')->default(null)->nullable();
-            $table->foreign('Doc_id')
+            $table->unsignedBigInteger('doctor_id')->default(null)->nullable();
+            $table->foreign('doctor_id')
                 ->references('id')
                 ->on('doctors')
                 ->onDelete('SET NULL');
@@ -35,7 +35,8 @@ class ADDCOLDocIDTODOCTORPROFILE extends Migration
     {
         //
         Schema::table('doctor_profiles', function (Blueprint $table) {
-            $table->dropColumn('Doc_id');
+            $table->dropForeign('doctor_profiles_doctor_id_foreign');
+            $table->dropColumn('doctor_id');
         });
     }
 }

@@ -19,17 +19,17 @@ class CreatePatientsTable extends Migration
             $table->string('name_ar');
 
             $table->string('name_en')->nullable();
-            $table->char('telephone', 15)->nullable();
+            $table->char('telephone', 25)->nullable();
             $table->string('address')->nullable();
             $table->string('email')->nullable();
-            $table->char('whatsapp', 15)->nullable();
+            $table->char('whatsapp', 25)->nullable();
             $table->char('gender', 10)->nullable();
             $table->date('dob')->nullable();
             $table->integer('points')->nullable();
             $table->string('photo')->nullable();
             $table->jsonb('others')->nullable();
             $table->timestamps();
-            $table->foreignId('refered_by')->constrained('doctors');
+            // $table->foreignId('refered_by')->constrained('doctors');
         });
     }
 

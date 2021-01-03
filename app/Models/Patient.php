@@ -42,7 +42,7 @@ class Patient extends Model
         'photo' ,
         'address',
         'dob',
-        'id',
+
         'others',
         'refered_by',
         'whatsapp'
@@ -51,6 +51,11 @@ class Patient extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Doctors', 'refered_by');
+        return $this->belongsTo('App\Models\User', 'refered_by');
+    }
+
+    public function scanrequests()
+    {
+        return $this->hasMany('App\Models\ScanRequest','patient_id', 'id');
     }
 }

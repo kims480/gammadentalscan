@@ -2,7 +2,7 @@
 <div class="col-md-12">
     <div class="card mb-4">
         <div class="card-body">
-            <div class="card-title"><i class="text-25 i-Add-User"></i> | Add New User</div>
+            <div class="card-title"><i class="text-25 i-Add-User"></i> | {{$route.params.id? ' Edit User: '+$route.params.name:' Add New User'}}</div>
             <form  @submit.prevent="submit"
                         method="post" enctype="multipart/form-data">
                         <!-- {{form}}
@@ -194,6 +194,15 @@ import { required, sameAs,minLength,maxLength, between } from 'vuelidate/lib/val
 
 import {mapActions,mapGetters} from 'vuex'
 export default {
+    props:{
+        id:{
+            type:Number | String,
+            //required:true
+        },
+        name:{
+            type:String
+        }
+    },
   components: {
     breadcumb
   },
@@ -439,7 +448,17 @@ export default {
 
            this.allPermissions=res.allPermissions;
             console.log(res)
-        })
+        });
+        if(this.id ){
+            this.$store.dispatch('users/getUserById',this.id).then(res=>{
+                console.log(res)
+                this.myForm=res.user
+                this.myForm.userRoles=res.roles
+                this.myForm.userPermissions=res.permissions
+            }).catch(err=>{
+                console.log(err)
+            })
+        }
     },
     mounted(){
 
@@ -455,4 +474,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.input-group-text{
+    max-height: 34px;
+}
+</style>

@@ -16,12 +16,12 @@ const apiClient = axios.create({
 });
 export default {
     getPatients() {
-        return apiClient.get("/patient");
+        return ServicesConst.myApiClient.get("/patient");
       },
     getPatient(id) {
-        return apiClient.post("/patient/" + id);
+        return ServicesConst.myApiClient.post("/patient/" + id);
       },
     getDoctorPatient(id) {
-        return apiClient.post("child/patients/" + id);
+        return ServicesConst.myApiClient.post("child/patients/" + id);
       },
 }

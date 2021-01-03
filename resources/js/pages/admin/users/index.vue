@@ -31,13 +31,15 @@
               params: { id: item.id, name: item.name }
             }"
             >{{ item.name }}</nuxt-link
+            name: 'admin-users-name',
           >-->
                 <span
                     class="username"
                     @click="
                         $router.push({
-                            name: 'admin-users-name',
-                            params: { id: item.id, name: item.name, user: item }
+                            name: 'edit-user',
+
+                            params: { id: item.id, name: item.name }
                         })
                     "
                 >
