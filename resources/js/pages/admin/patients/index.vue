@@ -1,22 +1,25 @@
 <template>
   <div class="main-content">
     <v-card>
-      <v-card-title>
-        Patients List
-        <v-spacer></v-spacer>
-         <v-btn
-            class="mx-2"
-            fab
-            dark
-            small
-            color="indigo"
-            @click=" $router.push({ name: 'add-patient' }) "
-            >
-            <v-icon dark>
-                mdi-plus
-            </v-icon>
-        </v-btn>
-        <br/>
+      <v-card-title class="index">
+        <div class="title">
+            <div class="text-h4"> Patients List </div>
+           <v-spacer></v-spacer>
+            <v-btn
+                class="mx-2"
+                fab
+                dark
+                x-small
+                color="success"
+                @click=" $router.push({ name: 'add-patient' }) "
+                >
+                <v-icon dark>
+                    mdi-plus
+                </v-icon>
+            </v-btn>
+        </div>
+        <div class="search">
+             <div class="space"></div>
         <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
@@ -24,6 +27,7 @@
           single-line
           hide-details
         ></v-text-field>
+        </div>
       </v-card-title>
       <v-data-table
         dense
@@ -218,4 +222,26 @@ export default {
   color: rgb(2, 185, 84);
   cursor: pointer;
 }
+.index{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}.title{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+}
+.search{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.space{
+    flex-grow: 3;
+    line-height: 1rem;
+
+}
+
 </style>

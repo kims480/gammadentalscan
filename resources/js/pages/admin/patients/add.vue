@@ -256,6 +256,7 @@ export default {
                             gender:1,
                             phone: null,
                         };
+                        $router.push({name: "patients"});
                   }).catch(err=>{
                       console.log(err)
                       this.$store.dispatch('notifications/pushNotif',err)
