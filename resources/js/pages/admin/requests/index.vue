@@ -164,96 +164,187 @@
       <v-toolbar flat color="green" dense rounded="0">
         <v-icon class="white--text">mdi-account</v-icon>
         <v-toolbar-title class="font-weight-light text-center white--text" >
-          3D Printing
+          3D Imaging
         </v-toolbar-title>
       </v-toolbar>
       <v-card-text class="d-flex flex-wrap justify-space-around align-center" dense>
-        <div class="ll">
-            <three-d-print purposeName="GammaTeethLL1" caption="LL1" :storedValue="threeDImaging.GammaTeethLL1">
-                <!-- v-model="puRposeInfo.threeDPrint"  -->
-                <template v-slot:purposeimage>
-                    <GammaTeethLL1></GammaTeethLL1>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL2" caption="LL2" :storedValue="threeDImaging.GammaTeethLL2">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL2></GammaTeethLL2>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL3" caption="LL3" :storedValue="threeDImaging.GammaTeethLL3">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL3></GammaTeethLL3>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL4" caption="LL4" :storedValue="threeDImaging.GammaTeethLL4">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL4></GammaTeethLL4>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL5" caption="LL5" :storedValue="threeDImaging.GammaTeethLL5">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL5></GammaTeethLL5>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL6" caption="LL6" :storedValue="threeDImaging.GammaTeethLL6">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL6></GammaTeethLL6>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL7" caption="LL7" :storedValue="threeDImaging.GammaTeethLL7">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL7></GammaTeethLL7>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLL8" caption="LL8" :storedValue="threeDImaging.GammaTeethLL8">
-                <template v-slot:purposeimage>
-                    <GammaTeethLL8></GammaTeethLL8>
-                </template>
-            </three-d-print>
+        <div class="upper">
+            <div class="ul">
+                <three-d-print purposeName="GammaTeethUL1" caption="UL1" :storedValue="threeDImaging.GammaTeethUL1">
+                    <!-- v-model="puRposeInfo.threeDPrint"  -->
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL1></GammaTeethUL1>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL2" caption="UL2" :storedValue="threeDImaging.GammaTeethUL2">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL2></GammaTeethUL2>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL3" caption="UL3" :storedValue="threeDImaging.GammaTeethUL3">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL3></GammaTeethUL3>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL4" caption="UL4" :storedValue="threeDImaging.GammaTeethUL4">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL4></GammaTeethUL4>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL5" caption="UL5" :storedValue="threeDImaging.GammaTeethUL5">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL5></GammaTeethUL5>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL6" caption="UL6" :storedValue="threeDImaging.GammaTeethUL6">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL6></GammaTeethUL6>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL7" caption="UL7" :storedValue="threeDImaging.GammaTeethUL7">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL7></GammaTeethUL7>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUL8" caption="UL8" :storedValue="threeDImaging.GammaTeethUL8">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUL8></GammaTeethUL8>
+                    </template>
+                </three-d-print>
+            </div>
+            <div class="ur">
+                <three-d-print purposeName="GammaTeethUR1" caption="UR1" :storedValue="threeDImaging.GammaTeethUR1">
+                    <!-- v-model="puRposeInfo.threeDPrint"  -->
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR1></GammaTeethUR1>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR2" caption="UR2" :storedValue="threeDImaging.GammaTeethUR2">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR2></GammaTeethUR2>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR3" caption="UR3" :storedValue="threeDImaging.GammaTeethUR3">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR3></GammaTeethUR3>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR4" caption="UR4" :storedValue="threeDImaging.GammaTeethUR4">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR4></GammaTeethUR4>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR5" caption="UR5" :storedValue="threeDImaging.GammaTeethUR5">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR5></GammaTeethUR5>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR6" caption="UR6" :storedValue="threeDImaging.GammaTeethUR6">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR6></GammaTeethUR6>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR7" caption="UR7" :storedValue="threeDImaging.GammaTeethUR7">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR7></GammaTeethUR7>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethUR8" caption="UR8" :storedValue="threeDImaging.GammaTeethUR8">
+                    <template v-slot:purposeimage>
+                        <GammaTeethUR8></GammaTeethUR8>
+                    </template>
+                </three-d-print>
+            </div>
         </div>
-        <div class="lr">
-            <three-d-print purposeName="GammaTeethLR1" caption="LR1" :storedValue="threeDImaging.GammaTeethLR1">
-                <!-- v-model="puRposeInfo.threeDPrint"  -->
-                <template v-slot:purposeimage>
-                    <GammaTeethLR1></GammaTeethLR1>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR2" caption="LR2" :storedValue="threeDImaging.GammaTeethLR2">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR2></GammaTeethLR2>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR3" caption="LR3" :storedValue="threeDImaging.GammaTeethLR3">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR3></GammaTeethLR3>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR4" caption="LR4" :storedValue="threeDImaging.GammaTeethLR4">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR4></GammaTeethLR4>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR5" caption="LR5" :storedValue="threeDImaging.GammaTeethLR5">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR5></GammaTeethLR5>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR6" caption="LR6" :storedValue="threeDImaging.GammaTeethLR6">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR6></GammaTeethLR6>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR7" caption="LR7" :storedValue="threeDImaging.GammaTeethLR7">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR7></GammaTeethLR7>
-                </template>
-            </three-d-print>
-            <three-d-print purposeName="GammaTeethLR8" caption="LR8" :storedValue="threeDImaging.GammaTeethLR8">
-                <template v-slot:purposeimage>
-                    <GammaTeethLR8></GammaTeethLR8>
-                </template>
-            </three-d-print>
+        <div class="lower">
+            <div class="ll">
+                <three-d-print purposeName="GammaTeethLL1" caption="LL1" :storedValue="threeDImaging.GammaTeethLL1">
+                    <!-- v-model="puRposeInfo.threeDPrint"  -->
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL1></GammaTeethLL1>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL2" caption="LL2" :storedValue="threeDImaging.GammaTeethLL2">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL2></GammaTeethLL2>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL3" caption="LL3" :storedValue="threeDImaging.GammaTeethLL3">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL3></GammaTeethLL3>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL4" caption="LL4" :storedValue="threeDImaging.GammaTeethLL4">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL4></GammaTeethLL4>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL5" caption="LL5" :storedValue="threeDImaging.GammaTeethLL5">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL5></GammaTeethLL5>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL6" caption="LL6" :storedValue="threeDImaging.GammaTeethLL6">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL6></GammaTeethLL6>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL7" caption="LL7" :storedValue="threeDImaging.GammaTeethLL7">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL7></GammaTeethLL7>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLL8" caption="LL8" :storedValue="threeDImaging.GammaTeethLL8">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLL8></GammaTeethLL8>
+                    </template>
+                </three-d-print>
+            </div>
+            <div class="lr">
+                <three-d-print purposeName="GammaTeethLR1" caption="LR1" :storedValue="threeDImaging.GammaTeethLR1">
+                    <!-- v-model="puRposeInfo.threeDPrint"  -->
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR1></GammaTeethLR1>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR2" caption="LR2" :storedValue="threeDImaging.GammaTeethLR2">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR2></GammaTeethLR2>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR3" caption="LR3" :storedValue="threeDImaging.GammaTeethLR3">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR3></GammaTeethLR3>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR4" caption="LR4" :storedValue="threeDImaging.GammaTeethLR4">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR4></GammaTeethLR4>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR5" caption="LR5" :storedValue="threeDImaging.GammaTeethLR5">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR5></GammaTeethLR5>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR6" caption="LR6" :storedValue="threeDImaging.GammaTeethLR6">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR6></GammaTeethLR6>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR7" caption="LR7" :storedValue="threeDImaging.GammaTeethLR7">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR7></GammaTeethLR7>
+                    </template>
+                </three-d-print>
+                <three-d-print purposeName="GammaTeethLR8" caption="LR8" :storedValue="threeDImaging.GammaTeethLR8">
+                    <template v-slot:purposeimage>
+                        <GammaTeethLR8></GammaTeethLR8>
+                    </template>
+                </three-d-print>
+            </div>
         </div>
+
       </v-card-text>
     </v-card>
 
@@ -403,6 +494,14 @@ import GammaTeethLL5 from '@/components/requests/teeth/GammaTeethLL5.vue';
 import GammaTeethLL6 from '@/components/requests/teeth/GammaTeethLL6.vue';
 import GammaTeethLL7 from '@/components/requests/teeth/GammaTeethLL7.vue';
 import GammaTeethLL8 from '@/components/requests/teeth/GammaTeethLL8.vue';
+import GammaTeethUL1 from '@/components/requests/teeth/GammaTeethUL1.vue';
+import GammaTeethUL2 from '@/components/requests/teeth/GammaTeethUL2.vue';
+import GammaTeethUL3 from '@/components/requests/teeth/GammaTeethUL3.vue';
+import GammaTeethUL4 from '@/components/requests/teeth/GammaTeethUL4.vue';
+import GammaTeethUL5 from '@/components/requests/teeth/GammaTeethUL5.vue';
+import GammaTeethUL6 from '@/components/requests/teeth/GammaTeethUL6.vue';
+import GammaTeethUL7 from '@/components/requests/teeth/GammaTeethUL7.vue';
+import GammaTeethUL8 from '@/components/requests/teeth/GammaTeethLL8.vue';
 import GammaTeethLR1 from '@/components/requests/teeth/GammaTeethLR1.vue';
 import GammaTeethLR2 from '@/components/requests/teeth/GammaTeethLR2.vue';
 import GammaTeethLR3 from '@/components/requests/teeth/GammaTeethLR3.vue';
@@ -411,6 +510,14 @@ import GammaTeethLR5 from '@/components/requests/teeth/GammaTeethLR5.vue';
 import GammaTeethLR6 from '@/components/requests/teeth/GammaTeethLR6.vue';
 import GammaTeethLR7 from '@/components/requests/teeth/GammaTeethLR7.vue';
 import GammaTeethLR8 from '@/components/requests/teeth/GammaTeethLR8.vue';
+import GammaTeethUR1 from '@/components/requests/teeth/GammaTeethUR1.vue';
+import GammaTeethUR2 from '@/components/requests/teeth/GammaTeethUR2.vue';
+import GammaTeethUR3 from '@/components/requests/teeth/GammaTeethUR3.vue';
+import GammaTeethUR4 from '@/components/requests/teeth/GammaTeethUR4.vue';
+import GammaTeethUR5 from '@/components/requests/teeth/GammaTeethUR5.vue';
+import GammaTeethUR6 from '@/components/requests/teeth/GammaTeethUR6.vue';
+import GammaTeethUR7 from '@/components/requests/teeth/GammaTeethUR7.vue';
+import GammaTeethUR8 from '@/components/requests/teeth/GammaTeethUR8.vue';
 
 export default {
   components: {
@@ -424,6 +531,14 @@ export default {
     GammaTeethLL6,
     GammaTeethLL7,
     GammaTeethLL8,
+    GammaTeethUL1,
+    GammaTeethUL2,
+    GammaTeethUL3,
+    GammaTeethUL4,
+    GammaTeethUL5,
+    GammaTeethUL6,
+    GammaTeethUL7,
+    GammaTeethUL8,
     GammaTeethLR1,
     GammaTeethLR2,
     GammaTeethLR3,
@@ -432,6 +547,14 @@ export default {
     GammaTeethLR6,
     GammaTeethLR7,
     GammaTeethLR8,
+    GammaTeethUR1,
+    GammaTeethUR2,
+    GammaTeethUR3,
+    GammaTeethUR4,
+    GammaTeethUR5,
+    GammaTeethUR6,
+    GammaTeethUR7,
+    GammaTeethUR8,
   },
   data() {
      return {
@@ -592,12 +715,12 @@ export default {
     stroke-linejoin: round;
     stroke-width: 0.5px;
 }
-.ll{
+.ll,.ul{
     display: inline-flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
 }
-.lr{
+.lr,.ur{
     display: inline-flex;
     flex-direction: row;
     justify-content: flex-end;

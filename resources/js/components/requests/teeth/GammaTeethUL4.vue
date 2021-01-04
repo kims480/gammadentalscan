@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.04 16.04"><defs><style>.cls-1{fill:none;stroke:#013333;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5px;}</style></defs><title>Gamma_Teeth_UL-4</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M2.77,14.55a12.92,12.92,0,0,0,3.62,1.24h0c.18,0,.34-.16.49-.14s.27,0,.32,0c.43-.43.9-.84,1.36-1.25,1.34-1.18,2.61-2.28,3.14-4a3.32,3.32,0,0,0-.16-1.94c-.44-1.51-.92-3.14-1.43-4.71A4.86,4.86,0,0,0,7.42.59,5,5,0,0,0,3.19.88a2.68,2.68,0,0,0-1.49,2C1.32,5.25.8,7.52.39,9.23A4.59,4.59,0,0,0,2.77,14.55Z"/></g></g></svg>
+<template>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.04 16.04"><title>Gamma_Teeth_UL-4</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M2.77,14.55a12.92,12.92,0,0,0,3.62,1.24h0c.18,0,.34-.16.49-.14s.27,0,.32,0c.43-.43.9-.84,1.36-1.25,1.34-1.18,2.61-2.28,3.14-4a3.32,3.32,0,0,0-.16-1.94c-.44-1.51-.92-3.14-1.43-4.71A4.86,4.86,0,0,0,7.42.59,5,5,0,0,0,3.19.88a2.68,2.68,0,0,0-1.49,2C1.32,5.25.8,7.52.39,9.23A4.59,4.59,0,0,0,2.77,14.55Z"/></g></g></svg>
+    </template>
+
+
+
+<style lang="scss" scoped>
+
+</style>

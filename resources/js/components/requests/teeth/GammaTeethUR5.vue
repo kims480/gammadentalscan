@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.31 17.88"><defs><style>.cls-1{fill:none;stroke:#013333;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.5px;}</style></defs><title>Gamma_Teeth_UR-5</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M2.76,15.55l.68.4a9.68,9.68,0,0,0,4.19,1.68h.24c3.3-.59,6.25-3.91,6.19-7a6.35,6.35,0,0,0-1-3c-.18-.34-.37-.67-.52-1A33.59,33.59,0,0,1,11.21,3.1a4.06,4.06,0,0,0-2-2.49A4.16,4.16,0,0,0,6,.55C4.16,1.19,3.55,2.6,3,4c-.12.28-.23.55-.36.82-.73,1.54-1.36,3-1.88,4.47C.08,11.08-.42,13.7,2.76,15.55Z"/></g></g></svg>
+
+<template>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.31 17.88"><title>Gamma_Teeth_UR-5</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M2.76,15.55l.68.4a9.68,9.68,0,0,0,4.19,1.68h.24c3.3-.59,6.25-3.91,6.19-7a6.35,6.35,0,0,0-1-3c-.18-.34-.37-.67-.52-1A33.59,33.59,0,0,1,11.21,3.1a4.06,4.06,0,0,0-2-2.49A4.16,4.16,0,0,0,6,.55C4.16,1.19,3.55,2.6,3,4c-.12.28-.23.55-.36.82-.73,1.54-1.36,3-1.88,4.47C.08,11.08-.42,13.7,2.76,15.55Z"/></g></g></svg>
+</template>
+
+<script>
+    export default {
+
+    }
+</script>
+
+<style lang="scss" scoped>
+
+</style>
