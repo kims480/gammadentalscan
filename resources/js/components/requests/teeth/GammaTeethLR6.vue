@@ -1,0 +1,13 @@
+<template>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.17 15.31"><title>Gamma_Teeth_LR-6</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M14.42.26h-.71l-.54,0A15.47,15.47,0,0,0,10,1.56a2.84,2.84,0,0,1-2.54,0A9,9,0,0,0,5,1C2.24.78,1,1.9.48,4.87c-.61,3.63,0,6.49,1.83,8.75a3.42,3.42,0,0,0,2.24,1.13,27.06,27.06,0,0,0,4.1.31,39.6,39.6,0,0,0,6.45-.59,3.79,3.79,0,0,0,3.2-3.13,26.25,26.25,0,0,0,.61-6.15V4.93A4.71,4.71,0,0,0,14.42.26Z"/></g></g></svg>
+</template>
+
+<script>
+    export default {
+
+    }
+</script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,6 +1,6 @@
 <template>
-<div class="col-md-12">
-    <div class="card mb-4">
+<div class="col-md-12 p-0">
+    <div class="card mb-4 p-0">
         <div class="card-body">
             <div class="card-title"><i class="text-25 i-Add-User"></i> | {{$route.params.id ? 'Edit Patient '+$route.params.name :'Add New Patient'}}</div>
             <form  @submit.prevent="submit"
@@ -350,8 +350,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .input-group-text{
     max-height: 34px;
+}
+.col-md-6.col-sm-12.mb-3{
+    padding-top: 0;
+    padding-bottom: 0;
 }
 </style>

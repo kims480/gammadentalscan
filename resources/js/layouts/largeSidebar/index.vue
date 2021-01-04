@@ -21,9 +21,9 @@
                 {{ get }}
                 <separator></separator>
                 <v-sheet
-                    color="#f5f5f5"
+
                     elevation="0"
-                    style="padding:1px;margin-bottom:60px"
+                    style="margin-bottom:60px"
                     width="100%"
                     >
                 <transition name="page" mode="out-in">

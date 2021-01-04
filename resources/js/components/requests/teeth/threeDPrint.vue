@@ -2,9 +2,9 @@
     <div class="inner" >
 
         <input type="checkbox"  @change="changePurp"
-        :name="purposeName"  id="teeth"
+        :name="purposeName"  :id="purposeName"
          v-bind="$attrs" >
-        <label for="teeth">
+        <label :for="purposeName">
 <!--         <label :for="purposeName">
  -->
 
@@ -115,12 +115,12 @@ input[type=checkbox]{
 
             grid-row-start: 1;
             grid-row-end: 2;
-            height: 55px;
-            width: 55px;
+            height: 48px;
+            width: 36px;
             padding: 2px;
             fill:none;
-            stroke: rgb(55, 176, 180) ;
-            stroke-width: 2px;
+            stroke: rgb(32, 129, 133) ;
+            stroke-width: 0.04rem;
             transform: scale(0.9);
             stroke-dasharray: 116;
             stroke-dashoffset: 0;
@@ -133,7 +133,7 @@ input[type=checkbox]{
             grid-row-end: 3;
             padding-top: .3em;
             margin-left: .3em;
-            border-top: 1px dashed #07d4bbf5;
+
         }
     }
     &:checked + label{
