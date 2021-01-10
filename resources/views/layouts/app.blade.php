@@ -18,10 +18,33 @@
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Styles -->
+    <style>
+        body{
+    background: url('/images/SVG/main-bg.svg') no-repeat;
+    background-size: cover;
+    /* padding-bottom: 500px; */
+}
+#left{
+    position: absolute;
+    top:40%;
+    transform: scale(.1);
+    transform-origin:top left ;
+}
+#right{
+    position: absolute;
+    top:15%;
+    right: 0;
+    transform: scale(.1);
+    transform-origin:top right ;
+    z-index: 1;
+}
+    </style>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
+        <img src="/images/SVG/left-highligh.svg" id="left" alt="">
+        <img src="/images/SVG/right-highlight.svg" id="right" alt="">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

@@ -60,6 +60,29 @@ export const actions = {
                 });
         });
     },
+    getPatientList({ commit, rootState }) {
+        // PatientServices.defaults.headers.common["Authorization"] =
+        //     "" + this.$auth.getToken("local");
+
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.get('/patient-list')
+
+                .then(res => {
+                    console.log(res);
+                    commit("SET_PATIENTS", res.data);
+                    resolve(res.data);
+                    //
+                    // console.log(this.$store.state.auth.loggedIn);
+                    // console.log(this.$store.state.auth.user);
+                })
+                .catch(err => {
+
+                    console.log(err);
+
+                    reject(err);
+                });
+        });
+    },
     addPatient({ commit, rootState }, data) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient

@@ -1,8 +1,8 @@
 <template>
     <div class="inner" >
 
-        <input type="checkbox"  @change="changePurp"
-        :name="purposeName"  :id="purposeName"
+        <input type="checkbox"  @change="changeTeeth"
+        :name="purposeName"  :id="purposeName" :checked="value"
          v-bind="$attrs" >
         <label :for="purposeName">
 <!--         <label :for="purposeName">
@@ -41,12 +41,6 @@ import {mapActions} from 'vuex'
                 default:"",
                 required:true
             },
-
-            // storedValue:{
-            //     type:Boolean,
-            //     default:false,
-
-            // },
             value:{
                 type:Boolean,
                 default:false,
@@ -61,16 +55,16 @@ import {mapActions} from 'vuex'
 
         },
         methods:{
-            changePurp(event){
+            changeTeeth(event){
                 // this.value=!this.value
                 // console.log(this.name+":"+this.purpValue)
                 if(typeof event !=='undefined'){
                     if(event.target.checked ){
 
-                        this.$store.dispatch("scanRequest/setPurpose",this.purposeName)
+                        this.$store.dispatch("scanRequest/setTeeth",this.purposeName)
                     }
                     else{
-                        this.$store.dispatch("scanRequest/removePurpose",this.purposeName)
+                        this.$store.dispatch("scanRequest/removeTeeth",this.purposeName)
                     }
 
 
@@ -83,7 +77,7 @@ import {mapActions} from 'vuex'
             },
             setValue(){
                 if(this.value ){
-                        this.$store.dispatch("scanRequest/setPurpose",this.purposeName)
+                        this.$store.dispatch("scanRequest/setTeeth",this.purposeName)
 
                     }
             }

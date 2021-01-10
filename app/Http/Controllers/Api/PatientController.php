@@ -23,6 +23,23 @@ class PatientController extends Controller
         }])->get();
         return response()->json($Patient);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function patientList()
+    {
+        //
+        $patient=Patient::select('id','name_en','name_ar')->get();
+        $Patients = collect($patient);
+        $patientList=$Patients->transform(function($value,$key){
+            return ['id'=>$value['id'],'name'=>$value['name_en']. ' : '.$value['name_ar']] ;
+        });
+        $patient=$patient->keyBy('id');
+        $patient=$patient->all();
+        return response()->json(['list'=> $patientList, 'patients'=> array_values( $patient)],201);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -109,6 +126,7 @@ class PatientController extends Controller
     public function update(Request $request, $id)
     {
         //
+
     }
 
     /**

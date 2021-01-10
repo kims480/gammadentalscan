@@ -67,6 +67,7 @@ export default {
             localStorage.removeItem('token')
             localStorage.removeItem('user')
             localStorage.removeItem('permissions')
+            localStorage.clear()
 
         // this.$router.go("/");
         },

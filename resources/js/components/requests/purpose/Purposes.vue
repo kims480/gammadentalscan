@@ -69,6 +69,8 @@
         <v-text-field
           :disabled="!enabled"
           label="other Purpose"
+          v-model="other"
+          @keypress.enter="otherPurpos"
         ></v-text-field>
       </v-row>
         </template>
@@ -87,10 +89,11 @@ import Orthodontics from './Orthodontics.vue'
 import PhotoDSD from './PhotoDSD.vue'
 import purpose from './purpose.vue'
 import TMJ from './TMJ.vue'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 export default {
     computed:{
-        ...mapGetters({purposes:'scanRequest/getPurposesFinal'}),
+        ...mapGetters({getPurposes:'scanRequest/purposesFinal'}),
+        ...mapGetters({otherPurpose:'scanRequest/otherPurpose'}),
 
 
     },
@@ -102,12 +105,17 @@ export default {
     "endo-ttt":EndoTTT
     },
     methods:{
-
+        otherPurpos(){
+            this.$store.dispatch("scanRequest/setPurposeOther",this.other)
+        }
     },
     created(){
 
-            console.log(this.purposes)
-
+           this.purposeInfo=this.getPurposes;
+           this.other=this.otherPurpose
+    },
+    destroyed(){
+        this.$store.dispatch('scanRequest/initPurpose');
     },
     data(){
         return{
@@ -132,8 +140,10 @@ export default {
                 'Lesion':false,
                 'Orthodontics':false,
                 'PhotoDSD':false,
-                'TMJ':false
+                'TMJ':false,
+
             },
+            other:''
         }
     },
 }

@@ -203,10 +203,7 @@ export default {
     --input-padding-y: 0.75rem;
 }
 
-body {
-    background: #00b12c67;
-    background: linear-gradient()
-}
+
 
 .card-signin {
     border: 0;

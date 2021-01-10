@@ -75,6 +75,8 @@ import {mapActions} from 'vuex'
 
                     // this.value=event.target.checked
                     this.$emit('input',event.target.checked)
+                    const purpose=this.purposeName;
+                    // this.$parent.$emit('input',purposeInfo[`${purpose}`]=event.target.checked)
 
                     // console.log(event.target.name +'/'+event.target.checked)
                 }

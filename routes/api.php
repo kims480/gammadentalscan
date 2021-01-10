@@ -35,6 +35,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/getAllRolesPremissions', 'Api\\UserController@getAllRolesPremissions');
 
     Route::post('/createWithRolesPremissions', 'Api\\UserController@createWithRolesPremissions');
+
+    ///////////////////////////// Ptients ///////////////////////////////
+    Route::get('/patient-list', 'Api\\PatientController@patientList')->name('patient.list');
+
     Route::apiResources([
 
             'notifications' => 'Api\\NotificationsController',
