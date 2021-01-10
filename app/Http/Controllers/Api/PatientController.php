@@ -28,7 +28,7 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function patientList()
+    public function getPatientList()
     {
         //
         $patient=Patient::select('id','name_en','name_ar')->get();
@@ -38,7 +38,7 @@ class PatientController extends Controller
         });
         $patient=$patient->keyBy('id');
         $patient=$patient->all();
-        return response()->json(['list'=> $patientList, 'patients'=> array_values( $patient)],201);
+        return response()->json(['patients'=> $patientList, 'list'=> array_values( $patient)],201);
     }
 
     /**

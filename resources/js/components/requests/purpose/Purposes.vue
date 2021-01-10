@@ -70,7 +70,7 @@
           :disabled="!enabled"
           label="other Purpose"
           v-model="other"
-          @keypress.enter="otherPurpos"
+          @mouseleave="otherPurpos"
         ></v-text-field>
       </v-row>
         </template>

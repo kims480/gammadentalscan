@@ -1,3 +1,4 @@
+import ServicesConst from "@/services/ServicesConst";
 export const namespaced = true;
 const getDefaultState = () => {
     return {
@@ -77,6 +78,10 @@ const getDefaultState = () => {
             DSDPhotography:false,
             TreatmentSimulation:false
         },
+        patients: [],
+        patient: {},
+        doctors:[],
+        doctor:{},
     }
   }
 export const state = getDefaultState();
@@ -106,6 +111,12 @@ export const getters = {
     },
     getPhotography:state=>{
         return state.Photography;
+    },
+    getPatient: state => {
+        return state.patient;
+    },
+    getDoctor: state => {
+        return state.doctor;
     }
 
 };
@@ -171,6 +182,20 @@ export const mutations = {
         state.Photography[`${teeth}`]=false;
         localStorage.setItem("Photography", JSON.stringify(state.Photography));
     },
+    SET_PATIENTS: (state, patients) => {
+        // console.log(token.access_token);
+        state.patients.length = 0;
+        state.patients.push(patients);
+
+        // localStorage.setItem("access_token", token.access_token);
+    },
+    SET_DOCTORS: (state, doctors) => {
+        // console.log(token.access_token);
+        state.doctors.length = 0;
+        state.doctors.push(doctors);
+
+        // localStorage.setItem("access_token", token.access_token);
+    },
 
 }
 export const actions = {
@@ -231,6 +256,8 @@ export const actions = {
         state.RequiredPhoto =JSON.parse(localStorage.getItem("RequiredPhoto"))??Object.assign(state.RequiredPhoto, getDefaultState().RequiredPhoto);
         state.ThreeDPrinting =JSON.parse(localStorage.getItem("ThreeDPrinting"))??Object.assign(state.ThreeDPrinting, getDefaultState().ThreeDPrinting);
         state.Photography =JSON.parse(localStorage.getItem("Photography"))??Object.assign(state.Photography, getDefaultState().Photography);
+        state.doctor =JSON.parse(localStorage.getItem("doctor"))??Object.assign(state.doctor, getDefaultState().doctor);
+        state.patient =JSON.parse(localStorage.getItem("patient"))??Object.assign(state.patient, getDefaultState().patient);
     },
     initRequest({state}){
         localStorage.removeItem("currentPurposes")
@@ -240,8 +267,25 @@ export const actions = {
         localStorage.removeItem("RequiredPhoto")
         localStorage.removeItem("ThreeDPrinting")
         localStorage.removeItem("Photography")
+        localStorage.removeItem("doctor")
+        localStorage.removeItem("patient")
         Object.assign(state,getDefaultState())
 
     },
+    getPatientDoctorList({commit},isAdmin=false){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.post('doctors-patients-list')
+                .then(res => {
+                    // console.log(res);
+                    commit("SET_PATIENTS", res.data.patients);
+                    commit("SET_DOCTORS", res.data.doctors);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
+    }
 
 }

@@ -16,29 +16,15 @@
         </v-btn>
       </v-toolbar>
       <v-card-text class="d-flex flex-wrap justify-space-around align-center" dense>
-        <v-autocomplete  dense label="Patient Name"  prepend-icon="mdi-database-search"
-          return-object  :items="patients" chips clearable deletable-chips  filled
+        <v-autocomplete v-model="patient" dense label="Patient Name"  prepend-icon="mdi-database-search"
+          return-object  :items="patients" item-text="name" chips clearable deletable-chips  filled
             rounded small-chips  solo color="green"  class="">
-            </v-autocomplete>
+        </v-autocomplete>
         <v-spacer></v-spacer>
-        <v-autocomplete v-if="is_SuperAdmin"
-        dense
-              label="Ref Doctor Name"
-          prepend-icon="mdi-database-search"
-          return-object
-          :items="states"
-             class=""
-          color="white"
-          item-text="name"
-            chips
-            clearable
-            deletable-chips
-
-            filled
-            rounded
-            small-chips
-            solo
-        ></v-autocomplete>
+        <v-autocomplete v-model="doctor" v-if="is_SuperAdmin" dense label="Ref Doctor Name" prepend-icon="mdi-database-search"
+          return-object  :items="doctors"    class=""  color="white" item-text="name" chips clearable   deletable-chips
+            filled  rounded  small-chips solo>
+        </v-autocomplete>
       </v-card-text>
 
       <!-- <v-snackbar v-model="hasSaved" :timeout="2000" absolute bottom left>
@@ -569,85 +555,105 @@ export default {
   },
   data() {
      return {
-      allpurposes: [],
-      descriptionLimit: 60,
-      entries: [],
-      isLoading: false,
-      model: null,
-      search: null,
-      patients:[],
-      states:[],
-      patient:{},
-
-      twoDImaging:{
-            DigitalPACephalomerty:false,
-            CephalomertyAnalysis:false,
-            HandRest:false,
-            WateView:false,
-            DigitalPanotama:false,
-            DigitalLateralCephalomerty:false,
-            TMJboth:false,
-            TMJleft:false,
-            TMJright:false
-      },
-      requiredPhoto:{
-          cdOnly:false,
-          cdPlusFilm:false,
-          report:false
-      },
-      ThreeDPrinting:{
-          SurgicalGuid:false,
-          DSDModel:false,
-          BoneModel:false
-      },
-      Photography:{
-          DigitalSmileDesign:false,
-          UpperArch:false,
-          LowerArch:false,
-          CastModelScan:false,
-          DSDPhotography:false,
-          TreatmentSimulation:false
-      },
-      threeDImaging:{
-          GammaTeethLR1:false,
-          GammaTeethLR2:false,
-          GammaTeethLR3:false,
-          GammaTeethLR4:false,
-          GammaTeethLR5:false,
-          GammaTeethLR6:false,
-          GammaTeethLR7:false,
-          GammaTeethLR8:false,
-          GammaTeethLL1:false,
-          GammaTeethLL2:false,
-          GammaTeethLL3:false,
-          GammaTeethLL4:false,
-          GammaTeethLL5:false,
-          GammaTeethLL6:false,
-          GammaTeethLL7:false,
-          GammaTeethLL8:false,
-          GammaTeethUR1:false,
-          GammaTeethUR2:false,
-          GammaTeethUR3:false,
-          GammaTeethUR4:false,
-          GammaTeethUR5:false,
-          GammaTeethUR6:false,
-          GammaTeethUR7:false,
-          GammaTeethUR8:false,
-          GammaTeethUL1:false,
-          GammaTeethUL2:false,
-          GammaTeethUL3:false,
-          GammaTeethUL4:false,
-          GammaTeethUL5:false,
-          GammaTeethUL6:false,
-          GammaTeethUL7:false,
-          GammaTeethUL8:false,
-          }
+        descriptionLimit: 60,
+        entries: [],
+        isLoading: false,
+        model: null,
+        search: null,
+        patients:[
+            // {id: 6,name:'Ahmed'},
+            // {id: 7,name:'Hatem'},
+            // {id: 8,name:'Reda'},
+        ],
+        doctors:[
+            {id: 1,name:'Hany'},
+            {id: 3,name:'emad'},
+            {id: 6,name:'mohamed'},
+            ],
+        patient:null,
+        doctor:null,
+        purposeInfo: {
+            'Impaction':false,
+            'threeDPrint':false,
+            'EndoTTT':false,
+            'GuidedSurgery':false,
+            'Implant':false,
+            'Lesion':false,
+            'Orthodontics':false,
+            'PhotoDSD':false,
+            'TMJ':false,
+        },
+        otherPurpose:'',
+        twoDImaging:{
+                DigitalPACephalomerty:false,
+                CephalomertyAnalysis:false,
+                HandRest:false,
+                WateView:false,
+                DigitalPanotama:false,
+                DigitalLateralCephalomerty:false,
+                TMJboth:false,
+                TMJleft:false,
+                TMJright:false
+        },
+        requiredPhoto:{
+            cdOnly:false,
+            cdPlusFilm:false,
+            report:false
+        },
+        ThreeDPrinting:{
+            SurgicalGuid:false,
+            DSDModel:false,
+            BoneModel:false
+        },
+        Photography:{
+            DigitalSmileDesign:false,
+            UpperArch:false,
+            LowerArch:false,
+            CastModelScan:false,
+            DSDPhotography:false,
+            TreatmentSimulation:false
+        },
+        threeDImaging:{
+            GammaTeethLR1:false,
+            GammaTeethLR2:false,
+            GammaTeethLR3:false,
+            GammaTeethLR4:false,
+            GammaTeethLR5:false,
+            GammaTeethLR6:false,
+            GammaTeethLR7:false,
+            GammaTeethLR8:false,
+            GammaTeethLL1:false,
+            GammaTeethLL2:false,
+            GammaTeethLL3:false,
+            GammaTeethLL4:false,
+            GammaTeethLL5:false,
+            GammaTeethLL6:false,
+            GammaTeethLL7:false,
+            GammaTeethLL8:false,
+            GammaTeethUR1:false,
+            GammaTeethUR2:false,
+            GammaTeethUR3:false,
+            GammaTeethUR4:false,
+            GammaTeethUR5:false,
+            GammaTeethUR6:false,
+            GammaTeethUR7:false,
+            GammaTeethUR8:false,
+            GammaTeethUL1:false,
+            GammaTeethUL2:false,
+            GammaTeethUL3:false,
+            GammaTeethUL4:false,
+            GammaTeethUL5:false,
+            GammaTeethUL6:false,
+            GammaTeethUL7:false,
+            GammaTeethUL8:false,
+            }
         }
     },
 
   computed: {
       ...mapGetters(['checkPermission']),
       ...mapGetters({'purposesFinal':['scanRequest/purposesFinal']}),
+      ...mapGetters({'getOtherPurpose':['scanRequest/otherPurpose']}),
       ...mapGetters({'getTeethFinal':['scanRequest/getTeethFinal']}),
       ...mapGetters({'getTwoDImaging':['scanRequest/getTwoDImaging']}),
       ...mapGetters({'getRequiredPhoto':['scanRequest/getRequiredPhoto']}),
@@ -679,15 +685,16 @@ export default {
     },
     },
   created(){
-            this.loadPatients()
+            this.loadPatientsDoctors()
           this.$store.dispatch('scanRequest/loadRequest');
-
 
            this.threeDImaging=this.getTeethFinal;
            this.twoDImaging=this.getTwoDImaging;
            this.requiredPhoto=this.getRequiredPhoto;
            this.ThreeDPrinting=this.getThreeDPrinting;
            this.Photography=this.getPhotography;
+           this.purposeInfo=this.purposesFinal
+           this.otherPurpose=this.getOtherPurpose
         //    console.log(this.threeDImaging)
     },
   methods:{
@@ -703,38 +710,48 @@ export default {
       setPhotography(item){
           this.Photography[`${item}`]?this.$store.dispatch('scanRequest/setPhotography',item):this.$store.dispatch('scanRequest/removePhotography',item);
       },
-
-      submit(){
-
-        //   console.log(this.purposesFinal)
-        //   console.log(this.getPurposesFinal)
-
-        this.$store.dispatch('scanRequest/initRequest');
-
+      setPatient(){
+          this.patient??this.$store.dispatch('scanRequest/setPatient',this.patient);
+      },
+      setDoctor(){
+          this.doctor??this.$store.dispatch('scanRequest/setDoctor',this.doctor);
       },
 
-      loadPatients(){
+      submit(){
+        //   console.log(this.purposesFinal)
+        //   console.log(this.getPurposesFinal)
+        console.log('patient: ')
+        console.dir(this.patient)
+        console.log('doctor: ')
+        console.dir(this.doctor)
+            console.dir(this.threeDImaging);
+           console.dir(this.twoDImaging);
+           console.dir(this.requiredPhoto);
+           console.dir(this.ThreeDPrinting);
+           console.dir(this.Photography);
+           console.dir(this.purposesFinal);
+           console.log(this.getOtherPurpose);
+        // this.$store.dispatch('scanRequest/initRequest');
+      },
 
+      loadPatientsDoctors(){
         // Items have already been loaded
         if (this.patients.length > 0) return;
-
         // Items have already been requested
         if (this.isLoading) return;
-
         this.isLoading = true;
-
         // Lazily load input items
-        this.$store.dispatch('patient/getPatientList')
-
-
+        this.$store.dispatch('scanRequest/getPatientDoctorList',true)
             .then((res) => {
                 //console.log()
                 // const patients=[];
                 /* res.list.forEach(element => {
                     this.patients.push(element) ;
                 }) */
-                this.patients=res.list
-            console.log(this.patients)
+                this.patients=res.patients
+                this.doctors=res.doctors
+                console.log(this.patients)
+                console.log(this.doctors)
             })
             .catch((err) => {
             console.log(err);
