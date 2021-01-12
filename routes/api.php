@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function(){
     ///////////////////////////// Ptients ///////////////////////////////
     Route::post('/patient-list', 'Api\\PatientController@getPatientList')->name('patient.list');
     Route::post('/doctors-patients-list', 'Api\\ScanRequestsController@getDoctorsPatientsList')->name('doctors.patients.list');
+    Route::post('/dispatch-request', 'Api\\ScanRequestsController@dispatchRequest')->name('dispatch.request');
 
     Route::apiResources([
 
@@ -50,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function(){
             'categ' => 'Api\\CategController',
             'scans' => 'Api\\ScanController',
             'results' => 'Api\\ScanResultsController',
-            'requests' => 'Api\\ScanRequestsController',
+            'scanrequests' => 'Api\\ScanRequestsController',
             'services' => 'Api\\ServicesController',
             'softwares' => 'Api\\SoftwaresController',
             'webcontent' => 'Api\\WebContentController',

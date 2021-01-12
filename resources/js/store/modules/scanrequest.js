@@ -196,6 +196,14 @@ export const mutations = {
 
         // localStorage.setItem("access_token", token.access_token);
     },
+    SET_PATIENT: (state, patient) => {
+        state.patient=patient
+        localStorage.setItem("patient", JSON.stringify(state.patient));
+    },
+    SET_DOCTOR: (state, doctor) => {
+        state.doctor=doctor
+        localStorage.setItem("doctor", JSON.stringify(state.doctor));
+    },
 
 }
 export const actions = {
@@ -225,6 +233,12 @@ export const actions = {
     },
     setPhotography({ commit }, item){
             commit("SET_Photography",item)
+    },
+    setPatient({ commit }, item){
+            commit("SET_PATIENT",item)
+    },
+    setDoctor({ commit }, item){
+            commit("SET_DOCTOR",item)
     },
     removePurpose({ commit} , purpose){
         commit("Remove_Purpose",purpose)
@@ -286,6 +300,53 @@ export const actions = {
                     reject(err);
                 });
         });
+    },
+    dispatchRequest({commit},requestData){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.post('dispatch-request',requestData)
+                .then(res => {
+                    console.log(res);
+
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
+    },
+    getRequest({commit,state},id){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.get('scanrequests/'+id).then(res=>{
+                console.log(res.data)
+                commit("SET_Purpose",res.data.purposesFinal);
+                commit("SET_Purpose_Other", res.data.getOtherPurpose);
+                commit("SET_TwoDImaging", res.data.twoDImaging);
+                commit("SET_Teeth", res.data.threeDImaging);
+                commit("SET_RequiredPhoto",res.data.requiredPhoto);
+                commit("SET_ThreeDPrinting",res.data.ThreeDPrinting);
+                commit("SET_Photography",res.data.Photography);
+                commit("SET_DOCTOR",res.data.doctor);
+                commit("SET_PATIENT", res.data.patient);
+                resolve(res.data);
+            }).catch(err=>{
+                console.log(err)
+                reject(err);
+            })
+        });
+
+    },
+    getRequestsList(){
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient.get('scanrequests').then(res=>{
+                console.log(res.data)
+                resolve(res.data);
+            }).catch(err=>{
+                console.log(err)
+                reject(err);
+            })
+        });
+
     }
 
 }

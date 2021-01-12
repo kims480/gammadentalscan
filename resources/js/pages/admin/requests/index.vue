@@ -1,8 +1,6 @@
 <template>
-  <div class="container py-2">
-      <v-btn absolute small color="green" elevation="2" fab  @click="submit">
-          <v-icon> mdi-save </v-icon> Save
-      </v-btn>
+  <div id="request-form" class="container py-2">
+
 <!-- Start Patient Data -->
     <v-card class="overflow-hidden mb-5" dense rounded="t-xl">
       <v-toolbar flat color="green" dense rounded="t-xl">
@@ -11,6 +9,10 @@
           Patient Data
         </v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn   color=" darken-3" elevation="2"   @click="submit">
+          <v-icon> mdi-save </v-icon> Dispatch
+        </v-btn>
+        <v-spacer></v-spacer>
         <v-btn color=" darken-3" elevation="2"  fab x-small>
           <v-icon> mdi-plus </v-icon>
         </v-btn>
@@ -18,12 +20,12 @@
       <v-card-text class="d-flex flex-wrap justify-space-around align-center" dense>
         <v-autocomplete v-model="patient" dense label="Patient Name"  prepend-icon="mdi-database-search"
           return-object  :items="patients" item-text="name" chips clearable deletable-chips  filled
-            rounded small-chips  solo color="green"  class="">
+            rounded small-chips  solo color="green" @change="setPatient" class="">
         </v-autocomplete>
         <v-spacer></v-spacer>
         <v-autocomplete v-model="doctor" v-if="is_SuperAdmin" dense label="Ref Doctor Name" prepend-icon="mdi-database-search"
           return-object  :items="doctors"    class=""  color="white" item-text="name" chips clearable   deletable-chips
-            filled  rounded  small-chips solo>
+            filled  rounded  small-chips @change="setDoctor" solo>
         </v-autocomplete>
       </v-card-text>
 
@@ -154,6 +156,15 @@
           <!-- <div class="clippath"></div> -->
         <div class="upper">
             <div class="ul">
+                <v-switch
+                    v-model="upperLeft"
+                    inset
+                    dense
+                    color="green"
+                    class='group-selection-left'
+                    :label="`Upper Left`"
+                    @change="setUpperLeft"
+                    ></v-switch>
                 <three-d-print purposeName="GammaTeethUL1" v-model="threeDImaging.GammaTeethUL1" caption="UL1" :storedValue="threeDImaging.GammaTeethUL1">
                     <!-- v-model="puRposeInfo.threeDPrint"  -->
                     <template v-slot:purposeimage>
@@ -190,13 +201,14 @@
                         <GammaTeethUL7></GammaTeethUL7>
                     </template>
                 </three-d-print>
-                <three-d-print purposeName="GammaTeethUL8" caption="UL8"v-model="threeDImaging.GammaTeethUL8" :storedValue="threeDImaging.GammaTeethUL8">
+                <three-d-print purposeName="GammaTeethUL8"  caption="UL8" v-model="threeDImaging.GammaTeethUL8" :storedValue="threeDImaging.GammaTeethUL8">
                     <template v-slot:purposeimage>
-                        <GammaTeethUL8></GammaTeethUL8>
+                        <GammaTeethUL8 class="ul8"></GammaTeethUL8>
                     </template>
                 </three-d-print>
             </div>
             <div class="ur">
+
                 <three-d-print purposeName="GammaTeethUR1" v-model="threeDImaging.GammaTeethUR1" caption="UR1" :storedValue="threeDImaging.GammaTeethUR1">
                     <!-- v-model="puRposeInfo.threeDPrint"  -->
                     <template v-slot:purposeimage>
@@ -238,12 +250,30 @@
                         <GammaTeethUR8></GammaTeethUR8>
                     </template>
                 </three-d-print>
+                <v-switch
+                    v-model="upperRight"
+                    inset
+                    dense
+                    class='group-selection-right'
+                    color="green"
+                    :label="`Upper Right`"
+                    @change="setUpperRight"
+                    ></v-switch>
             </div>
             <!-- <div class="mouth"></div> -->
         </div>
         <!-- <div class="mouth"></div> -->
         <div class="lower">
             <div class="ll">
+                <v-switch
+                    v-model="lowerLeft"
+                    inset
+                    dense
+                    color="green"
+                    class='group-selection-left'
+                    :label="`Lower Left`"
+                    @change="setLowerLeft"
+                    ></v-switch>
                 <three-d-print purposeName="GammaTeethLL1" v-model="threeDImaging.GammaTeethLL1" caption="LL1" :storedValue="threeDImaging.GammaTeethLL1">
                     <!-- v-model="puRposeInfo.threeDPrint"  -->
                     <template v-slot:purposeimage>
@@ -328,6 +358,15 @@
                         <GammaTeethLR8></GammaTeethLR8>
                     </template>
                 </three-d-print>
+                 <v-switch
+                    v-model="lowerRight"
+                    inset
+                    dense
+                    class='group-selection-right'
+                    color="green"
+                    :label="`Lower Right`"
+                    @change="setLowerRight"
+                    ></v-switch>
             </div>
         </div>
 
@@ -475,11 +514,25 @@
       </v-card-text>
     </v-card>
 <!-- End Required ImagePurpose -->
-
+<v-btn   color="green" elevation="2" style="float:right;"  @click="submit">
+    <v-icon> mdi-save </v-icon> Dispatch Request
+</v-btn>
   </div>
 </template>
 
 <script>
+function buildFormData(formData, data, parentKey) {
+            if (data && typeof data === 'object' && !(data instanceof Date) && !(data instanceof File)) {
+                Object.keys(data).forEach(key => {
+                buildFormData(formData, data[key], parentKey ? `${parentKey}[${key}]` : key);
+                });
+            } else {
+                const value = data == null ? '' : data;
+
+                formData.append(parentKey, value);
+            }
+        };
+
 import Purposes from "@/components/requests/purpose/Purposes.vue";
 import { mapGetters,mapActions } from 'vuex';
 import ThreeDPrint from '@/components/requests/teeth/threeDPrint.vue';
@@ -560,6 +613,10 @@ export default {
         isLoading: false,
         model: null,
         search: null,
+        upperLeft:false,
+        upperRight:false,
+        lowerRight:false,
+        lowerLeft:false,
         patients:[
             // {id: 6,name:'Ahmed'},
             // {id: 7,name:'Hatem'},
@@ -659,6 +716,8 @@ export default {
       ...mapGetters({'getRequiredPhoto':['scanRequest/getRequiredPhoto']}),
       ...mapGetters({'getThreeDPrinting':['scanRequest/getThreeDPrinting']}),
       ...mapGetters({'getPhotography':['scanRequest/getPhotography']}),
+      ...mapGetters({'getPatient':['scanRequest/getPatient']}),
+      ...mapGetters({'getDoctor':['scanRequest/getDoctor']}),
 
     fields() {
       if (!this.model) return [];
@@ -695,6 +754,8 @@ export default {
            this.Photography=this.getPhotography;
            this.purposeInfo=this.purposesFinal
            this.otherPurpose=this.getOtherPurpose
+           this.patient=this.getPatient
+           this.doctor=this.getDoctor
         //    console.log(this.threeDImaging)
     },
   methods:{
@@ -711,27 +772,107 @@ export default {
           this.Photography[`${item}`]?this.$store.dispatch('scanRequest/setPhotography',item):this.$store.dispatch('scanRequest/removePhotography',item);
       },
       setPatient(){
-          this.patient??this.$store.dispatch('scanRequest/setPatient',this.patient);
+          this.$store.dispatch('scanRequest/setPatient',this.patient);
       },
       setDoctor(){
-          this.doctor??this.$store.dispatch('scanRequest/setDoctor',this.doctor);
+          this.$store.dispatch('scanRequest/setDoctor',this.doctor);
+      },
+      setUpperLeft(){
+          for(let i =1; i< 9 ;i++){
+              this.threeDImaging[`GammaTeethUL`+`${i}`]=this.upperLeft
+          }
+      },
+      setUpperRight(){
+          for(let i =1; i< 9 ;i++){
+              this.threeDImaging[`GammaTeethUR`+`${i}`]=this.upperRight
+          }
+      },
+      setLowerLeft(){
+          for(let i =1; i< 9 ;i++){
+              this.threeDImaging[`GammaTeethLL`+`${i}`]=this.lowerLeft
+          }
+      },
+      setLowerRight(){
+          for(let i =1; i< 9 ;i++){
+              this.threeDImaging[`GammaTeethLR`+`${i}`]=this.lowerRight
+          }
       },
 
       submit(){
         //   console.log(this.purposesFinal)
         //   console.log(this.getPurposesFinal)
-        console.log('patient: ')
-        console.dir(this.patient)
-        console.log('doctor: ')
-        console.dir(this.doctor)
-            console.dir(this.threeDImaging);
-           console.dir(this.twoDImaging);
-           console.dir(this.requiredPhoto);
-           console.dir(this.ThreeDPrinting);
-           console.dir(this.Photography);
-           console.dir(this.purposesFinal);
-           console.log(this.getOtherPurpose);
-        // this.$store.dispatch('scanRequest/initRequest');
+        // console.log('patient: ')
+        // console.dir(this.patient)
+        // console.log('doctor: ')
+        // console.dir(this.doctor)
+        //     console.dir(this.threeDImaging);
+        //    console.dir(this.twoDImaging);
+        //    console.dir(this.requiredPhoto);
+        //    console.dir(this.ThreeDPrinting);
+        //    console.dir(this.Photography);
+        //    console.dir(this.purposesFinal);
+        //    console.log(this.getOtherPurpose);
+                let fm ={
+                    'patient':this.patient,
+                    'doctor':this.doctor,
+                    'threeDImaging':this.threeDImaging,
+                    'twoDImaging':this.twoDImaging,
+                    'requiredPhoto':this.requiredPhoto,
+                    'ThreeDPrinting':this.ThreeDPrinting,
+                    'Photography':this.Photography,
+                    'purposesFinal':this.purposesFinal,
+                    'getOtherPurpose':this.getOtherPurpose,
+                    }
+                // formData.append('patient',this.patient)
+                // formData.append('doctor',this.doctor)
+                // formData.append('threeDImaging',this.threeDImaging)
+                // formData.append('twoDImaging',this.twoDImaging)
+                // formData.append('requiredPhoto',this.requiredPhoto)
+                // formData.append('ThreeDPrinting',this.ThreeDPrinting)
+                // formData.append('Photography',this.Photography)
+                // formData.append('purposesFinal',this.purposesFinal)
+                // formData.append('getOtherPurpose',this.getOtherPurpose)
+
+                // formData.append('photo',this.myForm.image)
+                // this.myForm.append
+                let formData= new FormData()
+                // for ( var key in fm ) {
+                    //  for ( var subkey in fm[key] ) {
+                    //     formData.append(key+'[]', `{${subkey}:${fm[key][subkey]}}`);
+                    //     }
+                         buildFormData(formData, fm);
+
+                // }
+                // let fa =Object.entries(fm);
+            //    fa.forEach((value)=>{               //    console.log(value)
+            //         if (!Array.isArray(value[1])){
+            //             formData.append(value[0],value[1])
+            //         }else{
+            //             value[1].forEach((valueb,index)=>{
+            //                 // console.log(index)
+            //                 // console.log(valueb)
+            //                 // console.log(value[0])
+            //                 formData.append(value[0]+'[]',valueb)
+            //                 })
+            //             }
+
+            //    });
+                // formData.append('photo',this.myForm.image)
+                // console.log(fa)
+                // console.dir(formData)
+                // let myData ={
+                //     data:this.myForm,
+                //     file:formData
+                // }
+                // console.log(myData)
+                this.$store.dispatch('scanRequest/dispatchRequest',formData).then(res=>{
+
+                    this.$store.dispatch('scanRequest/initRequest');
+                    this.$router.push({path:'/'});
+                }).catch(err=>{
+                    console.log(err)
+                })
+
       },
 
       loadPatientsDoctors(){
@@ -750,8 +891,8 @@ export default {
                 }) */
                 this.patients=res.patients
                 this.doctors=res.doctors
-                console.log(this.patients)
-                console.log(this.doctors)
+                // console.log(this.patients)
+                // console.log(this.doctors)
             })
             .catch((err) => {
             console.log(err);
@@ -803,6 +944,10 @@ export default {
   stroke: #05aa4c;
   stroke-width: 2px;
 }
+.ul8{
+    transform: rotateX(180deg);
+    transform-origin: center;
+}
 .request-header {
   --color: white;
 
@@ -839,11 +984,13 @@ export default {
     display: inline-flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
+    position: relative;
 }
 .lr,.ur{
     display: inline-flex;
     flex-direction: row;
     justify-content: flex-end;
+    position: relative;
 }
 .clippath{
     // position: absolute;
@@ -872,4 +1019,19 @@ export default {
     background: #0a6b37;
     float:left;
 }
+.group-selection-right{
+    position: absolute;
+    top:0;
+    right: -156px;
+ }
+.group-selection-left{
+    position: absolute;
+    top:0;
+    left:-156px;
+ }
+#request-form .v-messages{
+
+     min-height: 1px;
+}
+
 </style>

@@ -209,14 +209,37 @@ const routes = [
             ),
         name: "admin-patients"
     },
+
+/* Requests Routes */
     {
-        path: "/admin/requests",
+        path: "/admin/request/new",
         component: () =>
             import(
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/index.vue"
             ),
-        name: "requests"
+        name: "request-new"
     },
+    {
+        path: "/admin/request/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/_id.vue"
+            ),
+        name: "request-view",
+        props:true
+    },
+    {
+        path: "/admin/requests/list",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/list.vue"
+            ),
+        name: "request-list",
+        props:true
+    },
+
+/* End Requests Routes */
+
     {
         path: "/admin/notification",
         component: () =>

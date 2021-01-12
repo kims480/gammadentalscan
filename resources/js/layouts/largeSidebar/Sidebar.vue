@@ -260,13 +260,13 @@
             </router-link>
             <ul class="submenu">
               <li>
-                <router-link tag="a" class to="/app/apps/invoice">
+                <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Files"></i>
                   <span class="item-name">Users List</span>
                 </router-link>
               </li>
               <li class="nav-item">
-                <router-link tag="a" class to="/admin/users">
+                <router-link tag="a" class to="/admin/users/add">
                   <i class="nav-icon i-Clock-3"></i>
                   <span class="item-name">
                     Add user
@@ -350,9 +350,9 @@
           :class="{ 'd-block': selectedParentMenu == 'doctors' }"
         >
           <li class="nav-item">
-            <router-link tag="a" class to="/app/datatables/paging">
+            <router-link tag="a" class to="/admin/users/">
               <i class="nav-icon i-Split-Four-Square-Window"></i>
-              <span class="item-name">Paging</span>
+              <span class="item-name">list</span>
             </router-link>
           </li>
 
@@ -436,18 +436,7 @@
             </router-link>
           </li>
 
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/inbox">
-              <i class="nav-icon i-Email"></i>
-              <span class="item-name">Inbox</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/chat">
-              <i class="nav-icon i-Speach-Bubble-3"></i>
-              <span class="item-name">Chat</span>
-            </router-link>
-          </li>
+
           <li class="nav-item">
             <router-link tag="a" class to="/app/apps/scrumboard">
               <i class="nav-icon i-Add-File"></i>
@@ -563,7 +552,7 @@
 
 
         </ul>
- <!-- Submenu Dashboards -->
+ <!-- Submenu storage -->
         <ul
           class="childNav d-none"
           data-parent="storage"
@@ -620,43 +609,32 @@
             </ul>
           </li>
         </ul>
- <!-- Submenu Dashboards -->
+ <!-- Submenu Request -->
         <ul
           class="childNav d-none"
           data-parent="widgets"
-          :class="{ 'd-block': selectedParentMenu == 'widgets' }"
+          :class="{ 'd-block': selectedParentMenu == 'requests' }"
         >
           <li class="nav-item">
-            <router-link tag="a" class to="/app/widgets/widgetCard">
+            <router-link tag="a" class to="/admin/request/new">
               <i class="nav-icon i-Two-Windows"></i>
-              <span class="item-name">Widget Card</span>
+              <span class="item-name">New Scan Request</span>
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link tag="a" class to="/app/widgets/widgetStatistics">
+            <router-link tag="a" class to="/admin/requests/list">
               <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name">Widget Statistics</span>
+              <span class="item-name">List Request</span>
             </router-link>
           </li>
 
           <li class="nav-item">
-            <router-link tag="a" class to="/app/widgets/weatherApp">
+            <router-link tag="a" class to="/admin/request/list">
               <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name">Weather App</span>
+              <span class="item-name"> ___ </span>
             </router-link>
           </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/widgets/widgetApp">
-              <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name">App Widgets</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/widgets/widgetList">
-              <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name">Widget List</span>
-            </router-link>
-          </li>
+
         </ul>
  <!-- Submenu Dashboards -->
         <ul
