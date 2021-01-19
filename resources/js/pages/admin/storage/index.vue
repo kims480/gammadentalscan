@@ -296,7 +296,7 @@
                                     <v-list-item>
                                     <v-list-item-content class="file-info-title">Title:</v-list-item-content>
                                     <v-list-item-content class="align-end file-info-value">
-                                        {{ fileId }}
+                                        {{ fileTitle }}
                                     </v-list-item-content>
                                     </v-list-item>
 
