@@ -11,8 +11,13 @@
             </button>
         </p>
     </div>
+    <template v-if="uploadPercentage">
+        <div id='upload-percentage' class='flash'>{{percentageValue.toString() + "%"}}</div>
+    </template>
 
-    <div id="drive-box">
+
+
+    <div id="drive-box" v-show="showDriveBox">
         <!-- Page Container -->
         <div class="w3-content w3-margin-top" style="max-width:1400px;">
             <!-- The Grid -->
@@ -22,17 +27,22 @@
                 <div class="w3-third">
                     <div class="w3-white w3-text-grey w3-card-4">
                         <div class="w3-display-container">
-                            <img src="/Images/google_drive_logo.png" style="width:80%; float:initial" alt="Avatar">
+                            <img src="./../../../assets/images/google_drive_logo.png" style="width:80%; float:initial" alt="Avatar">
                         </div>
                         <div class="w3-container">
                             <p>
-                                <div id="error-message" class="flash "></div>
-                                <div id="status-message" class="flash "></div>
+                                <div id="error-message" class="flash ">{{errorMessageTxt}}</div>
+                                <div id="status-message" class="flash ">{{statusMessageTxt}}</div>
                             </p>
+                             <template v-if="setShowLoading">
+                                <div id='drive-box-loading'>
+                                    <div id='loading-wrapper'><div id='loading'><img src='./../../../assets/images/loading.gif'></div></div>
+                                </div>
+                            </template>
                             <hr>
-                            <p class="w3-large"><b>Welcome <span id="span-name"></span></b></p>
-                            <p style="font-size:15px; color:limegreen;">Total Storage: <span id="span-totalQuota" style="color:red;"></span></p>
-                            <p style="font-size:15px; color:limegreen;">Used Storage: <span id="span-usedQuota" style="color:red;"></span></p>
+                            <p class="w3-large"><b>Welcome <span id="span-name">{{userName}}</span></b></p>
+                            <p style="font-size:15px; color:limegreen;">Total Storage: <span id="span-totalQuota" style="color:blue;">{{spanTotalQuota}}</span></p>
+                            <p style="font-size:15px; color:limegreen;">Used Storage: <span id="span-usedQuota" style="color:green;">{{spanUsedQuota}}</span></p>
                             <hr>
                             <p>
                                 <button type="button" class="btn btn-default btn-sm" @click="handleSignoutClick()">
@@ -62,7 +72,7 @@
                             <hr>
 
                             <div id="box-UploadFile" style="display:none">
-                                <div class="close-x"><img id="imgCloseAddFile" class="imgClose" src="/Images/button_close.png" alt="close" /></div>
+                                <div class="close-x"><img id="imgCloseAddFile" class="imgClose" src="./../../../assets/images/button_close.png" alt="close" /></div>
                                 <p class="w3-large"><b>Upload</b></p>
 
                                 <div class="custom-file mb-3">
@@ -75,7 +85,7 @@
 
                             <div id="box-AddFolder" style="display:none">
                                 <div class="folder-form">
-                                    <div class="close-x"><img id="imgCloseAddFolder" class="imgClose" src="/Images/button_close.png" alt="close" /></div>
+                                    <div class="close-x"><img id="imgCloseAddFolder" class="imgClose" src="./../../../assets/images/button_close.png" alt="close" /></div>
                                     <p class="w3-large"><b>Add New Folder</b></p>
                                     <div><input type="text" id="txtFolder" class="text-input" /></div>
 
@@ -89,7 +99,7 @@
 
                             <div id="box-info" style="display:none">
                                 <div class="info-form">
-                                    <div class="close-x"><img id="imgCloseInfo" class="imgClose" src="/Images/button_close.png" alt="close" /></div>
+                                    <div class="close-x"><img id="imgCloseInfo" class="imgClose" src="./../../../assets/images/button_close.png" alt="close" /></div>
                                     <p class="w3-large"><b>View Details</b></p>
 
                                     <p style="font-size:15px; color:limegreen;">Created Date: <span id="spanCreatedDate" style="color:red;"></span></p>
@@ -123,6 +133,84 @@
                     </div>
 
                     <div class="w3-container w3-card w3-white" id="drive-content">
+                        <template v-if="DRIVE_FILES.length > 0">
+                            <div v-for="(file,index) in DRIVE_FILES" :key="index" :class='file.mimeType == "application/vnd.google-apps.folder"?"folder" + "-box" : "file" + "-box"'>
+                                <template v-if='file.mimeType == "application/vnd.google-apps.folder"'>
+                                        <div class='folder-icon' :data-file-counter='index'
+                                            :data-level='file.level' :data-parent='file.parentID'
+                                            :data-size='file.fileSize' :data-id='file.id'
+                                            :title='file.fileType != "file" ? "Browse " + file.title  : file.title'
+                                            :data-name='file.title' :data-has-permission='file.hasPermission'>
+                                                <div class='image-preview'><img src='./../../../assets/images/folder.png'/></div>
+                                        </div>
+                                </template>
+                                <template v-else>
+                                     <template v-if='file.fileType !== "file"'>
+                                        <template v-if='file.thumbnailLink'>
+                                            <div class='image-icon' :data-file-counter='index' >
+                                                <div class='image-preview'>
+                                                    <a :href='file.thumbnailLink.replace("s220", "s800")' :data-lightbox='"image-"+index'>
+                                                        <img :src='file.thumbnailLink'/>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <template v-if='isFileExtension(file)'>
+                                                <div class='file-icon' :data-file-counter='index' >
+                                                    <div class='image-preview'>
+                                                        <img :src='"./../../../assets/images/" +file.fileExtension +  "-icon.png"'/>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <template v-else>
+                                                    <div class='file-icon' :data-file-counter='index' >
+                                                        <div class='image-preview'>
+                                                            <img src="./../../../assets/images/undefined-icon.png"/>
+                                                        </div>
+                                                    </div>
+                                            </template>
+                                        </template>
+                                     </template>
+                                </template>
+                                <div class='item-title'>{{file.title}}</div>
+                                <div class='button-box'>
+                                    <template v-if='file.fileType !== "folder"'>
+                                        <v-icon>mdi-download</v-icon>
+                                            <span class='glyphicon glyphicon-download-alt button-download'
+                                                title='Download' :data-id='file.id' :data-file-counter='index'>
+                                            </span>
+                                    </template>
+                                    <v-icon color='black'>mdi-info</v-icon>
+                                    <span class='glyphicon glyphicon-info-sign button-info' title='Info'
+                                        :data-id='file.id' :data-file-counter='index'>
+                                    </span>
+                                    <template v-if='file.hasPermission'>
+                                        <template v-if='file.labels.trashed'>
+                                            <template v-if='file.permissionRole == "owner"'>
+                                                <v-icon>mdi-delete</v-icon>
+                                                <span class='glyphicon glyphicon-remove button-delete' title='Delete' :data-id='file.id'>
+                                                </span>
+                                            </template>
+                                            <template v-else-if='file.fileType != "folder"'>
+                                                <span class='glyphicon glyphicon-remove button-delete' title='Delete' :data-id='file.id'></span>
+                                            </template>
+                                            <span class='glyphicon glyphicon-retweet button-restore' title='Restore' :data-id='file.id'>
+                                            </span>
+                                        </template>
+                                        <temolate v-else>
+                                            <template v-if='file.permissionRole == "owner"'>
+                                                <span class='glyphicon glyphicon-remove button-delete' title='Delete' :data-id='file.id'>
+                                                </span>
+                                            </template>
+                                            <template v-else-if='file.fileType != "folder"'>
+                                                <span class='glyphicon glyphicon-remove button-delete' title='Delete' :data-id='file.id'></span>
+                                            </template>
+                                        </temolate>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- End Right Column -->
@@ -137,48 +225,353 @@
 </div>
 </template>
 <script>
+// function updateSigninStatus(isSignedIn) {
+//     if (isSignedIn) {
+//         $("#drive-box").show();
+//         $("#login-box").hide();
+//         showLoading();
+//         getDriveFiles();
+//     } else {
+//         $("#login-box").show();
+//         $("#drive-box").hide();
+//     }
+//     return;
+// }
+// function isGoogleSigned() {
+//     return window.gapi.auth2.getAuthInstance().isSignedIn.get();
+// }
 import * as lightbox from '@/services/lightbox.min.js'
-import drive from '@/services/drive.js'
-import upload from'@/services/upload.js'
+// import drive from '@/services/drive.js'
+// import * as upload from'@/services/upload.js'
+import gapi from'@/services/gapi.js'
 export default {
     data(){
         return{
-
+            SCOPES : ["https://www.googleapis.com/auth/drive", "profile"],
+            CLIENT_ID :
+                "909780462877-7uqkksfdop3v16avj4ae077134aluoim.apps.googleusercontent.com",
+            FOLDER_NAME :"",
+            FOLDER_ID :"root",
+            FOLDER_PERMISSION :true,
+            FOLDER_LEVEL :0,
+            NO_OF_FILES :100,
+            DRIVE_FILES :[],
+            FILE_COUNTER:0,
+            FOLDER_ARRAY :[],
+            DELETE_FROM_TRASH:false,
+            statusMessage:false,
+            statusMessageTxt:'',
+            uploadPercentage:false,
+            uploadPercentageTxt:'',
+            percentageValue:0,
+            errorMessage:false,
+            errorMessageTxt:'',
+            setShowLoading:false,
+            showLoadingTxt:'Loading Google Drive files...',
+            dataLevel:'',
+            dataId:0,
+            driveInfo:false,
+            userName:'',
+            spanTotalQuota:0,
+            spanUsedQuota:0,
+            showDriveBox:false,
+            ShowSharedFiles:false,
+            ShowTrashFiles:false,
         }
-    },
-    computed:{
-
-    },
-    methods:{
-        handleAuthClick(){
-            return drive.handleAuthClick();
-        },
-        handleSignoutClick(){
-            return drive.handleSignoutClick();
-        },
-        upload(){
-            // this.
-        }
-    },
-    created(){
-        drive.handleClientLoad()
     },
     mounted(){
+        // let gDrive = document.createElement("script");
+        //     gDrive.setAttribute("type", "text/javascript");
+        //     // gDrive.async=true
+        //     gDrive.setAttribute("src", "https://apis.google.com/js/api.js");
+        //     document.head.appendChild(gDrive);
+            this.handleClientLoad().then(()=>{
+
+                    this.getDriveFiles()
+                })
+                // console.log(gapi)
 
          let jquery = document.createElement('script')
             jquery.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
             document.head.appendChild(jquery)
-            // document.head.appendChild(lightbox)
-            // document.head.appendChild(drive)
-        // let gogoleApi = document.createElement('script')
-        //     gogoleApi.async=true
-        //     gogoleApi.defer=true
-        //     gogoleApi.setAttribute('src', 'https://apis.google.com/js/api.js')
-        //     gogoleApi.setAttribute('onload', `this.onload=function(){};`)
-        //     gogoleApi.setAttribute('onreadystatechange', "if (this.readyState === 'complete') this.onload()")
-        //     document.head.appendChild(gogoleApi)
-            // document.head.appendChild(upload)
-    }
+    },
+
+    methods:{
+        // handleAuthClick(){
+        //     return drive.handleAuthClick();
+        // },
+        // handleSignoutClick(){
+        //     return drive.handleSignoutClick();
+        // },
+         async handleClientLoad() {
+        //gapi is client library, it used for Load the API client and auth2 library
+            console.log('handleClientLoad');
+            await gapi.load("client:auth2", this.initClient);
+         },
+        onload: () => {},
+        onreadystatechange: () => {
+            return this.readyState === "complete" ?? this.onload;
+        },
+        //authorize apps
+        async initClient() {
+            console.log('initClient');
+             await gapi.client
+                .init({
+                    clientId: this.CLIENT_ID,
+                    scope: this.SCOPES.join(" ")
+                })
+                .then(o => {
+                    console.log("o", o);
+                    console.log(
+                        "signed in",
+                        window.gapi.auth2.getAuthInstance().isSignedIn.get()
+                    );
+                    this.showDriveBox=true
+                    // Listen for sign-in state changes.
+                    gapi.auth2
+                        .getAuthInstance()
+                        .isSignedIn.listen(updateSigninStatus);
+                    this.updateSigninStatus(this.isGoogleSigned());
+                        // this.getDriveFiles();
+                    // Handle the initial sign-in state.
+                })
+                .catch(err => {
+                    console.log("err", err);
+                });
+        },
+        isGoogleSigned() {
+            console.log('isGoogleSignIN');
+            return gapi.auth2.getAuthInstance().isSignedIn.get();
+        },
+         updateSigninStatus(isSignedIn) {
+             console.log('updateSigninStatus');
+             if (isSignedIn) {
+                 $("#drive-box").show();
+                $("#login-box").hide();
+                this.showLoading();
+                this.getDriveFiles();
+            } else {
+                $("#login-box").show();
+                $("#drive-box").hide();
+            }
+            return;
+        },
+
+        async handleAuthClick(event) {
+            console.log('handleAuthClick');
+            await gapi.auth2.getAuthInstance().signIn();
+        },
+
+        handleSignoutClick(event) {
+            console.log('handleSignoutClick');
+            if (confirm("Are you sure you want to logout?")) {
+                gapi.auth2.getAuthInstance().signOut();
+            }
+        },
+        upload(){
+            // this.
+        },
+        showStatus(text) {
+            this.statusMessage=true;
+            this.statusMessageTxt=text;
+        },
+        hideStatus() {
+            this.statusMessage=false;
+            this.statusMessageTxt='';
+        },
+        showErrorMessage(errorMessage) {
+            this.errorMessage=true;
+            this.errorMessageTxt=errorMessage;
+            setTimeout(function() {
+                this.errorMessage=false;
+                this.errorMessageTxt='';
+
+            }, 3000);
+        },
+        showLoading(){
+            this.setShowLoading=true;
+        },
+        hideLoading(){
+            this.setShowLoading=false;
+        },
+        showProgressPercentage(percentageValue) {
+            if (this.uploadPercentageTxt == 0) {
+               this.uploadPercentage=true;
+            }
+            this.uploadPercentageTxt=percentageValue.toString() + "%";
+        },
+        showUserInfo() {
+                let request = gapi.client.drive.about.get();
+
+                request.execute(resp => {
+                    if (!resp.error) {
+
+                        this.driveInfo=true;
+                        this.userName=resp.name;
+                        this.spanTotalQuota=this.formatBytes(resp.quotaBytesTotal);
+                        this.spanUsedQuota=this.formatBytes(resp.quotaBytesUsed);
+                    } else {
+                        this.showErrorMessage("Error: " + resp.error.message);
+                    }
+                });
+            },
+        buttonReload() {
+            this.showLoading();
+            this.showStatus("Loading Google Drive files...");
+            this.getDriveFiles();
+        },
+        getDriveFiles() {
+            // console.log(gapi.load("drive", "v2", this.getFiles()));
+            this.showStatus("Loading Google Drive files...");
+            var _this=this
+            gapi.load('client', function () {
+                        gapi.client.load('drive', 'v2', _this.getFiles());
+            });
+        },
+        cloneObject(obj) {
+            if (obj === null || typeof obj !== "object") {
+                return obj;
+            }
+            var temp = obj.constructor();
+            for (var key in obj) {
+                temp[key] = cloneObject(obj[key]);
+            }
+            return temp;
+        },
+        ifShowSharedFiles(){
+            return this.ShowSharedFiles;
+
+        },
+        ifShowTrashFiles(){
+            return this.ShowTrashFiles;
+        },
+        isFileExtension(file){
+            return
+                file.fileExtension == "txt" ||
+                        file.fileExtension == "xls" ||
+                        file.fileExtension == "xlsx" ||
+                        file.fileExtension == "pdf" ||
+                        file.fileExtension == "ppt" ||
+                        file.fileExtension == "pptx" ||
+                        file.fileExtension == "csv" ||
+                        file.fileExtension == "doc" ||
+                        file.fileExtension == "docx"
+        },
+        formatBytes(bytes) {
+            if (bytes < 1024) return bytes + " Bytes";
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(3) + " KB";
+            else if (bytes < 1073741824) return (bytes / 1048576).toFixed(3) + " MB";
+            else return (bytes / 1073741824).toFixed(3) + " GB";
+        },
+        getFiles() {
+             var query = "";
+                if (this.ifShowSharedFiles()) {
+                    $(".button-opt").hide();
+                    $(".trash-opt").hide();
+
+                    if ($("#drive-breadcrumb a").html() == "Share") {
+                        if ($("#span-navigation").html() == "") {
+                            $("#drive-breadcrumb a").html("Share");
+                        } else {
+                            $(".button-opt").hide();
+                            $(".trash-opt").hide();
+                        }
+                    } else {
+                        $("#drive-breadcrumb a").html("Share");
+                    }
+
+                    this.DELETE_FROM_TRASH = false;
+                    query =
+                        this.FOLDER_ID == "root"
+                            ? "trashed=false and sharedWithMe"
+                            : "trashed=false and '" + this.FOLDER_ID + "' in parents";
+                } else if (this.ifShowTrashFiles()) {
+                    $(".button-opt").hide();
+                    $(".share-opt").hide();
+                   this.DELETE_FROM_TRASH = true;
+
+                    if ($("#drive-breadcrumb a").html() == "Trash") {
+                        if ($("#span-navigation").html() == "") {
+                            $("#drive-breadcrumb a").html("Trash");
+                        } else {
+                            $(".button-opt").hide();
+                            $(".share-opt").hide();
+                        }
+                    } else {
+                        $("#drive-breadcrumb a").html("Trash");
+                    }
+
+                    query = "trashed=true";
+                    //query = "starred=true";
+                    //query = "trashed=true and mimeType='application/vnd.google-apps.folder'";
+                } else {
+                    if ($("#drive-breadcrumb a").html() == "Trash") {
+                        if ($("#span-navigation").html() == "") {
+                            $("#drive-breadcrumb a").html("Home");
+                        }
+                    } else if ($("#drive-breadcrumb a").html() == "Share") {
+                        if ($("#span-navigation").html() == "") {
+                            $("#drive-breadcrumb a").html("Home");
+                        }
+                    }
+
+                    this.DELETE_FROM_TRASH = false;
+                    query = "trashed=false and '" + this.FOLDER_ID + "' in parents";
+                    $(".button-opt").show();
+                    $(".share-opt").show();
+                    $(".trash-opt").show();
+                }
+
+                    console.log('resp')
+                    var _this= this
+                    gapi.load('client', function () {
+                        gapi.client.load('drive', 'v2',function(){
+
+                            var request =gapi.client.drive.files.list({
+                                    maxResults:  _this.NO_OF_FILES,
+                                    q: query
+                                });
+                            request.execute(resp => {
+                                console.log(resp)
+
+                                if (!resp.error) {
+                                    _this.showUserInfo();
+                                    _this.DRIVE_FILES = resp.items;
+                                    // this.buildFiles();
+                                } else {
+
+                                    _this.showErrorMessage("Error: " + resp.error.message);
+                                }
+                            });
+                        })
+                    })
+
+
+
+            },
+
+
+
+
+
+    },
+    created(){
+        // this.handleAuthClick()
+
+    },
+     computed:{
+        message(){
+            return this.statusMessageTxt
+        },
+        folderArray(){
+            this.FOLDER_ARRAY.push(Promise)
+        },
+        driveFiles(){
+            this.DRIVE_FILES.push(Promise)
+        },
+
+    },
+
 
 }
 
@@ -218,7 +611,7 @@ export default {
     }
 
 .breadcrumb-arrow {
-    background: url(/Images/arrow_right.png) no-repeat 0 7px;
+    background: url("../../../assets/images/arrow_right.png") no-repeat 0 7px;
     display: inline-block;
     height: 20px;
     width: 15px;
@@ -231,7 +624,7 @@ export default {
     margin: 10px;
     width: 98%;
     box-sizing: border-box;
-    display: none;
+    // display: none;
     position: relative;
     min-height: 150px;
 }
@@ -656,7 +1049,7 @@ export default {
   width: 32px;
   height: 32px;
   margin: 0 auto;
-  background: url(/Images/loading.gif) no-repeat;
+  background: url(/../../../assets/images/loading.gif) no-repeat;
 }
 
 .lb-nav {
@@ -687,7 +1080,7 @@ export default {
   width: 34%;
   left: 0;
   float: left;
-  background: url(/Images/prev.png) left 48% no-repeat;
+  background: url(/../../../assets/images/prev.png) left 48% no-repeat;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-transition: opacity 0.6s;
@@ -705,7 +1098,7 @@ export default {
   width: 64%;
   right: 0;
   float: right;
-  background: url(/Images/next.png) right 48% no-repeat;
+  background: url(/../../../assets/images/next.png) right 48% no-repeat;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-transition: opacity 0.6s;
@@ -769,7 +1162,7 @@ export default {
   float: right;
   width: 30px;
   height: 30px;
-  background: url(/Images/close.png) top right no-repeat;
+  background: url(/../../../assets/images/close.png) top right no-repeat;
   text-align: right;
   outline: none;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);

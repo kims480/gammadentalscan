@@ -1,8 +1,8 @@
 // import Vue from "vue";
 import VueRouter from "vue-router";
-import store from '@/store/index'
-import Home from '@/pages/admin/index'
-import Signin from '@/pages/auth/signin'
+import store from "@/store/index";
+import Home from "@/pages/admin/index";
+import Signin from "@/pages/auth/signin";
 // import ExampleComponent from "./components/ExampleComponent.vue";
 // import Example2Component from "./components/Example2Component.vue";
 // import Default from "./layouts/default.vue";
@@ -11,79 +11,81 @@ const routes = [
     // { path: "/", component: Default },
     {
         path: "/", //auth/sign-in
-        meta:{layout:"large-sidebar"},
+        meta: { layout: "large-sidebar" },
         component: Home,
         name: "home",
         beforeEnter: (to, from, next) => {
-            var auth = localStorage.getItem('token')
+            var auth = localStorage.getItem("token");
             if (!auth) {
-              store.dispatch('auth/logout')
-              next('/signin')
+                store.dispatch("auth/logout");
+                next("/signin");
             } else {
-                store.dispatch('auth/user')
-                .then(response => {
-                      next()
-                    }, response => {
-                      next('/signin')
-                })
+                store.dispatch("auth/user").then(
+                    response => {
+                        next();
+                    },
+                    response => {
+                        next("/signin");
+                    }
+                );
             }
-          },
-
+        }
     },
 
-      {
-        path: '/dashboard',
-        meta:{layout:"dashboard"},
-        component: import(/* webpackChunkName: 'dashboard' */ "@/layouts/default"),
+    {
+        path: "/dashboard",
+        meta: { layout: "dashboard" },
+        component: import(
+            /* webpackChunkName: 'dashboard' */ "@/layouts/default"
+        ),
         children: [
-          {
-            path: '',
-            component: import(/* webpackChunkName: 'home' */ "@/pages/admin/index"),
-          },
-        ],
-      },
+            {
+                path: "",
+                component: import(
+                    /* webpackChunkName: 'home' */ "@/pages/admin/index"
+                )
+            }
+        ]
+    },
     {
         path: "/login", //auth/sign-in
-        meta:{layout:"auth"},
-        component:()=> import(/* webpackChunkName: 'login' */ "@/pages/auth/login"),
-        name: "login",
-
-
+        meta: { layout: "auth" },
+        component: () =>
+            import(/* webpackChunkName: 'login' */ "@/pages/auth/login"),
+        name: "login"
     },
     {
         path: "/request-full", //auth/sign-in
         // meta:{layout:"auth"},
-        component:()=> import(/* webpackChunkName: 'login' */ "@/components/requests/GammaRequest"),
-        name: "full-request",
-
-
+        component: () =>
+            import(
+                /* webpackChunkName: 'login' */ "@/components/requests/GammaRequest"
+            ),
+        name: "full-request"
     },
     {
         path: "/signin", //auth/sign-in
-        meta:{layout:require( "@/pages/auth/signin").default.layout},
+        meta: { layout: require("@/pages/auth/signin").default.layout },
         component: Signin,
-        name: "sign-in",
-
+        name: "sign-in"
     },
     {
         path: "/auth/logout", //auth/sign-in
-        meta:{layout:require( "@/pages/auth/logout").default.layout},
+        meta: { layout: require("@/pages/auth/logout").default.layout },
         component: () =>
             import(/* webpackChunkName: 'auth' */ "@/pages/auth/logout"),
-        name: "logout",
-
+        name: "logout"
     },
     {
         path: "/register", //auth/sign-in
-        meta:{layout:'auth'},
+        meta: { layout: "auth" },
         component: () =>
             import(/* webpackChunkName: 'auth' */ "@/pages/auth/register"),
-        name: "register",
-
+        name: "register"
     },
     {
         path: "/loginclean",
-        meta:{layout:require( "@/pages/auth/loginclean").default.layout},
+        meta: { layout: require("@/pages/auth/loginclean").default.layout },
         component: () =>
             import(
                 /* webpackChunkName: 'admin-storage' */ "@/pages/auth/loginclean"
@@ -96,7 +98,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/index.vue"
             ),
-        meta: { guard: 'SUPER_ADMIN' },
+        meta: { guard: "SUPER_ADMIN" },
         // children: administrationRoutes,
         name: "users"
     },
@@ -106,10 +108,9 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
             ),
-        meta: { guard: 'SUPER_ADMIN' },
+        meta: { guard: "SUPER_ADMIN" },
         // children: administrationRoutes,
-        name: "add-user",
-
+        name: "add-user"
     },
     {
         path: "/admin/user/:name/:id",
@@ -117,10 +118,10 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
             ),
-        meta: { guard: 'SUPER_ADMIN' },
+        meta: { guard: "SUPER_ADMIN" },
         // children: administrationRoutes,
         name: "edit-user",
-        props:true
+        props: true
     },
     {
         path: "/admin/users/profile",
@@ -128,7 +129,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/profile.vue"
             ),
-        meta: { guard: 'SUPER_ADMIN' },
+        meta: { guard: "SUPER_ADMIN" },
         // children: administrationRoutes,
         name: "admin-user-profile"
     },
@@ -149,7 +150,7 @@ const routes = [
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/_name/_id.vue"
             ),
         name: "admin-users-name",
-        props:true
+        props: true
     },
     {
         path: "/admin/doctors",
@@ -175,7 +176,7 @@ const routes = [
             ),
         name: "admin-doctors-name"
     },
-//////////////////////Patients Routes///////////////////////////
+    //////////////////////Patients Routes///////////////////////////
     {
         path: "/admin/patients",
         component: () =>
@@ -199,7 +200,7 @@ const routes = [
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
             ),
         name: "edit-patient",
-        props:true
+        props: true
     },
     {
         path: "/admin/patients/:name/:id",
@@ -210,7 +211,7 @@ const routes = [
         name: "admin-patients"
     },
 
-/* Requests Routes */
+    /* Requests Routes */
     {
         path: "/admin/request/new",
         component: () =>
@@ -226,7 +227,7 @@ const routes = [
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/_id.vue"
             ),
         name: "request-view",
-        props:true
+        props: true
     },
     {
         path: "/admin/requests/list",
@@ -235,10 +236,10 @@ const routes = [
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/list.vue"
             ),
         name: "request-list",
-        props:true
+        props: true
     },
 
-/* End Requests Routes */
+    /* End Requests Routes */
 
     {
         path: "/admin/notification",
@@ -297,6 +298,14 @@ const routes = [
         name: "gdrive"
     },
     {
+        path: "/admin/Test",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-gdrive' */ "@/pages/admin/storage/gdriveTest.vue"
+            ),
+        name: "gdrive-test"
+    },
+    {
         path: "/points",
         component: () =>
             import(
@@ -306,43 +315,46 @@ const routes = [
     },
     {
         path: "/404",
-        meta:{layout:""},
+        meta: { layout: "" },
         component: () =>
-            import(
-                /* webpackChunkName: 'Not-Found' */ "@/pages/error/404.vue"
-            ),
+            import(/* webpackChunkName: 'Not-Found' */ "@/pages/error/404.vue"),
         name: "404"
     }
-
 ];
 const router = new VueRouter({
     mode: "history",
-    base:  "dashboard",
+    base: "dashboard",
     routes
 });
 
-router.beforeEach(function (to, from, next) {
-    let middleware
-    store.state.page = null
+router.beforeEach(function(to, from, next) {
+    let middleware;
+    store.state.page = null;
     to.matched.some(m => {
-      middleware = m.meta.guard
-    })
-    if (typeof middleware === 'undefined') {
-      next()
+        middleware = m.meta.guard;
+    });
+    if (typeof middleware === "undefined") {
+        next();
     } else {
-      if (store.getters['checkPermission'](middleware)) {
-          console.log('checkPermission:',store.getters['checkPermission'])
-          console.log('checkPermission-middleware:',store.getters['checkPermission'](middleware))
-            window.scrollTo(0, 0)
-        next()
-      } else if (store.getters['isAuth']) {
-            store.dispatch('notifications/pushNotif','You are not Authorized','error')
+        if (store.getters["checkPermission"](middleware)) {
+            console.log("checkPermission:", store.getters["checkPermission"]);
+            console.log(
+                "checkPermission-middleware:",
+                store.getters["checkPermission"](middleware)
+            );
+            window.scrollTo(0, 0);
+            next();
+        } else if (store.getters["isAuth"]) {
+            store.dispatch(
+                "notifications/pushNotif",
+                "You are not Authorized",
+                "error"
+            );
             toasted.global.Not_Authorized();
-        next({name:'home'})
-
-      } else {
-        next({name:'signin'})
-      }
+            next({ name: "home" });
+        } else {
+            next({ name: "signin" });
+        }
     }
-  })
+});
 export default router;
