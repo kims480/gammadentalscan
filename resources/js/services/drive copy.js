@@ -199,7 +199,7 @@ function buildFiles() {
     if (DRIVE_FILES.length > 0) {
         for (var i = 0; i < DRIVE_FILES.length; i++) {
             DRIVE_FILES[i].textContentURL = "";
-            DRIVE_FILES[i].level = (parseInt(FOLDER_LEVEL) + 1).toString();
+            DRIVE_FILES[i].level = (parseInt(this.FOLDER_LEVEL) + 1).toString();
             DRIVE_FILES[i].parentID =
                 DRIVE_FILES[i].parents.length > 0
                     ? DRIVE_FILES[i].parents[0].id

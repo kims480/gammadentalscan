@@ -320,7 +320,27 @@
                 </v-col>
                 <v-col cols="12" md="8">
                     <v-card class="mx-auto" shaped>
-                        <v-breadcrumbs :items="items">
+                        <v-breadcrumbs :items="items" >
+                            <template v-slot:item="{ item }">
+                                <v-breadcrumbs-item
+
+                                >
+                                   <span class='folder-name'><a
+                                    :spanCreatedDate="item.CreatedDate"
+                                    :spanModifiedDate="item.ModifiedDate"
+                                    :spanOwner="item.Owner"
+                                    :spanSize="item.Size"
+                                    :spanExtension="item.Extension"
+                                    :spanTitle="item.text"
+                                    :data-id="item.Id"
+                                    :data-level="item.Level"
+                                    :FOLDER_PERMISSION="item.Permission"
+
+                                    @click="bb">
+
+                                   {{ item.text.toUpperCase() }}</a></span>
+                                </v-breadcrumbs-item>
+                            </template>
                             <template v-slot:divider>
                                 <v-icon>mdi-forward</v-icon>
                             </template>
@@ -330,18 +350,18 @@
                     <v-card  class="w3-container w3-card w3-white my-4" id="drive-content" raised>
 
                             <template v-if="DRIVE_FILES.length > 0">
-                                <div v-for="(file,index) in DRIVE_FILES" :key="index" :class='file.mimeType == "application/vnd.google-apps.folder"?"folder" + "-box" : "file" + "-box"'>
-                                    <template v-if='file.mimeType == "application/vnd.google-apps.folder"'>
-                                            <div class='folder-icon' :data-file-counter='index'
+                                <div v-for="(file,index) in DRIVE_FILES" :key="index" :class='file.fileType == "folder"?"folder" + "-box" : "file" + "-box"'>
+                                    <template v-if='file.fileType == "folder"'>
+                                            <a class='folder-icon' :data-file-counter='index'
                                                 :data-level='file.level' :data-parent='file.parentID'
-                                                :data-size='file.fileSize' :data-id='file.id'
+                                                :data-size='file.fileSize' :data-id='file.id'  @click='browseFolder(file,index) '
                                                 :title='file.fileType != "file" ? "Browse " + file.title  : file.title'
                                                 :data-name='file.title' :data-has-permission='file.hasPermission'>
                                                     <div class='image-preview'><img src='./../../../assets/images/folder.png'/></div>
-                                            </div>
+                                            </a>
                                     </template>
                                     <template v-else>
-                                        <template v-if='file.fileType !== "file"'>
+                                        <template v-if='file.fileType !== "folder"'>
                                             <template v-if='file.thumbnailLink'>
                                                 <div class='image-icon' :data-file-counter='index' >
                                                     <div class='image-preview'>
@@ -371,7 +391,7 @@
                                     </template>
                                     <div class='item-title'>{{file.title}}</div>
                                     <div class='button-box'>
-                                        <template v-if='file.mimeType !== "application/vnd.google-apps.folder"'>
+                                        <template v-if='file.fileType !== "folder"'>
                                             <v-icon class='button-download'
                                                     title='Download' :data-id='file.id' @click="buttonDownload" :data-file-counter='index'>mdi-download</v-icon>
 
@@ -379,31 +399,34 @@
                                         <v-icon class='button-info' title='Info'
                                             :data-id='file.id' @click="showFileData" :data-file-counter='index' color='indigo'>mdi-information</v-icon>
 
-                                        <template v-if='hasPermission(file)'>
+                                        <template v-if='file.hasPermission'>
                                             <template v-if='file.labels.trashed'>
-                                                <template v-if='hasPermission(file)'>
+                                                <template v-if='file.hasPermission'>
                                                     <v-icon class='button-delete' @click="buttonDelete" title='Delete' color='danger' :data-id='file.id'>mdi-delete-circle</v-icon>
                                                 </template>
-                                                <template v-else-if='file.mimeType !== "application/vnd.google-apps.folder"'>
+                                                <template v-else-if='file.fileType !== "folder"'>
                                                     <v-icon class='button-delete' title='Delete' color='red' :data-id='file.id'>mdi-delete-circle</v-icon>
                                                 </template>
                                                     <v-icon class='button-restore' @click="buttonRestore" title='Restore' color='green' :data-id='file.id'>mdi-delete-restore</v-icon>
                                             </template>
                                             <template v-else>
-                                                <template v-if='hasPermission(file)'>
+                                                <template v-if='file.hasPermission'>
                                                     <v-icon class='glyphicon glyphicon-remove button-restore' @click="buttonRestore" color='green' title='Delete' :data-id='file.id'>
                                                         mdi-delete-restore
                                                     </v-icon>
 
                                                     <v-icon class='button-delete' @click="buttonDelete" title='Delete' color='red' :data-id='file.id'>mdi-delete-circle</v-icon>
                                                 </template>
-                                                <template v-else-if='file.mimeType !== "application/vnd.google-apps.folder"'>
+                                                <template v-else-if='file.fileType !== "folder"'>
                                                     <v-icon class='button-delete' @click="buttonDelete" title='Delete' :data-id='file.id'>mdi-delete-circle</v-icon>
                                                 </template>
                                             </template>
                                         </template>
                                     </div>
                                 </div>
+                            </template>
+                            <template v-else>
+                                <div >Empty Folder</div>
                             </template>
 
                     </v-card>
@@ -806,7 +829,7 @@ export default {
                             if (!resp.error) {
                                 _this.showUserInfo();
                                 _this.DRIVE_FILES = resp.items;
-                                // this.buildFiles();
+                                _this.buildFiles();
                             } else {
                                 _this.showErrorMessage("Error: " + resp.error.message);
                             }
@@ -814,6 +837,34 @@ export default {
                     })
                 })
                 this.hideStatus();
+        },
+        buildFiles() {
+
+        if (this.DRIVE_FILES.length > 0) {
+            for (var i = 0; i < this.DRIVE_FILES.length; i++) {
+                this.DRIVE_FILES[i].textContentURL = "";
+                this.DRIVE_FILES[i].level = (parseInt(this.FOLDER_LEVEL) + 1).toString();
+                this.DRIVE_FILES[i].parentID =
+                    this.DRIVE_FILES[i].parents.length > 0
+                        ? this.DRIVE_FILES[i].parents[0].id
+                        : "";
+                this.DRIVE_FILES[i].thumbnailLink = this.DRIVE_FILES[i].thumbnailLink || "";
+                this.DRIVE_FILES[i].fileType =
+                    this.DRIVE_FILES[i].fileExtension == null ? "folder" : "file";
+                this.DRIVE_FILES[i].permissionRole = this.DRIVE_FILES[i].userPermission.role;
+                this.DRIVE_FILES[i].hasPermission =
+                    this.DRIVE_FILES[i].permissionRole == "owner" ||
+                    this.DRIVE_FILES[i].permissionRole == "writer";
+
+                if (this.DRIVE_FILES[i]["exportLinks"] != null) {
+                    this.DRIVE_FILES[i].fileType = "file";
+                    this.DRIVE_FILES[i].textContentURL =
+                        this.DRIVE_FILES[i]["exportLinks"]["text/plain"];
+                }
+             }
+            }else{
+                this.DRIVE_FILES=[]
+            }
         },
         btnAddFolder(event) {
             //$("#box-AddFolder").hide();
@@ -997,7 +1048,7 @@ export default {
                 if (this.DELETE_FROM_TRASH) {
                     this.howStatus("Deleting file for forever...");
                     var request = gapi.client.drive.files.delete({
-                        fileId: event.taget.dataset.id
+                        fileId: event.target.dataset.id
                     });
 
                     request.execute(resp => {
@@ -1025,6 +1076,174 @@ export default {
                 }
             }
         },
+        //browse folder
+        browseFolder(folder,index) {
+            // console.log(index)
+            var flag=0;
+            console.log(folder.id);
+            console.log(folder.title);
+            console.log( parseInt(folder.level));
+            console.log( index);
+            console.log(this.hasPermission(folder));
+            this.FOLDER_ID =folder.id;
+            this.FOLDER_NAME =folder.title;
+            this.FOLDER_LEVEL = parseInt(folder.level);
+            this.FOLDER_PERMISSION =this.hasPermission(folder);
+            //-------------------------------------------------------------
+            //Clear all before Insert
+            this.fileCreatedDate=""
+            this.fileModifiedDate=""
+            this.fileOwner=""
+            this.fileTitle=""
+            this.fileId=""
+            this.fileSize=""
+            this.fileExtension=""
+
+            if (flag == 0) {
+                this.FILE_COUNTER = index;
+
+                if (this.DRIVE_FILES[this.FILE_COUNTER] != null) {
+                    var createdDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].createdDate);
+                    var modifiedDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].modifiedDate);
+                    this.fileCreatedDate=
+                        createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                    this.fileModifiedDat
+                        modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                    this.fileOwner=
+                        this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName.length > 0
+                            ? this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName
+                            : ""
+
+                    this.fileTitle=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                    this.fileId=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                    this.fileSize=
+                        this.DRIVE_FILES[this.FILE_COUNTER].fileSize == null
+                            ? "N/A"
+                            : this.formatBytes(this.DRIVE_FILES[this.FILE_COUNTER].fileSize)
+
+                    this.fileExtension=this.DRIVE_FILES[this.FILE_COUNTER].fileExtension;
+                }
+            } else {
+                    var createdDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].createdDate);
+                    var modifiedDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].modifiedDate);
+                    this.fileCreatedDate=
+                        createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                    this.fileModifiedDat
+                        modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                    this.fileOwner=
+                        this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName.length > 0
+                            ? this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName
+                            : ""
+
+                    this.fileTitle=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                    this.fileId=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                    this.fileSize=
+                        this.DRIVE_FILES[this.FILE_COUNTER].fileSize == null
+                            ? "N/A"
+                            : this.formatBytes(this.DRIVE_FILES[this.FILE_COUNTER].fileSize)
+
+                    this.fileExtension=this.DRIVE_FILES[this.FILE_COUNTER].fileExtension;
+            }
+            //-----------------------------------------------------------------------------------------------------------
+            if (typeof this.FOLDER_NAME === "undefined") {
+                this.FOLDER_NAME = "";
+                this.FOLDER_ID = "root";
+                this.FOLDER_LEVEL = 0;
+                this.FOLDER_PERMISSION = true;
+                this.FOLDER_ARRAY = [];
+                this.boxInfo=false;
+            } else {
+                if (this.FOLDER_LEVEL == this.FOLDER_ARRAY.length && this.FOLDER_LEVEL > 0) {
+                    //do nothing
+                } else if (this.FOLDER_LEVEL < this.FOLDER_ARRAY.length) {
+                    var tmpArray = this.cloneObject(FOLDER_ARRAY);
+                    this.FOLDER_ARRAY = [];
+
+                    for (var i = 0; i < tmpArray.length; i++) {
+                        this.FOLDER_ARRAY.push(tmpArray[i]);
+                        if (tmpArray[i].Level >= this.FOLDER_LEVEL) {
+                            break;
+                        }
+                    }
+                } else {
+                    //breadcrumb navigation data insert
+                    var fd = {
+                        Name: this.FOLDER_NAME,
+                        ID: this.FOLDER_ID,
+                        Level: this.FOLDER_LEVEL,
+                        Permission: this.FOLDER_PERMISSION,
+
+                        text: this.fileTitle,
+                        CreatedDate: this.fileCreatedDate,
+                        ModifiedDate: this.ModifiedDate,
+                        Owner: this.fileOwner,
+                        Id: this.fileId,
+                        Size: this.fileSize,
+                        Extension: this.fileExtension
+                    };
+                    this.FOLDER_ARRAY.push(fd);
+                }
+            }
+
+            var sbNav = "";
+            this.items=[
+                 {
+                        Name: '',
+                        ID: '',
+                        Level: '',
+                        Permission: '',
+
+                        text: "Root",
+                        CreatedDate: '',
+                        ModifiedDate: '',
+                        Owner: '',
+                        Id: '',
+                        Size: '',
+                        Extension: ''
+                }
+            ]
+            for (var i = 0; i < this.FOLDER_ARRAY.length; i++) {
+                this.items.push(this.FOLDER_ARRAY[i]);
+                // sbNav += "<span class='breadcrumb-arrow'></span>";
+                // sbNav +=
+                //     "<span class='folder-name'><a  spanCreatedDate='" +
+                //     FOLDER_ARRAY[i].CreatedDate +
+                //     "' spanModifiedDate='" +
+                //     FOLDER_ARRAY[i].ModifiedDate +
+                //     "' spanOwner='" +
+                //     FOLDER_ARRAY[i].Owner +
+                //     "' spanSize='" +
+                //     FOLDER_ARRAY[i].Size +
+                //     "' spanExtension='" +
+                //     FOLDER_ARRAY[i].Extension +
+                //     "' spanTitle='" +
+                //     FOLDER_ARRAY[i].Title +
+                //     "' data-id='" +
+                //     FOLDER_ARRAY[i].ID +
+                //     "' data-level='" +
+                //     FOLDER_ARRAY[i].Level +
+                //     "' data-name='" +
+                //     FOLDER_ARRAY[i].Name +
+                //     "' data-has-permission='" +
+                //     FOLDER_PERMISSION +
+                //     "'>" +
+                //     FOLDER_ARRAY[i].Name +
+                //     "</a></span>";
+            }
+            // $("#span-navigation").html(sbNav.toString());
+
+            this.showLoading();
+            this.showStatus("Loading Google Drive files...");
+            this.getDriveFiles();
+        },
+        bb(event){
+            console.log(event)
+        }
+
 
 
 
