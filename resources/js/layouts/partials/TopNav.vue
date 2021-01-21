@@ -472,7 +472,7 @@ watch: {
     display :flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 15vw;
+
 
 }
 // Small devices (landscape phones, 576px and up)

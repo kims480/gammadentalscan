@@ -46,10 +46,24 @@
                 <v-col cols="12" md="4">
                     <v-card class="pa-2" outlined tile>
                         <div class="w3-display-container">
-                                <img src="./../../../assets/images/google_drive_logo.png" style="width:80%; float:initial" alt="Avatar">
+                            <span>
+                                <img src="./../../../assets/images/google_drive_logo.png" alt="Avatar">
+                                </span>
+                                <span><v-btn
+                                        class="ma-2"
+                                        color="error"
+                                        right
+                                        dense
+                                        icon
+                                        dark
+                                        @click="handleSignoutClick"
+                                    >
+                                        <v-icon dark left>mdi-exit-to-app </v-icon>
+                                    </v-btn>
+                                    </span>
                             </div>
 
-                        <v-divider class="mx-3"></v-divider>
+
 
                         <v-container>
 
@@ -102,22 +116,7 @@
                                     </v-list-item-content>
                                     </v-list-item>
                                 </v-list>
-                                <v-tooltip top>
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        class="ma-2"
-                                        color="error"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        dark
-                                        @click="handleSignoutClick"
-                                    >
-                                        <v-icon dark left>mdi-exit-to-app </v-icon> Logout
-                                    </v-btn>
-                                </template>
-                                <span>Log Out</span>
-                            </v-tooltip>
-                                <hr>
+
                             </div>
                             <v-progress-linear
                                 :active="active"
@@ -957,8 +956,12 @@ export default {
                 this.showLoading();
                 this.showStatus("Uploading file in progress...");
                 var _this =this
-                var file = this.files[0];
+                // var file = this.files[0];
                 // console.dir(file)
+            if (this.files.length>0){
+            this.files.forEach(file => {
+
+
                 var metadata = {
                     title: file.name,
                     description: "File Upload",
@@ -1048,6 +1051,8 @@ export default {
                       _this.showUploadProgress=false
                     _this.hideStatus();
                 }
+            });
+            }
         },
         buttonDownload(event){
             this.showLoading();
@@ -1990,5 +1995,20 @@ export default {
         transform: translate(10%, 50%);
     }
 
+}
+.w3-display-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.w3-display-container>:nth-child(1){
+    flex-grow: 1;
+    flex-basis: 50%;
+    max-width: 50%;
+}
+.w3-display-container>:nth-child(2){
+    flex-grow: 1;
+    align-self: center;
+    text-align: end;
 }
 </style>
