@@ -14,7 +14,7 @@
                 <v-card-text color="light-blue lighten-5">Use your Google Account</v-card-text>
                 <v-card-actions class="d-flex justify-content-center">
                     <v-btn color="green lighten-5 " light   @click="handleAuthClick()">
-                        <v-icon  left>mdi-login-variant</v-icon> Google Sign In
+                        <v-icon  left>mdi-login-variant</v-icon> Sign In
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -62,7 +62,7 @@
                                         dismissible
                                         border="top"
                                         dense
-                                        outlined
+                                        text
                                         type="error"
                                         class="notif-message" id="error-message">{{errorMessageTxt}}
                                     </v-alert>
@@ -73,7 +73,7 @@
                                         transition="slide-y-reverse-transition"
                                         dismissible
                                         dense
-                                        text
+
                                         type="info"
                                         class="notif-message"
                                          id="status-message"
@@ -87,8 +87,21 @@
                                 </template>
                                 <hr>
                                 <p class="w3-large"><b>Welcome <span id="span-name">{{userName}}</span></b></p>
-                                <p style="font-size:15px; color:limegreen;">Total Storage: <span id="span-totalQuota" style="color:blue;">{{spanTotalQuota}}</span></p>
-                                <p style="font-size:15px; color:limegreen;">Used Storage: <span id="span-usedQuota" style="color:green;">{{spanUsedQuota}}</span></p>
+                                <v-list dense>
+                                    <v-list-item>
+                                    <v-list-item-content class="file-info-title" >Total Storage:</v-list-item-content>
+                                    <v-list-item-content class="align-end file-info-value" style="color:blue;">
+                                        {{ spanTotalQuota }}
+                                    </v-list-item-content>
+                                    </v-list-item>
+
+                                    <v-list-item>
+                                    <v-list-item-content class="file-info-title">Used Storage:</v-list-item-content>
+                                    <v-list-item-content class="align-end file-info-value">
+                                        {{ spanUsedQuota }}
+                                    </v-list-item-content>
+                                    </v-list-item>
+                                </v-list>
                                 <v-tooltip top>
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
@@ -144,23 +157,7 @@
                                 <span>Refresh</span>
                             </v-tooltip>
                             <template v-if="optBtn">
-                                <!-- upload -->
-                                <v-tooltip top>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                            class="ma-2"
-                                            text
-                                            icon
-                                            color="indigo"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            dark
-                                        >
-                                            <v-icon dark>mdi-cloud-upload</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>Upload</span>
-                                </v-tooltip>
+
                                 <!-- addFolder -->
                                 <v-tooltip top>
                                     <template v-slot:activator="{ on, attrs }">
@@ -246,18 +243,19 @@
 
                             <!-- <v-icon slot="prepend" color="green">mdi-minus</v-icon> -->
                         </v-text-field>
-
+                        <template v-if="addFiles">
+                            <div class="file-upload">
                         <v-file-input
                             v-model="files"
                             color="light-green accent-4"
                             counter
                             clearable
                             dense
-                            append-outer-icon="mdi-file-plus"
-                            @click:append-outer="fUpload"
+                            outlined
                             v-if="addFiles"
                             label="Add Files"
                             multiple
+
                             placeholder="Select your files"
                             prepend-icon="mdi-paperclip"
                             :show-size="1000"
@@ -279,8 +277,25 @@
                                 >
                                     +{{ files.length - 3 }} File(s)
                                 </span>
+
                             </template>
                         </v-file-input>
+                        <!-- upload -->
+                        <v-btn
+                                class="ma-2 white--text upload-btn"
+                                depressed
+                                block
+
+                                :disabled='files.length == 0'
+                                color="blue-grey"
+                                @click="fUpload"
+
+                            >
+                            Upload
+                                <v-icon  right>mdi-cloud-upload</v-icon>
+                            </v-btn>
+                        </div>
+                        </template>
                         <div id="box-info" v-show="boxInfo">
                             <v-card class="info-form">
                                 <v-card-title class="subheading font-weight-bold">
@@ -346,7 +361,7 @@
                 </v-col>
                 <v-col cols="12" md="8">
                     <v-card class="mx-auto" shaped>
-                        <v-breadcrumbs :items="items" >
+                        <v-breadcrumbs :items="spanNavigation" >
                             <template v-slot:item="{ item }">
                                 <v-breadcrumbs-item
 
@@ -842,8 +857,7 @@ export default {
                     this.shareBtn=true;
                     this.trashBtn=true;
                 }
-                this.initBread();
-                console.log('resp')
+                // console.log('resp')
                 var _this= this
                 gapi.load('client', function () {
                     gapi.client.load('drive', 'v2',function(){
@@ -853,7 +867,7 @@ export default {
                                 q: query
                             });
                         request.execute(resp => {
-                            console.log(resp)
+                            // console.log(resp)
                             if (!resp.error) {
                                 _this.showUserInfo();
                                 _this.DRIVE_FILES = resp.items;
@@ -1009,6 +1023,8 @@ export default {
                                 //  _this.showUploadProgress=false
                             }
                                 _this.hideLoading();
+                                // _this.addFiles=false;
+                                _this.files.length=0;
                                 _this.showUploadProgress=false
                         },
                         onProgress: function(event) {
@@ -1220,10 +1236,13 @@ export default {
             }
 
             this.initBread();
+                // console.log(this.items)
             for (var i = 0; i < this.FOLDER_ARRAY.length; i++) {
                 this.items.push(this.FOLDER_ARRAY[i]);
-
+                // console.log(this.FOLDER_ARRAY[i])
+                // console.log(this.items)
             }
+                // console.log(this.items)
 
             this.showLoading();
             this.showStatus("Loading Google Drive files...");
@@ -1248,16 +1267,7 @@ export default {
         initBread(){
             this.items=[
                  {
-                    Name: '',
-                    folderId: '',
-                    Level: '',
-                    Permission: '',
                     text: this.driveBreadcrumbLink,
-                    CreatedDate: '',
-                    ModifiedDate: '',
-                    Owner: '',
-                    Size: '',
-                    Extension: ''
                 }
             ]
             return;
@@ -1296,7 +1306,7 @@ export default {
             return (this.usedQuota/this.totalQuota)*100;
         },
         spanNavigation(){
-            return 'home'
+            return this.items
         }
 
     },
@@ -1949,5 +1959,34 @@ export default {
 }
 .folder-name,.folder-name a{
     color:rgb(11, 126, 126);
+}
+.file-upload{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+}
+.file-upload:nth-child(1){
+    flex-grow: 4;
+}
+.file-upload:nth-child(3){
+    flex-grow: 1;
+}
+.upload-btn:hover,.upload-btn:focus{
+    background: darkolivegreen;
+}
+@media screen and (max-width: 600px) {
+    .notif-message{
+        top:50px;
+        width: 90vw;
+        transform: translate(-5%,50%);
+        transform-origin: center;
+        z-index: 100;
+    }
+    .proress-upload{
+        width: 80%;
+        transform: translate(10%, 50%);
+    }
+
 }
 </style>
