@@ -1,21 +1,29 @@
 <template>
     <v-container class="grey lighten-5">
         <template v-if="!driveBox">
-            <div id="login-box">
-                <h1>Sign In</h1>
-                <p>Use your Google Account</p>
-                <p>
-                    <button type="button" class="btn btn-default btn-sm" @click="handleAuthClick()">
-                        <span class="glyphicon glyphicon-log-in"></span> Google Sign In
-                    </button>
-                </p>
-            </div>
-
+            <v-card elevation="6" dark color="green" id="login-box">
+                <v-card-title  class="d-flex justify-content-center" style="background: darkslategray;">
+                    <v-avatar
+                  size="36px"
+                >
+                  <img
+                    alt="Gmail Login"
+                    src="@/assets/images/Gmail-logo.png">
+                </v-avatar> GMAIL Sign In
+                </v-card-title>
+                <v-card-text color="light-blue lighten-5">Use your Google Account</v-card-text>
+                <v-card-actions class="d-flex justify-content-center">
+                    <v-btn color="green lighten-5 " light   @click="handleAuthClick()">
+                        <v-icon  left>mdi-login-variant</v-icon> Google Sign In
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
         </template>
 
         <template v-else>
              <v-alert
                 v-model="showUploadProgress"
+                transition="slide-y-reverse-transition"
                 dismissible
                 color="cyan"
                 border="left"
@@ -33,7 +41,7 @@
                         ></v-progress-linear>
                         <span>{{uploadPercentageTxt}}</span>
             </v-alert>
-            <div id="drive-box">
+            <v-sheet transition="slide-y-transition" id="drive-box">
             <v-row>
                 <v-col cols="12" md="4">
                     <v-card class="pa-2" outlined tile>
@@ -48,10 +56,28 @@
                             <div class="w3-container">
                                 <p>
                                 <template v-if="errorMessage">
-                                    <div id="error-message" class="flash ">{{errorMessageTxt}}</div>
+                                    <v-alert
+                                        v-model="errorMessage"
+                                        transition="slide-y-reverse-transition"
+                                        dismissible
+                                        border="top"
+                                        dense
+                                        outlined
+                                        type="error"
+                                        class="notif-message" id="error-message">{{errorMessageTxt}}
+                                    </v-alert>
                                 </template>
                                 <template v-if="statusMessage">
-                                    <div id="status-message" class="flash ">{{statusMessageTxt}}</div>
+                                    <v-alert
+                                        v-model="statusMessage"
+                                        transition="slide-y-reverse-transition"
+                                        dismissible
+                                        dense
+                                        text
+                                        type="info"
+                                        class="notif-message"
+                                         id="status-message"
+                                        >{{statusMessageTxt}}</v-alert>
                                 </template>
                                 </p>
                                 <template v-if="setShowLoading">
@@ -67,8 +93,6 @@
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         class="ma-2"
-
-
                                         color="error"
                                         v-bind="attrs"
                                         v-on="on"
@@ -186,6 +210,7 @@
                                         v-bind="attrs"
                                         v-on="on"
                                         color="blue lighten-2"
+                                        @click="handleShareTrash('Shared')"
                                     >
                                         <v-icon>mdi-share-variant </v-icon>
                                     </v-btn>
@@ -202,6 +227,7 @@
                                         v-bind="attrs"
                                         v-on="on"
                                         color="red lighten-2"
+                                         @click="handleShareTrash('Trashed')"
                                     >
                                         <v-icon>mdi-trash-can</v-icon>
                                     </v-btn>
@@ -326,15 +352,15 @@
 
                                 >
                                    <span class='folder-name'><a
-                                    :spanCreatedDate="item.CreatedDate"
-                                    :spanModifiedDate="item.ModifiedDate"
+                                    :spanCreatedDate="item.createdDate"
+                                    :spanModifiedDate="item.modifiedDate"
                                     :spanOwner="item.Owner"
                                     :spanSize="item.Size"
                                     :spanExtension="item.Extension"
                                     :spanTitle="item.text"
-                                    :data-id="item.Id"
+                                    :data-id="item.folderId"
                                     :data-level="item.Level"
-                                    :FOLDER_PERMISSION="item.Permission"
+                                    :folderPermission="item.Permission"
 
                                     @click="bb">
 
@@ -350,7 +376,7 @@
                     <v-card  class="w3-container w3-card w3-white my-4" id="drive-content" raised>
 
                             <template v-if="DRIVE_FILES.length > 0">
-                                <div v-for="(file,index) in DRIVE_FILES" :key="index" :class='file.fileType == "folder"?"folder" + "-box" : "file" + "-box"'>
+                                <div v-for="(file,index) in DRIVE_FILES" :key="index" :class='file.mimeType == "application/vnd.google-apps.folder"?"folder" + "-box" : "file" + "-box"'>
                                     <template v-if='file.fileType == "folder"'>
                                             <a class='folder-icon' :data-file-counter='index'
                                                 :data-level='file.level' :data-parent='file.parentID'
@@ -411,11 +437,7 @@
                                             </template>
                                             <template v-else>
                                                 <template v-if='file.hasPermission'>
-                                                    <v-icon class='glyphicon glyphicon-remove button-restore' @click="buttonRestore" color='green' title='Delete' :data-id='file.id'>
-                                                        mdi-delete-restore
-                                                    </v-icon>
-
-                                                    <v-icon class='button-delete' @click="buttonDelete" title='Delete' color='red' :data-id='file.id'>mdi-delete-circle</v-icon>
+                                                   <v-icon class='button-delete' @click="buttonDelete" title='Delete' color='red' :data-id='file.id'>mdi-delete-circle</v-icon>
                                                 </template>
                                                 <template v-else-if='file.fileType !== "folder"'>
                                                     <v-icon class='button-delete' @click="buttonDelete" title='Delete' :data-id='file.id'>mdi-delete-circle</v-icon>
@@ -432,7 +454,7 @@
                     </v-card>
                 </v-col>
             </v-row>
-            </div>
+            </v-sheet>
         </template>
     </v-container>
 </template>
@@ -458,7 +480,7 @@ export default {
             height: 10,
             indeterminate: false,
             query: false,
-            driveBox: true,
+            driveBox: false,
             loginBox: false,
             driveBoxLoading: false,
             rounded: true,
@@ -519,7 +541,7 @@ export default {
             boxInfo:false,
             newFolderName:null,
             newFile:null,
-            driveBreadcrumbLink:'home',
+            driveBreadcrumbLink:'Root',
 
 
 
@@ -547,6 +569,9 @@ export default {
 
          async handleClientLoad() {
         //gapi is client library, it used for Load the API client and auth2 library
+            this.errorMessageTxt='';
+            this.statusMessageTxt='';
+
             console.log('handleClientLoad');
             await gapi.load("client:auth2", this.initClient);
          },
@@ -691,11 +716,12 @@ export default {
             }
             var temp = obj.constructor();
             for (var key in obj) {
-                temp[key] = cloneObject(obj[key]);
+                temp[key] = this.cloneObject(obj[key]);
             }
             return temp;
         },
         ifShowSharedFiles(){
+
             return this.ShowSharedFiles;
 
         },
@@ -800,13 +826,15 @@ export default {
                 } else {
                     if (this.driveBreadcrumbLink == "Trash") {
                         if (this.spanNavigation == "") {
-                            this.driveBreadcrumbLink == "Home";
+                            this.driveBreadcrumbLink == "Root";
                         }
                     } else if (this.driveBreadcrumbLink == "Share") {
                         if (this.spanNavigation == "") {
-                            this.driveBreadcrumbLink == "Home";
+                            this.driveBreadcrumbLink == "Root";
+
                         }
                     }
+
 
                     this.DELETE_FROM_TRASH = false;
                     query = "trashed=false and '" + this.FOLDER_ID + "' in parents";
@@ -814,7 +842,7 @@ export default {
                     this.shareBtn=true;
                     this.trashBtn=true;
                 }
-
+                this.initBread();
                 console.log('resp')
                 var _this= this
                 gapi.load('client', function () {
@@ -830,13 +858,16 @@ export default {
                                 _this.showUserInfo();
                                 _this.DRIVE_FILES = resp.items;
                                 _this.buildFiles();
+                                _this.hideLoading();
+                                _this.hideStatus();
+
                             } else {
                                 _this.showErrorMessage("Error: " + resp.error.message);
                             }
                         });
                     })
                 })
-                this.hideStatus();
+
         },
         buildFiles() {
 
@@ -1046,7 +1077,7 @@ export default {
                 this.showStatus("Deleting file in progress...");
 
                 if (this.DELETE_FROM_TRASH) {
-                    this.howStatus("Deleting file for forever...");
+                    this.showStatus("Deleting file for forever...");
                     var request = gapi.client.drive.files.delete({
                         fileId: event.target.dataset.id
                     });
@@ -1079,17 +1110,12 @@ export default {
         //browse folder
         browseFolder(folder,index) {
             // console.log(index)
-            var flag=0;
-            console.log(folder.id);
-            console.log(folder.title);
-            console.log( parseInt(folder.level));
-            console.log( index);
-            console.log(this.hasPermission(folder));
-            this.FOLDER_ID =folder.id;
-            this.FOLDER_NAME =folder.title;
-            this.FOLDER_LEVEL = parseInt(folder.level);
-            this.FOLDER_PERMISSION =this.hasPermission(folder);
-            //-------------------------------------------------------------
+            var flag= index !=null ? 0:1;
+            // console.log(folder.id);
+            // console.log(folder.title);
+            // console.log( parseInt(folder.level));
+            // console.log( index);
+            // console.log(this.hasPermission(folder));
             //Clear all before Insert
             this.fileCreatedDate=""
             this.fileModifiedDate=""
@@ -1099,57 +1125,61 @@ export default {
             this.fileSize=""
             this.fileExtension=""
 
-            if (flag == 0) {
-                this.FILE_COUNTER = index;
+            if(typeof folder !=="undefined"){
+                this.FOLDER_ID =folder.id;
+                this.FOLDER_NAME =folder.title;
+                this.FOLDER_LEVEL = parseInt(folder.level);
+                this.FOLDER_PERMISSION =folder.hasPermission;
 
-                if (this.DRIVE_FILES[this.FILE_COUNTER] != null) {
-                    var createdDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].createdDate);
-                    var modifiedDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].modifiedDate);
-                    this.fileCreatedDate=
-                        createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+            //-------------------------------------------------------------
+                if (flag == 0) {
+                    this.FILE_COUNTER = index;
 
-                    this.fileModifiedDat
-                        modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+                    if (this.DRIVE_FILES[this.FILE_COUNTER] != null) {
+                        var createdDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].createdDate);
+                        var modifiedDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].modifiedDate);
+                        this.fileCreatedDate=
+                            createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
 
-                    this.fileOwner=
-                        this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName.length > 0
-                            ? this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName
-                            : ""
+                        this.fileModifiedDat
+                            modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
 
-                    this.fileTitle=this.DRIVE_FILES[this.FILE_COUNTER].title;
-                    this.fileId=this.DRIVE_FILES[this.FILE_COUNTER].title;
-                    this.fileSize=
-                        this.DRIVE_FILES[this.FILE_COUNTER].fileSize == null
-                            ? "N/A"
-                            : this.formatBytes(this.DRIVE_FILES[this.FILE_COUNTER].fileSize)
+                        this.fileOwner=
+                            this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName.length > 0
+                                ? this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName
+                                : ""
 
-                    this.fileExtension=this.DRIVE_FILES[this.FILE_COUNTER].fileExtension;
+                        this.fileTitle=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                        this.fileId=this.DRIVE_FILES[this.FILE_COUNTER].title;
+                        this.fileSize=
+                            this.DRIVE_FILES[this.FILE_COUNTER].fileSize == null
+                                ? "N/A"
+                                : this.formatBytes(this.DRIVE_FILES[this.FILE_COUNTER].fileSize)
+
+                        this.fileExtension=this.DRIVE_FILES[this.FILE_COUNTER].fileExtension;
+                    }
+                } else {
+                        var createdDate = new Date(folder.createdDate);
+                        var modifiedDate = new Date(folder.modifiedDate);
+                        this.fileCreatedDate=
+                            createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                        this.fileModifiedDate=
+                            modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
+
+                        this.fileOwner=  folder.owner
+                        this.FOLDER_PERMISSION=  folder.folderPermission
+
+
+                        this.fileTitle=folder.title;
+                        this.fileId=folder.title;
+                        this.fileSize=this.formatBytes(folder.fileSize)
+
+                        this.fileExtension=folder.fileExtension;
                 }
-            } else {
-                    var createdDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].createdDate);
-                    var modifiedDate = new Date(this.DRIVE_FILES[this.FILE_COUNTER].modifiedDate);
-                    this.fileCreatedDate=
-                        createdDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
-
-                    this.fileModifiedDat
-                        modifiedDate.toString("dddd, d MMMM yyyy h:mm:ss tt")
-
-                    this.fileOwner=
-                        this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName.length > 0
-                            ? this.DRIVE_FILES[this.FILE_COUNTER].owners[0].displayName
-                            : ""
-
-                    this.fileTitle=this.DRIVE_FILES[this.FILE_COUNTER].title;
-                    this.fileId=this.DRIVE_FILES[this.FILE_COUNTER].title;
-                    this.fileSize=
-                        this.DRIVE_FILES[this.FILE_COUNTER].fileSize == null
-                            ? "N/A"
-                            : this.formatBytes(this.DRIVE_FILES[this.FILE_COUNTER].fileSize)
-
-                    this.fileExtension=this.DRIVE_FILES[this.FILE_COUNTER].fileExtension;
             }
             //-----------------------------------------------------------------------------------------------------------
-            if (typeof this.FOLDER_NAME === "undefined") {
+            if (typeof this.FOLDER_NAME === "undefined" || typeof folder ==="undefined") {
                 this.FOLDER_NAME = "";
                 this.FOLDER_ID = "root";
                 this.FOLDER_LEVEL = 0;
@@ -1160,7 +1190,7 @@ export default {
                 if (this.FOLDER_LEVEL == this.FOLDER_ARRAY.length && this.FOLDER_LEVEL > 0) {
                     //do nothing
                 } else if (this.FOLDER_LEVEL < this.FOLDER_ARRAY.length) {
-                    var tmpArray = this.cloneObject(FOLDER_ARRAY);
+                    var tmpArray = this.cloneObject(this.FOLDER_ARRAY);
                     this.FOLDER_ARRAY = [];
 
                     for (var i = 0; i < tmpArray.length; i++) {
@@ -1173,15 +1203,15 @@ export default {
                     //breadcrumb navigation data insert
                     var fd = {
                         Name: this.FOLDER_NAME,
-                        ID: this.FOLDER_ID,
+                        folderId: this.FOLDER_ID,
                         Level: this.FOLDER_LEVEL,
                         Permission: this.FOLDER_PERMISSION,
 
                         text: this.fileTitle,
-                        CreatedDate: this.fileCreatedDate,
-                        ModifiedDate: this.ModifiedDate,
+                        createdDate: this.fileCreatedDate,
+                        modifiedDate: this.fileModifiedDate,
                         Owner: this.fileOwner,
-                        Id: this.fileId,
+
                         Size: this.fileSize,
                         Extension: this.fileExtension
                     };
@@ -1189,72 +1219,70 @@ export default {
                 }
             }
 
-            var sbNav = "";
-            this.items=[
-                 {
-                        Name: '',
-                        ID: '',
-                        Level: '',
-                        Permission: '',
-
-                        text: "Root",
-                        CreatedDate: '',
-                        ModifiedDate: '',
-                        Owner: '',
-                        Id: '',
-                        Size: '',
-                        Extension: ''
-                }
-            ]
+            this.initBread();
             for (var i = 0; i < this.FOLDER_ARRAY.length; i++) {
                 this.items.push(this.FOLDER_ARRAY[i]);
-                // sbNav += "<span class='breadcrumb-arrow'></span>";
-                // sbNav +=
-                //     "<span class='folder-name'><a  spanCreatedDate='" +
-                //     FOLDER_ARRAY[i].CreatedDate +
-                //     "' spanModifiedDate='" +
-                //     FOLDER_ARRAY[i].ModifiedDate +
-                //     "' spanOwner='" +
-                //     FOLDER_ARRAY[i].Owner +
-                //     "' spanSize='" +
-                //     FOLDER_ARRAY[i].Size +
-                //     "' spanExtension='" +
-                //     FOLDER_ARRAY[i].Extension +
-                //     "' spanTitle='" +
-                //     FOLDER_ARRAY[i].Title +
-                //     "' data-id='" +
-                //     FOLDER_ARRAY[i].ID +
-                //     "' data-level='" +
-                //     FOLDER_ARRAY[i].Level +
-                //     "' data-name='" +
-                //     FOLDER_ARRAY[i].Name +
-                //     "' data-has-permission='" +
-                //     FOLDER_PERMISSION +
-                //     "'>" +
-                //     FOLDER_ARRAY[i].Name +
-                //     "</a></span>";
+
             }
-            // $("#span-navigation").html(sbNav.toString());
 
             this.showLoading();
             this.showStatus("Loading Google Drive files...");
             this.getDriveFiles();
         },
         bb(event){
-            console.log(event)
+            if(event.target.attributes.spanTitle.value=="Root"){
+                this.browseFolder()
+            }else{
+            const folder ={
+                id:event.target.dataset.id,
+                title:event.target.attributes.spanTitle.value,
+                level:event.target.dataset.level,
+                hasPermission:event.target.attributes.folderPermission?event.target.attributes.folderPermission.value:false,
+                spanCreatedDate:event.target.attributes.spancreateddate.value,
+                spanModifiedDate:event.target.attributes.spanModifieddate.value,
+
+            };
+                this.browseFolder(folder)
+            }
+        },
+        initBread(){
+            this.items=[
+                 {
+                    Name: '',
+                    folderId: '',
+                    Level: '',
+                    Permission: '',
+                    text: this.driveBreadcrumbLink,
+                    CreatedDate: '',
+                    ModifiedDate: '',
+                    Owner: '',
+                    Size: '',
+                    Extension: ''
+                }
+            ]
+            return;
+        },
+        handleShareTrash(mode){
+            this.driveBreadcrumbLink=mode;
+            if(mode=='Shared'){
+                this.ShowSharedFiles=!this.ShowSharedFiles;
+                this.ShowTrashFiles=false;
+            }
+            else if(mode=='Trashed'){
+                this.ShowTrashFiles=!this.ShowTrashFiles;
+                this.ShowSharedFiles=false;
+            }
+            if(this.ShowTrashFiles ==false && this.ShowSharedFiles==false){
+
+                this.driveBreadcrumbLink='Root';
+            }
+            this.getDriveFiles();
         }
-
-
-
-
-
-
     },
     created(){
-        // this.handleAuthClick()
 
     },
-     computed:{
+    computed:{
         message(){
             return this.statusMessageTxt
         },
@@ -1284,18 +1312,18 @@ export default {
     background: light-blue;
 }
 #login-box {
-    font-size: medium;
+    // font-size: medium;
     text-align: center;
-    padding-top: 40px;
-    padding-bottom: 50px;
-    background-color: lightgreen;
+    // padding-top: 40px;
+    // padding-bottom: 50px;
+    /* background-color: darkolivegreen; */
     width: 400px;
-    height: 200px;
+    // height: 200px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 5px 10px #888888;
+    box-shadow: 5px 10px #b4b4b4;
 }
 
 .logout-link {
@@ -1542,31 +1570,31 @@ export default {
 }
 
 #status-message {
-    color: red;
-    border: solid 1px #fbfbd4;
-    background: #fbfbd4;
-    border-radius: 5px;
-    padding: 5px;
-    /*position:absolute;*/
-    right: 10px;
-    bottom: 10px;
-    z-index: 9999999999;
-    font-size: 15px;
+    // color: red;
+    // border: solid 1px #fbfbd4;
+    // background: #fbfbd4;
+    // border-radius: 5px;
+    // padding: 5px;
+    // /*position:absolute;*/
+    // right: 10px;
+    // bottom: 10px;
+    // z-index: 9999999999;
+    // font-size: 15px;
 }
 
 #error-message{
-    border:solid 1px #f2fcb9;
-    background:#d83813;
-    border-radius:5px;
-    color:#fff;
-    padding:10px;
-    /*position:absolute;*/
-    left:10px;
-    bottom:10px;
-    z-index:9999999999;
-    max-width:400px;
-    border-radius:5px;
-    display:none;
+    // border:solid 1px #f2fcb9;
+    // background:#d83813;
+    // border-radius:5px;
+    // color:#fff;
+    // padding:10px;
+    // /*position:absolute;*/
+    // left:10px;
+    // bottom:10px;
+    // z-index:9999999999;
+    // max-width:400px;
+    // border-radius:5px;
+    // display:none;
 }
 
 #upload-percentage {
@@ -1909,5 +1937,17 @@ export default {
 .file-info-title{
 
     font-weight: bolder;
+}
+.notif-message{
+    position: fixed;
+    top: 60px;
+    /* left: 0; */
+    /* right: 0; */
+    transform: translate(50%, 50%);
+    width: 40vw;
+    z-index: 100;
+}
+.folder-name,.folder-name a{
+    color:rgb(11, 126, 126);
 }
 </style>
