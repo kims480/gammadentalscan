@@ -284,8 +284,6 @@
                         <v-btn
                                 class="ma-2 white--text upload-btn"
                                 depressed
-                                block
-
                                 :disabled='files.length == 0'
                                 color="blue-grey"
                                 @click="fUpload"
@@ -1979,8 +1977,12 @@ export default {
     .notif-message{
         top:50px;
         width: 90vw;
-        transform: translate(-5%,50%);
-        transform-origin: center;
+       left: 50%;
+        -ms-transform: translate(-50%, 50%);
+        -moz-transform: translate(-50%, 50%);
+        -webkit-transform: translate(-50%, 50%);
+        transform: translate(-50%, 50%);
+        // transform-origin: center;
         z-index: 100;
     }
     .proress-upload{
