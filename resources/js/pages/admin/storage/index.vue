@@ -285,7 +285,7 @@
                                 depressed
                                 :disabled='files.length == 0'
                                 color="blue-grey"
-                                @click="fUpload"
+                                @click="workerfUpload"
 
                             >
                             Upload
@@ -474,7 +474,7 @@
 <script>
 import * as lightbox from '@/services/lightbox.min.js'
 import gapi from'@/services/gapi.js'
-import MediaUploader from '@/services/upload.js'
+import {MediaUploader, RetryHandler} from '@/services/upload.js'
 export default {
     name: "index",
 
@@ -554,10 +554,6 @@ export default {
             newFolderName:null,
             newFile:null,
             driveBreadcrumbLink:'Root',
-
-
-
-
         };
     },
     mounted(){
@@ -572,9 +568,9 @@ export default {
                 })
                 // console.log(gapi)
 
-         let jquery = document.createElement('script')
-            jquery.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
-            document.head.appendChild(jquery)
+        //  let jquery = document.createElement('script')
+        //     jquery.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+        //     document.head.appendChild(jquery)
     },
 
     methods:{
@@ -683,12 +679,12 @@ export default {
         hideLoading(){
             this.setShowLoading=false;
         },
-        showProgressPercentage(percentageValue) {
+        showProgressPercentage(percentageValue,message='') {
            /*  if (this.uploadPercentageTxt == 0) {
                this.uploadPercentage=true;
             } */
 
-            this.uploadPercentageTxt=percentageValue.toString() + "%";
+            this.uploadPercentageTxt=message + " : " +  percentageValue.toString() + "%";
             this.percentageValue=percentageValue;
         },
         showUserInfo() {
@@ -1053,6 +1049,110 @@ export default {
                 }
             });
             }
+        },
+        workerfUpload () {
+
+                this.showLoading();
+                this.showStatus("Uploading file in progress...");
+                var _this =this
+                var metadata = {
+
+                    description: "File Upload",
+
+                    parents: [
+                        {
+                            kind: "drive#file",
+                            id: _this.FOLDER_ID
+                        }
+                    ]
+                };
+                var progress=0;
+                var fileNumber=0;
+                var fileName='';
+                var fileCount=0;
+                var fileSize=0;
+                this.showProgressPercentage(0);
+                _this.showUploadProgress=true
+                try {
+                    var worker = new Worker('./../../drive/uploadworker.js');
+
+                    worker.onmessage = function(e) {
+                        // console.log(e.data);
+                        if(e.data.message=="Initiate"){
+                            console.log({fileName:e.data.fileName,
+                            fileSize:e.data.fileSize,
+                            totalFiles:e.data.totalFiles
+                            });
+                            progress=0;
+                            fileName=e.data.fileName;
+                            fileSize=e.data.fileSize;
+                            fileCount=e.data.totalFiles;
+                            fileNumber=e.data.fileNumber;
+                        }
+
+
+                        if(e.data.message=="onError"){
+                            var errorResponse = JSON.parse(e.data.response);
+                            _this.showErrorMessage("Error: " + errorResponse.error.message);
+                            _this.file=null;
+                              _this.showUploadProgress=false
+                            _this.getDriveFiles();
+                        }
+                        if(e.data.message=="onProgress"){
+                            _this.showProgressPercentage(
+
+                                Math.round((((progress*1048576)+(e.data.eventLoaded / e.data.eventTotal)) / fileSize) * 100, 0)
+                                ,fileName
+                            );
+                                if (e.data.eventLoaded == e.data.eventTotal) progress++
+                        }
+                        if(e.data.message=="onComplete"){
+                                var errorResponse = JSON.parse(e.data.response);
+                            if (errorResponse.message != null) {
+                                console.log('inside Mediauploader OnComplete Error')
+                                _this.showErrorMessage(
+                                    "Error: " + errorResponse.error.message
+                                );
+                                _this.files=null;
+                                _this.getDriveFiles();
+                            } else {
+                                console.log('inside Mediauploader OnComplete Done')
+                                _this.showStatus("Loading Google Drive files...");
+                                _this.getDriveFiles();
+                                //  _this.showUploadProgress=false
+                            }
+                                _this.hideLoading();
+                                // _this.addFiles=false;
+                                _this.files.length=0;
+                                _this.showUploadProgress=false
+                        }
+                    }
+                    worker.onerror =werror;
+                    function werror(e) {
+                        console.log('ERROR: Line ', e.lineno, ' in ', e.filename, ': ', e.message);
+                        var errorResponse = JSON.parse(response);
+                            _this.showErrorMessage("Error: " + errorResponse.error.message);
+                            _this.file=null;
+                              _this.showUploadProgress=false
+                            _this.getDriveFiles();
+                    }
+                     worker.postMessage({files:_this.files,metadata: metadata,
+                                        token: gapi.auth2
+                                            .getAuthInstance()
+                                            .currentUser.get()
+                                            .getAuthResponse().access_token
+                                        });
+                } catch (exc) {
+                    console.log('inside Mediauploader OnComplete on Catch')
+                    _this.showErrorMessage("Error: " + exc);
+                    _this.files=[];
+                    _this.getDriveFiles();
+                    _this.hideLoading();
+                      _this.showUploadProgress=false
+                    _this.hideStatus();
+                }
+
+
         },
         buttonDownload(event){
             this.showLoading();

@@ -1,4 +1,5 @@
-﻿/**
+﻿var file = [];
+/*/*
 import { rangesIntersect } from './../../../vendor/almasaeed2010/adminlte/plugins/fullcalendar/main.d';
 import { RetryHandler } from './upload';
  * Helper for implementing retries with backoff. Initial retry
@@ -12,7 +13,7 @@ import { RetryHandler } from './upload';
  *
  * @constructor
  */
-export class RetryHandler {
+class RetryHandler {
     constructor() {
         this.interval = 1000; // Start at one second
         this.maxInterval = 60 * 1000; // Don't wait longer than a minute
@@ -80,7 +81,7 @@ export class RetryHandler {
  * @param {function} [options.onProgress] Callback for status for the in-progress upload
  * @param {function} [options.onError] Callback if upload fails
  */
-export class MediaUploader {
+class MediaUploader {
     constructor(options) {
         var noop = function() {};
         this.file = options.file;
@@ -95,7 +96,7 @@ export class MediaUploader {
         this.onProgress = options.onProgress || noop;
         this.onError = options.onError || noop;
         this.offset = options.offset || 0;
-        this.chunkSize = options.chunkSize || 0;
+        this.chunkSize = options.chunkSize || 1024 * 1024;
         this.retryHandler = new RetryHandler();
 
         this.url = options.url;
@@ -126,6 +127,7 @@ export class MediaUploader {
                 this.sendFile_();
             } else {
                 this.onUploadError_(e);
+                self;
             }
         }.bind(this);
         xhr.onerror = this.onUploadError_.bind(this);
@@ -271,3 +273,89 @@ export class MediaUploader {
         return url;
     }
 }
+/* function process(){
+    for (var j = 0; j <file.length; j++) {
+        var blob = file[j];
+
+        const BYTES_PER_CHUNK = 1024 * 1024;
+        // 1MB chunk sizes.
+        const SIZE = blob.size;
+
+        var start = 0;
+        var end = BYTES_PER_CHUNK;
+
+        while (start < SIZE) {
+
+         if ('mozSlice' in blob) {
+          var chunk = blob.mozSlice(start, end);
+         } else {
+          var chunk = blob.webkitSlice(start, end);
+         }
+
+         upload(chunk);
+
+         start = end;
+         end = start + BYTES_PER_CHUNK;
+        }
+        p = ( j = file.length - 1) ? true : false;
+        self.postMessage(blob.name + " Uploaded Succesfully");
+       }
+
+} */
+var options = {};
+
+self.onmessage = function(e) {
+    options = {
+        file: null,
+        token: gapi.auth2
+            .getAuthInstance()
+            .currentUser.get()
+            .getAuthResponse().access_token,
+        metadata: e.data.metadata,
+        onError: function(response) {
+            self.postMessage({ response, message: "onError" });
+        },
+        onComplete: function(response) {
+            console.log("inside Mediauploader OnComplete");
+            var errorResponse = JSON.parse(response);
+            if (errorResponse.message != null) {
+                console.log("inside Mediauploader OnComplete Error");
+
+                self.postMessage({ response, message: "onError" });
+            } else {
+                console.log("inside Mediauploader OnComplete Done");
+            }
+
+            //  _this.showUploadProgress=false
+            self.postMessage({ response, message: "onComplete" });
+        },
+        onProgress: function(event) {
+            // console.log('inside Mediauploader OnComplete on Progress')
+            self.postMessage({ event, message: "onProgress" });
+        },
+        params: {
+            convert: false,
+            ocr: false
+        }
+    };
+    for (var j = 0; j < e.data.file.length; j++) file.push(e.data.file[j]);
+
+    //  if (p) {
+    //   process(){
+    for (var i = 0; i < file.length; i++) {
+        options.file = e.data.file[i];
+        option.metadata.title = this.file[i].name;
+        option.metadata.mimeType = file[i].type || "application/octet-stream";
+
+        //if user upload an empty content, create a temp blob with a space content on it.
+        if (file[i].size <= 0) {
+            var emptyContent = " ";
+            options.file = new Blob([emptyContent], {
+                type: file[i].type || "application/octet-stream"
+            });
+        }
+        var uploader = new MediaUploader(options);
+        uploader.upload();
+    }
+    //  }
+};
