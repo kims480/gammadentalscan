@@ -1,5 +1,5 @@
 <template>
-<v-container>
+
 <div class="col-md-12">
     <div class="card mb-4">
         <div class="card-body">
@@ -183,7 +183,7 @@
         </div>
     </div>
 </div>
-</v-container>
+
 </template>
 
 <script>

@@ -11,7 +11,7 @@
         float: right;
         margin-top: $topbar-height;
         transition: width 0.24s ease-in-out;
-        padding: 1rem 0.5em 0.5em 0.5em;
+        padding: 1rem 0.8em;
         position: relative;
         min-height: calc(100vh - #{$topbar-height});
         background: $white;

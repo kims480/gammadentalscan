@@ -1,17 +1,21 @@
 <template>
+<v-container>
     <div class="breadcrumb">
         <slot name="header">
-            <h1 class="mr-2">{{ mainSection }}</h1>
+            <ul>
+            <li class="mr-2">{{ mainSection }}</li>
 
             <template v-if="MainPage == null"> </template>
             <template v-else>
-                <ul>
+                
                     <li><router-link to=""> {{ MainPage }}</router-link></li>
                     <li v-if="!SubPage == null">{{ SubPage }}</li>
-                </ul>
+               
             </template>
+             </ul>
         </slot>
     </div>
+</v-container>
         <!-- <div class="breadcrumb">
             <slot name="header">
                 <h5><i class="i-Folder"></i> {{ mainSection }}</h5>

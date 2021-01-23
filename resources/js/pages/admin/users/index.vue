@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    
     <v-card>
         <v-card-title>
             Users List
@@ -80,7 +80,7 @@
             </template>
         </v-data-table>
     </v-card>
-    </v-container>
+  
 </template>
 
 <script>

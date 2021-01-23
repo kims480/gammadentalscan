@@ -1,5 +1,5 @@
 <template>
-  <div id="request-form" class="container py-2">
+  <div id="request-form" class="py-2">
 
 <!-- Start Patient Data -->
     <v-card class="overflow-hidden mb-5" dense rounded="t-xl">

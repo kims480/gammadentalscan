@@ -1,5 +1,5 @@
 <template>
-<v-container>
+
   <div class="main-content">
     <v-card>
       <v-card-title class="index">
@@ -122,7 +122,7 @@
       </v-data-table>
     </v-card>
   </div>
-</v-container>
+
 </template>
 
 <script>

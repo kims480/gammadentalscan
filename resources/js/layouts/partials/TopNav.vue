@@ -81,7 +81,7 @@
                         <router-link
                             :to="
                                 true /* $auth.hasScope('super_admin') */
-                                    ? '/admin/requests/'
+                                    ? '/admin/request/new'
                                     : '/doctors/requests'
                             "
                             ><i class="i-Ambulance"> </i> Requests

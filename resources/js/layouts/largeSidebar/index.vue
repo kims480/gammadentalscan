@@ -20,16 +20,14 @@
                 />
                 {{ get }}
                 <separator></separator>
-                <v-sheet
-
-                    elevation="0"
-                    style="margin-bottom:60px"
-                    width="100%"
+                <v-container
+                    elevation="1"
+                    style="margin-bottom:60px"                   
                     >
                 <transition name="page" mode="out-in">
                     <router-view></router-view>
                 </transition>
-                </v-sheet>
+                </v-container>
                 <v-speed-dial
                     v-model="fab"
                     fixed
@@ -163,14 +161,14 @@ export default {
             ) {
                 // console.log(currentParentUrl);
 
-                (this.mainSection = currentParentUrl[0].toLowerCase()),
+                (this.mainSection = currentParentUrl[0].toUpperCase()),
                     (this.MainPage = currentParentUrl[1].toLowerCase()),
                     (this.SubPage =
                         currentParentUrl.length > 2
                             ? currentParentUrl[2].toLowerCase()
                             : null);
             } else {
-                this.mainSection = "Home";
+                this.mainSection = "Home".toUpperCase();
             }
         }
     },
@@ -216,7 +214,7 @@ export default {
             ) {
                 // console.log(currentParentUrl);
 
-                (this.mainSection = currentParentUrl[0].toLowerCase()),
+                (this.mainSection = currentParentUrl[0].toUpperCase()),
                     (this.MainPage = currentParentUrl[1].toLowerCase()),
                     (this.SubPage =
                         currentParentUrl.length > 2
@@ -225,8 +223,8 @@ export default {
             } else {
                 currentParentUrl[0] !== undefined &&
                 currentParentUrl[0] !== null
-                    ? (this.mainSection = currentParentUrl[0].toLowerCase())
-                    : (this.mainSection = "Home");
+                    ? (this.mainSection = currentParentUrl[0].toUpperCase())
+                    : (this.mainSection = "Home".toUpperCase());
                 this.MainPage = null;
                 this.SubPage = null;
             }
