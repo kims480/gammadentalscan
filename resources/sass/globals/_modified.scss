@@ -513,6 +513,9 @@ div.master-tab {
     #request-form .ur {
         transform: scale(0.8);
     }
+    #master-tabs {
+        display: none;
+    }
     #request-form .upper,
     #request-form .lower {
         display: flex;
