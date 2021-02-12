@@ -315,7 +315,7 @@ export const actions = {
                 });
         });
     },
-    getRequest({commit,state},id){
+    getRequestById({commit,state},id){
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient.get('scanrequests/'+id).then(res=>{
                 console.log(res.data)

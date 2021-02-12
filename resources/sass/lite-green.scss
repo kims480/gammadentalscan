@@ -7,3 +7,11 @@
 //import material-icon scss
 @import "~font-awesome/css/font-awesome.min.css";
 @import './themes/lite-purple.scss';
+@font-face {
+    font-family: Kufi;
+    src: url('/css/DroidKufi-Regular.ttf');
+  }
+@font-face {
+    font-family: Naskh;
+    src: url('/css/DroidNaskh-Regular.ttf');
+  }

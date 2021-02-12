@@ -212,9 +212,9 @@
         height: calc(100vh - #{$topbar-height});
         bottom: 0;
         right: 0;
-        background: rgba(0, 0, 0, 0);
+        background: rgba(202, 241, 218, 0.2);
         z-index: 101;
-        cursor: w-resize;
+        cursor: grabbing;
         &.open {
             display: block;
         }

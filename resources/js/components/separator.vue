@@ -1,17 +1,15 @@
 <template>
-<v-container>
+  <v-container class="py-1">
     <div class="border-top"></div>
-</v-container>
+  </v-container>
 </template>
 
 <script>
-    export default {
-
-    }
+export default {};
 </script>
 
 <style lang="scss" scoped>
-.border-top{
-    padding-bottom: 4px;
+.border-top {
+  padding-bottom: 4px;
 }
 </style>

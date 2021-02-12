@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import VueHtmlToPaper from "vue-html-to-paper";
+import VueHtml2Canvas from "vue-html2canvas";
 
 // import Vuex from "vuex";
 import vuetify from "@/plugins/vuetify"; // path to vuetify export
@@ -17,10 +18,9 @@ import Breadcumb from "./components/breadcumb";
 // import "firebase/auth";
 // import { firebaseSettings } from "@/data/config";
 // import i18n from "./lang/lang";
-import i18n from './locales/index'
+import i18n from "./locales/index";
 import DateRangePicker from "vue2-daterange-picker";
 //you need to import the CSS manually (in case you want to override it)
-
 
 //defined as global component
 Vue.component(
@@ -37,16 +37,22 @@ Vue.use(VueRouter);
 //mounting Vuex
 // Vue.use(Vuex);
 
-
-
-
 Vue.use(InstantSearch);
 Vue.use(GammaDentalScan);
-
+const printOptions = {
+    name: "_blank",
+    specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
+    styles: [
+        // "https://gamma-dental-scan.dev/public/css/app.css",
+        "https://gamma-dental-scan.dev/public/css/print.css"
+    ]
+};
+Vue.use(VueHtmlToPaper, printOptions);
+Vue.use(VueHtml2Canvas);
 // firebase.initializeApp(firebaseSettings);
 
 Vue.config.productionTip = false;
-    // Enable pusher logging - don't include this in production
+// Enable pusher logging - don't include this in production
 
 require("./bootstrap");
 
@@ -73,11 +79,11 @@ gamma-dental-scan-staging
 gamma-dental-scan-production
 */
 Vue.prototype.$reverseText = function(propertyName) {
-  this[propertyName] = this[propertyName]
-    .split('')
-    .reverse()
-    .join('')
-}
+    this[propertyName] = this[propertyName]
+        .split("")
+        .reverse()
+        .join("");
+};
 
 const app = new Vue({
     el: "#gamma-dental-scan",
@@ -90,11 +96,11 @@ const app = new Vue({
     vuetify,
     i18n,
     data: {
-        messages: [],
-      },
-    async beforeCreate(){
+        messages: []
+    },
+    async beforeCreate() {
         // this.$store.dispatch('loadStoredState');
-        this.$store.dispatch('loadUserState');
+        this.$store.dispatch("loadUserState");
     }
     //     // await axios.get('/sanctum/csrf-cookie');
     //     // await axios.post('/login',{

@@ -238,6 +238,15 @@ const routes = [
         name: "request-list",
         props: true
     },
+    {
+        path: "/admin/requests/print",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-request-print' */ "@/pages/admin/requests/print.vue"
+            ),
+        name: "request-print",
+        props: true
+    },
 
     /* End Requests Routes */
 
