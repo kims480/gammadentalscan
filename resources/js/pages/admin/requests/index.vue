@@ -860,6 +860,7 @@ import GammaTeethUR6 from "@/components/requests/teeth/GammaTeethUR6.vue";
 import GammaTeethUR7 from "@/components/requests/teeth/GammaTeethUR7.vue";
 import GammaTeethUR8 from "@/components/requests/teeth/GammaTeethUR8.vue";
 import Logo from "@/components/Logo.vue";
+
 import { jsPDF } from "jspdf";
 // import { html2canvas } from "html2convas";
 

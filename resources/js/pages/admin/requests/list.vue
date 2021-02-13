@@ -189,7 +189,7 @@
                         </v-list>
                       </template>
                     </v-row> -->
-                    <view></view>
+                    <ViewRequest :requestData="requestData" />
                   </div>
                 </v-card-text>
                 <v-card-actions class="justify-end">
@@ -205,10 +205,10 @@
 </template>
 
 <script>
-import view from "./view.vue";
+import ViewRequest from "./view.vue";
 export default {
   components: {
-    view,
+    ViewRequest,
   },
   data() {
     return {

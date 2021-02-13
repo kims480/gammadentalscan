@@ -376,6 +376,20 @@ table tbody tr:hover {
     stroke: #05aa4c;
     stroke-width: 2px;
 }
+.ll,
+.ul {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: relative;
+}
+.lr,
+.ur {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    position: relative;
+}
 #request-form .three-d-inner .ul8 {
     transform: rotateX(180deg);
     transform-origin: center;
@@ -585,5 +599,163 @@ div.master-tab {
             font-weight: bold;
             columns: #0ed407f5;
         }
+    }
+}
+#request-form-view .three-d-inner > input[type="checkbox"] {
+    display: none;
+    pointer-events: none;
+
+    & + label {
+        cursor: pointer;
+        font-size: 0.8em;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+
+        svg:nth-child(1) {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            height: 48px;
+            width: 36px;
+            padding: 2px;
+            fill: none;
+            stroke: rgb(32, 129, 133);
+            stroke-width: 0.04rem;
+            transform: scale(0.9);
+            stroke-dasharray: 116;
+            stroke-dashoffset: 0;
+            transform-origin: bottom;
+        }
+
+        span {
+            grid-row-start: 2;
+            grid-row-end: 3;
+            padding-top: 0.3em;
+            margin-left: 0.3em;
+        }
+    }
+    &[aria-checked="true"] + label {
+        svg:nth-child(1) {
+            /* border: 1px solid darkgreen;
+              border-radius: 50%; */
+            transform: scale(1);
+            transform-box: fill;
+            transform-origin: center;
+            fill: darkgreen;
+            stroke-dashoffset: 0;
+            stroke-dashoffset: 116;
+            transition: stroke-dashoffset 0.1s linear;
+        }
+
+        span {
+            border-top: none;
+            font-weight: bold;
+            columns: #0ed407f5;
+        }
+    }
+}
+#request-form-view .purpose-inner > input[type="checkbox"] {
+    display: none;
+    pointer-events: none;
+
+    & + label {
+        cursor: pointer;
+        font-size: 0.8em;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+
+        svg:nth-child(1) {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            height: 55px;
+            width: 55px;
+            padding: 2px;
+
+            // width: auto;
+            fill: #07d4bbf5;
+            transform: scale(0.9);
+        }
+        svg:nth-child(2) {
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            width: 2em;
+            stroke: green;
+            stroke-width: 5;
+            fill: white;
+            circle {
+                fill: transparent;
+                stroke-dasharray: 116;
+                stroke-dashoffset: 0;
+            }
+            .check {
+                fill: none;
+                transform-origin: bottom;
+                transform: translateX(-32px) translateY(-10px) scale(1.8);
+            }
+            .check:first-child {
+                stroke-width: 3px;
+                stroke-dasharray: 5;
+                stroke-dashoffset: 5;
+            }
+            .check:nth-child(2) {
+                stroke-width: 3px;
+                stroke-dasharray: 12.6;
+                stroke-dashoffset: 12.6;
+                fill: none;
+            }
+        }
+        span {
+            grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 2;
+            grid-row-end: 3;
+            padding-top: 0.3em;
+            margin-left: 0.3em;
+            border-top: 1px dashed #07d4bbf5;
+        }
+    }
+}
+#request-form-view
+    .purpose-inner
+    > input[type="checkbox"][aria-checked="true"]
+    + label {
+    svg:nth-child(1) {
+        border: 1px solid darkgreen;
+        border-radius: 50%;
+        transform: scale(0.8);
+        transform-box: fill;
+        transform-origin: center;
+    }
+    svg:nth-child(2) {
+        circle {
+            fill: darkgreen;
+            stroke-dashoffset: 116;
+            transition: stroke-dashoffset 0.1s linear;
+        }
+        g.check {
+            stroke: white;
+            transform: translateX(-32px) translateY(-25px) scale(1.8);
+
+            transition: stroke-dashoffset 0.1s linear;
+        }
+        .check:first-child {
+            stroke-dashoffset: 0;
+        }
+        .check:nth-child(2) {
+            // transform: translateX(-1px) translateY(-8px) scaleY(1.5);
+            transform-origin: center;
+            stroke-dashoffset: 0;
+            fill: none;
+        }
+    }
+    span {
+        border-top: none;
+        font-weight: bold;
+        columns: #0ed407f5;
     }
 }

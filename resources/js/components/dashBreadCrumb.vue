@@ -78,6 +78,11 @@ export default {
     isMobile: false,
     items: [
       {
+        text: "Home",
+        icon: "mdi-home",
+        target: "home",
+      },
+      {
         text: "Patients",
         icon: "mdi-shield-account",
         target: "patients",

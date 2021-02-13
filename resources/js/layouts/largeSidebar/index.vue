@@ -142,6 +142,12 @@ export default {
     mini: true,
     fabItems: [
       {
+        text: "Home",
+        icon: "mdi-home",
+        target: "home",
+        color: "green",
+      },
+      {
         text: "Patients",
         icon: "mdi-shield-account",
         target: "patients",
