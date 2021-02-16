@@ -4,6 +4,20 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Google Drive API</title>
+    <meta
+          hid= "description"
+          name= "description"
+          content= "Gamma Dental Scan Radiology, We care to deliver most accurate ">
+    <meta
+          hid= "keywords"
+          name= "keywords"
+          content= "Gamma, Dental, Radiology, Scan, New Request, Impaction, 3d printing, 3d imaging, 2d printing, 2d imaging"
+        >
+    <meta
+          hid= "author"
+          name= "author"
+          content= "Gamma Dental Radiology Scan"
+        >
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">

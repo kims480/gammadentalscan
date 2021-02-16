@@ -114,7 +114,8 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: "Main page for Gamma Dental Scan Radiology",
+          content:
+            "Gamma Dental Scan Radiology, We are Spcialist for dental radio scans We care to deliver the most accurate dental scans in Egypt and Middle East",
         },
         {
           hid: "keywords",

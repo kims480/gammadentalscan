@@ -224,7 +224,7 @@ const routes = [
         path: "/admin/request/:id",
         component: () =>
             import(
-                /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/_id.vue"
+                /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/_id/index.vue"
             ),
         name: "request-view",
         props: true

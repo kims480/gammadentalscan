@@ -29,6 +29,15 @@
             @page-count="pageCount = $event"
           >
             >
+            <template v-slot:item.id="{ item }">
+              <router-link
+                :to="{
+                  name: 'request-view',
+                  params: { id: item.id, scanRequest: item },
+                }"
+                >{{ item.id }}</router-link
+              >
+            </template>
             <template v-slot:item.status="{ item }">
               <v-chip
                 v-if="item.status !== null"
@@ -265,6 +274,7 @@ export default {
           //  var _this=this
           res.requests.forEach((request) => {
             request.created_at = this.GetFormattedDate(request.created_at);
+            request.updated_at = this.GetFormattedDate(request.updated_at);
             this.desserts.push(request);
           });
 
