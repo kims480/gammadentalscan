@@ -61,7 +61,14 @@ class ScanRequestsController extends Controller
     {
         //
         // $scanRequest = ScanRequests::get();
-        $scanRequest = ScanRequests::FindOrFail($id)->with(['user', 'patient'])->get();
+        $scanRequest = ScanRequests::whereId($id)->with([
+            'user' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'patient' => function ($q) {
+                $q->select('id', 'name_en', 'name_ar');
+            }
+        ])->get();
         $scanRequest = $scanRequest->makeVisible(['created_at', 'updated_at']);
         $scanRequest = collect($scanRequest);
         $requestList = $scanRequest->transform(function ($value, $key) {
@@ -83,7 +90,7 @@ class ScanRequestsController extends Controller
         });
         return response()->json(
             [
-                'requests' => $requestList->all(),
+                'data' => $requestList->all(),
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
                 'message' => 'Requests Collected Sucessfully'

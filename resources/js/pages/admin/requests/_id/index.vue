@@ -331,20 +331,41 @@ export default {
 
   methods: {
     initialize() {
+      //   this.scanRequest.length = 0;
       this.$store
         .dispatch("scanRequest/getRequestsListById", this.id)
         .then((res) => {
           // console.log(res.requests);
           //  var _this=this
-          res.requests.forEach((request) => {
-            request.created_at = this.GetFormattedDate(request.created_at);
-            request.updated_at = this.GetFormattedDate(request.updated_at);
-            this.desserts.push(request);
-          });
+
+          this.scanRequest = res.data[0];
+          this.scanRequest.created_at = this.GetFormattedDate(
+            res.data[0].created_at
+          );
+          this.scanRequest.updated_at = this.GetFormattedDate(
+            res.data[0].updated_at
+          );
+          this.newFolderName = this.scanRequest.id;
 
           // console.log(this.desserts);
         })
         .catch((err) => {});
+    },
+    GetFormattedDate(date) {
+      let current_datetime = new Date(date);
+      let formatted_date =
+        current_datetime.getFullYear() +
+        "-" +
+        (current_datetime.getMonth() + 1) +
+        "-" +
+        current_datetime.getDate() +
+        " " +
+        current_datetime.getHours() +
+        ":" +
+        current_datetime.getMinutes() +
+        ":" +
+        current_datetime.getSeconds();
+      return formatted_date;
     },
     async handleClientLoad() {
       //gapi is client library, it used for Load the API client and auth2 library
@@ -373,6 +394,14 @@ export default {
             window.gapi.auth2.getAuthInstance().isSignedIn.get()
           );
           this.driveBox = window.gapi.auth2.getAuthInstance().isSignedIn.get();
+          this.searchItem().then((res) => {
+            // console.log(res);
+            if (res.files.length == 0) {
+              this.showErrorMessage("folder not exist");
+            } else {
+              this.showStatus("folder available");
+            }
+          });
 
           // Listen for sign-in state changes.
           gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
@@ -381,6 +410,7 @@ export default {
             .getAuthInstance()
             .currentUser.get()
             .getAuthResponse().access_token;
+
           // this.getDriveFiles();
           // Handle the initial sign-in state.
         })
@@ -398,7 +428,7 @@ export default {
     updateSigninStatus(isSignedIn) {
       console.log("updateSigninStatus");
       if (isSignedIn) {
-        this.showLoading();
+        // this.showLoading();
         //  this.showdriveBox();
         // this.getDriveFiles();
       } else {
@@ -669,7 +699,7 @@ export default {
             });
             console.log(_this.FOLDER_ARRAY);
             pageToken = resp.nextPageToken;
-            resolve(resp.data);
+            resolve(resp);
           } else {
             console.error(resp.error.message);
             reject(resp);
