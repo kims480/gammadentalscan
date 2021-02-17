@@ -65,11 +65,13 @@
 </head>
 
 <body>
+
     <div id="gamma-dental-scan">
         {{-- <app></app> --}}
         <gamma-dental></gamma-dental>
 
     </div>
+
 </body>
 
 </html>

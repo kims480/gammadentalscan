@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 | is assigned the "app" middleware group. Enjoy building your API!
 |
 */
+
 Route::get('/', 'AppController@index')->name('App_Home');
 // // Route::get('/app', 'AppController@index')->name('App_Main'); //middleware('auth')->
 Route::get('/signin', 'AppController@index')->name('App_Login');
@@ -33,32 +34,32 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Route::post('/register',['App\\Http\\Controllers\\Api\\Auth\\RegisterController','register']);
-Route::post('/login',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','login']);
-Route::post('/forgot',   ['App\\Http\\Controllers\\Api\\PasswordController','forgot']);
-Route::post('/reset',   ['App\\Http\\Controllers\\Api\\PasswordController','reset']);
+Route::post('/login',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController', 'login']);
+Route::post('/forgot',   ['App\\Http\\Controllers\\Api\\PasswordController', 'forgot']);
+Route::post('/reset',   ['App\\Http\\Controllers\\Api\\PasswordController', 'reset']);
 // Route::post('/user',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','user']); // this not work without middleware
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','user']); // this not work without middleware
-    Route::post('/logout',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController','logout']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController', 'user']); // this not work without middleware
+    Route::post('/logout',   ['App\\Http\\Controllers\\Api\\Auth\\LoginController', 'logout']);
     Route::get('/get-users', 'Api\\UserController@getUsers');
     Route::apiResources([
 
-            'notifications' => 'Api\\NotificationsController',
-            'messages' => 'Api\\MessagesController',
-            'doctors' => 'Api\\DoctorsController',
+        'notifications' => 'Api\\NotificationsController',
+        'messages' => 'Api\\MessagesController',
+        'doctors' => 'Api\\DoctorsController',
 
-            'patient' => 'Api\\PatientController',
-            'categ' => 'Api\\CategController',
-            'scans' => 'Api\\ScanController',
-            'results' => 'Api\\ScanResultsController',
-            'requests' => 'Api\\ScanRequestsController',
-            'services' => 'Api\\ServicesController',
-            'softwares' => 'Api\\SoftwaresController',
-            'webcontent' => 'Api\\WebContentController',
-            'websetting' => 'Api\\WebSettingController',
-            'purpose' => 'Api\\PurposeController',
-            'users' => 'Api\\UserController',
-        ]);
+        'patient' => 'Api\\PatientController',
+        'categ' => 'Api\\CategController',
+        'scans' => 'Api\\ScanController',
+        'results' => 'Api\\ScanResultsController',
+        'requests' => 'Api\\ScanRequestsController',
+        'services' => 'Api\\ServicesController',
+        'softwares' => 'Api\\SoftwaresController',
+        'webcontent' => 'Api\\WebContentController',
+        'websetting' => 'Api\\WebSettingController',
+        'purpose' => 'Api\\PurposeController',
+        'users' => 'Api\\UserController',
+    ]);
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

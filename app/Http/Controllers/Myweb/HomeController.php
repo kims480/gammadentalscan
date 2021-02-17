@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index','google','googleDrive');
+        $this->middleware('auth')->except('index', 'google', 'googleDrive', 'newscan');
     }
     /**
      * Display a listing of the resource.
@@ -28,8 +28,8 @@ class HomeController extends Controller
     public function google()
     {
         session_start();
-setcookie('foo', 'bar', time()+3600);
-header("location: googledrive.php");
+        setcookie('foo', 'bar', time() + 3600);
+        header("location: googledrive.php");
         return view('layouts.admin');
     }
     public function googleDrive()
@@ -116,5 +116,14 @@ header("location: googledrive.php");
     public function destroy($id)
     {
         //
+    }
+    /**
+     * New Scan Request Form
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function newscan()
+    {
+        return view('section.scan');
     }
 }
