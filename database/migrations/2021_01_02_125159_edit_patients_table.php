@@ -16,10 +16,10 @@ class EditPatientsTable extends Migration
         // DB::statement
         Schema::table('patients', function (Blueprint $table) {
             //
-            $table->dropColumn('telephone');
-            $table->dropColumn('whatsapp');
-            $table->char('telephone',25);
-            $table->char('whatsapp',25);
+            // $table->dropColumn('telephone');
+            // $table->dropColumn('whatsapp');
+            // $table->char('telephone',25)->default('0000000000');
+            // $table->char('whatsapp',25)->default('0000000000');
         });
     }
 

@@ -3,7 +3,7 @@
     <v-row align="start" class="mb-3" no-gutters style="height: auto">
       <div
         class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1"
-        v-for="(item, name, index) in scanRequest"
+        v-for="(item, name, index) in scanRequestData"
         :key="index"
       >
         <v-card
@@ -61,7 +61,7 @@
       >
         <v-btn
           color="green lighten-5 "
-          v-show="!driveBox"
+          v-show="notSignedIn"
           light
           @click="handleAuthClick()"
         >
@@ -281,6 +281,7 @@ export default {
 
   data() {
     return {
+      scanRequestData: {},
       alignments: ["start", "center", "end"],
       dispatched: true,
       accepted: false,
@@ -318,6 +319,7 @@ export default {
       dataLevel: "",
       dataId: 0,
       access_token: "",
+      notSignedIn: false,
     };
   },
   head() {
@@ -326,26 +328,35 @@ export default {
     };
   },
   mounted() {
+    ``;
     this.handleClientLoad();
   },
 
   methods: {
     initialize() {
       //   this.scanRequest.length = 0;
+      if (this.scanRequest === null) {
+        this.getRequestsListById(this.id);
+      } else {
+        this.scanRequestData = this.scanRequest;
+        this.newFolderName = this.scanRequest.rqNum;
+      }
+    },
+    getRequestsListById(id) {
       this.$store
-        .dispatch("scanRequest/getRequestsListById", this.id)
+        .dispatch("scanRequest/getRequestsListById", id)
         .then((res) => {
           // console.log(res.requests);
           //  var _this=this
 
-          this.scanRequest = res.data[0];
-          this.scanRequest.created_at = this.GetFormattedDate(
+          this.scanRequestData = res.data[0];
+          this.scanRequestData.created_at = this.GetFormattedDate(
             res.data[0].created_at
           );
-          this.scanRequest.updated_at = this.GetFormattedDate(
+          this.scanRequestData.updated_at = this.GetFormattedDate(
             res.data[0].updated_at
           );
-          this.newFolderName = this.scanRequest.id;
+          this.newFolderName = this.scanRequestData.request_Num;
 
           // console.log(this.desserts);
         })
@@ -394,22 +405,25 @@ export default {
             window.gapi.auth2.getAuthInstance().isSignedIn.get()
           );
           this.driveBox = window.gapi.auth2.getAuthInstance().isSignedIn.get();
-          this.searchItem().then((res) => {
-            // console.log(res);
-            if (res.files.length == 0) {
-              this.showErrorMessage("folder not exist");
-            } else {
-              this.showStatus("folder available");
-            }
-          });
+          this.notSignedIn = !this.driveBox;
+          if (this.driveBox) {
+            this.searchItem().then((res) => {
+              // console.log(res);
+              if (res.files.length == 0) {
+                this.showErrorMessage("folder not exist");
+              } else {
+                this.showStatus("folder available");
+              }
+            });
 
-          // Listen for sign-in state changes.
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-          this.updateSigninStatus(this.isGoogleSigned());
-          this.access_token = gapi.auth2
-            .getAuthInstance()
-            .currentUser.get()
-            .getAuthResponse().access_token;
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            this.updateSigninStatus(this.isGoogleSigned());
+            this.access_token = gapi.auth2
+              .getAuthInstance()
+              .currentUser.get()
+              .getAuthResponse().access_token;
+          }
 
           // this.getDriveFiles();
           // Handle the initial sign-in state.

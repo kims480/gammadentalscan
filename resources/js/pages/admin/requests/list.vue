@@ -29,13 +29,13 @@
             @page-count="pageCount = $event"
           >
             >
-            <template v-slot:item.id="{ item }">
+            <template v-slot:item.rqNum="{ item }">
               <router-link
                 :to="{
                   name: 'request-view',
                   params: { id: item.id, scanRequest: item },
                 }"
-                >{{ item.id }}</router-link
+                >{{ item.rqNum }}</router-link
               >
             </template>
             <template v-slot:item.status="{ item }">
@@ -226,10 +226,10 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "ID",
+          text: "Request#",
           align: "start",
           sortable: false,
-          value: "id",
+          value: "rqNum",
         },
         { text: "Patient Name", value: "patient.name" },
         { text: "Doctor", value: "doctor.name" },

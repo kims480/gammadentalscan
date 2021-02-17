@@ -31,6 +31,7 @@ class ScanRequestsController extends Controller
                 'patient' => $value['patient_name'],
                 'doctor' => $value['doctor_name'],
                 'status' =>  $value['status'],
+                'rqNum' => $value['rq_num'],
                 // 'purposesFinal'=>$value['purpose'],
                 // 'getOtherPurpose'=>$value['scan_name'],
                 // 'twoDImaging'=>$value['two_d_imaging'],
@@ -74,6 +75,7 @@ class ScanRequestsController extends Controller
         $requestList = $scanRequest->transform(function ($value, $key) {
             return  [
                 'id' => $value['id'],
+                'request_Num' => $value['rq_num'],
                 'patient' => $value['patient_name'],
                 'doctor' => $value['doctor_name'],
                 'status' =>  $value['status'],
@@ -131,6 +133,7 @@ class ScanRequestsController extends Controller
         $requestList = $scanRequest->transform(function ($value, $key) {
             return  [
                 'id' => $value['id'],
+                'rqNum' => $value['rq_num'],
                 'patient' => $value['patient_name'],
                 'doctor' => $value['doctor_name'],
                 'status' =>  $value['status'],
@@ -239,7 +242,8 @@ class ScanRequestsController extends Controller
             'photography' => $request->Photography,
             'report_type' => $request->requiredPhoto,
             'scan_name' => $request->getOtherPurpose,
-            'status' => "Dispatched"
+            'status' => "Dispatched",
+            'rq_num' => $this->genRq()
         ]);
         if ($scanRequest)
             return response()->json(['Message' => 'Request Dispatched Successfully'], HttpFoundationResponse::HTTP_CREATED);
@@ -263,5 +267,24 @@ class ScanRequestsController extends Controller
                 'patient_id',	'purpose',	'two_d_imaging',	'three_d_imaging',
                 'photography',	'three_d_printing',	'report_type'
                 */
+    }
+    public function genRq()
+    {
+        $latest_RQ = ScanRequests::select('id', 'rq_num')->orderBy('id', 'desc')->limit(1)->get();
+
+        if (count($latest_RQ) > 0) {
+            $latest_RQ_decoded = json_decode($latest_RQ, true);
+            $temp = explode('-', $latest_RQ_decoded[0]['rq_num']);
+            date_default_timezone_set('Africa/Cairo');
+
+            if ((int)$temp[1] == (int)date('Ymd')) {
+                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', (int)$temp[2] + 1));
+            } else {
+                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', 1));
+            }
+        } else {
+            $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', 1));
+        }
+        return $rqNum;
     }
 }

@@ -11,18 +11,18 @@ use Illuminate\Database\Eloquent\Model;
 class ScanRequests extends Model
 {
 
-    protected $table='scan_requests';
+    protected $table = 'scan_requests';
 
     //
-      /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable =[
-        'scan_name',	'details',	'created_at',	'updated_at',	'refered_by',
-        'patient_id',	'purpose',	'two_d_imaging',	'three_d_imaging',
-        'photography',	'three_d_printing',	'report_type', 'status'
+    protected $fillable = [
+        'scan_name',    'details',    'created_at',    'updated_at',    'refered_by',
+        'patient_id',    'purpose',    'two_d_imaging',    'three_d_imaging',
+        'photography',    'three_d_printing',    'report_type', 'status', 'rq_num'
 
     ];
     /**
@@ -31,10 +31,10 @@ class ScanRequests extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at','updated_at','pivot'
+        'created_at', 'updated_at', 'pivot'
     ];
 
-     /**
+    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -71,7 +71,7 @@ class ScanRequests extends Model
     public function getPatientNameAttribute()
     {
         //  return $value;
-        return ['id'=>$this->patient_id,'name'=> $this->patient->name_en . ' : '.$this->patient->name_ar ];
+        return ['id' => $this->patient_id, 'name' => $this->patient->name_en . ' : ' . $this->patient->name_ar];
     }
     /**
      * Accessor
@@ -82,10 +82,10 @@ class ScanRequests extends Model
     public function getDoctorNameAttribute()
     {
         //  return $value;
-        return ['id'=>$this->refered_by,'name'=> $this->user->name];
+        return ['id' => $this->refered_by, 'name' => $this->user->name];
     }
-     /**
-      * Mutator
+    /**
+     * Mutator
      * Set the user's first name.
      *
      * @param  string  $value
@@ -103,7 +103,6 @@ class ScanRequests extends Model
             $this->attributes['status'] = 4;
         if ($value == "Rejected")
             $this->attributes['status'] = 9;
-
     }
 
 
@@ -116,5 +115,4 @@ class ScanRequests extends Model
     {
         return $this->belongsTo('App\Models\Patient', 'patient_id', 'id');
     }
-
 }
