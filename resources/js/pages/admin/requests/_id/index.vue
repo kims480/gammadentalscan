@@ -327,10 +327,7 @@ export default {
       title: "Scan Request Details - " + this.$route.params.id,
     };
   },
-  mounted() {
-    ``;
-    this.handleClientLoad();
-  },
+  mounted() {},
 
   methods: {
     initialize() {
@@ -724,6 +721,7 @@ export default {
   },
   created() {
     this.initialize();
+    this.handleClientLoad();
     console.log(this.$route.params);
     console.log("-" + this.id + "-");
     console.log(this.scanRequest);
