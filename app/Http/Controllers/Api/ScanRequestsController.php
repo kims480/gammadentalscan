@@ -22,7 +22,7 @@ class ScanRequestsController extends Controller
     {
         //
         // $scanRequest = ScanRequests::get();
-        $scanRequest = ScanRequests::with(['user', 'patient'])->get();
+        $scanRequest = ScanRequests::with(['user', 'patient'])->orderBy('id', 'desc')->get();
         $scanRequest = $scanRequest->makeVisible(['created_at', 'updated_at']);
         $scanRequest = collect($scanRequest);
         $requestList = $scanRequest->transform(function ($value, $key) {
@@ -69,7 +69,7 @@ class ScanRequestsController extends Controller
             'patient' => function ($q) {
                 $q->select('id', 'name_en', 'name_ar');
             }
-        ])->get();
+        ])->orderBy('id', 'desc')->get();
         $scanRequest = $scanRequest->makeVisible(['created_at', 'updated_at']);
         $scanRequest = collect($scanRequest);
         $requestList = $scanRequest->transform(function ($value, $key) {
@@ -127,7 +127,7 @@ class ScanRequestsController extends Controller
             'patient' => function ($q) {
                 $q->select('id', 'name_en', 'name_ar');
             }
-        ])->get();
+        ])->orderBy('id', 'desc')->get();
         $scanRequest = $scanRequest->makeVisible(['created_at', 'updated_at']);
         $scanRequest = collect($scanRequest);
         $requestList = $scanRequest->transform(function ($value, $key) {
