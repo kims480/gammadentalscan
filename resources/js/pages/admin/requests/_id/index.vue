@@ -256,16 +256,7 @@
 </template>
 
 <script>
-Object.size = function (obj) {
-  var size = 0,
-    key;
-  for (key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-};
-import gapi from "@/services/gapi.js";
-import { MediaUploader, RetryHandler } from "@/services/upload.js";
+import gapiMixins from "@/mixins/gapiMixins.js";
 
 export default {
   props: {
@@ -278,7 +269,7 @@ export default {
       required: true,
     },
   },
-
+  mixins: [gapiMixins],
   data() {
     return {
       scanRequestData: {},
@@ -289,37 +280,7 @@ export default {
       rejected: false,
       delivered: false,
       details: [],
-      optBtn: true,
-      addFolder: false,
-      addFiles: false,
-      statusMessage: false,
-      statusMessageTxt: "",
-      errorMessage: false,
-      errorMessageTxt: "",
-      newFolderName: null,
-      files: [],
-      driveBox: false,
-      SCOPES: ["https://www.googleapis.com/auth/drive", "profile"],
-      CLIENT_ID:
-        "909780462877-7uqkksfdop3v16avj4ae077134aluoim.apps.googleusercontent.com",
-      FOLDER_NAME: "",
       FOLDER_ID: "1Yzzo2skepl_U5Xirv9FwBEyEx_tzgWGE",
-      FOLDER_PERMISSION: true,
-      FOLDER_LEVEL: 0,
-      NO_OF_FILES: 100,
-      DRIVE_FILES: [],
-      FILE_COUNTER: 0,
-      FOLDER_ARRAY: [],
-      uploadPercentage: false,
-      uploadPercentageTxt: "",
-      showUploadProgress: false,
-      percentageValue: 0,
-      setShowLoading: false,
-      showLoadingTxt: "Loading Google Drive files...",
-      dataLevel: "",
-      dataId: 0,
-      access_token: "",
-      notSignedIn: false,
     };
   },
   head() {
@@ -375,276 +336,18 @@ export default {
         current_datetime.getSeconds();
       return formatted_date;
     },
-    async handleClientLoad() {
-      //gapi is client library, it used for Load the API client and auth2 library
-      this.errorMessageTxt = "";
-      this.statusMessageTxt = "";
-
-      console.log("handleClientLoad");
-      await gapi.load("client:auth2", this.initClient);
-    },
-    onload: () => {},
-    onreadystatechange: () => {
-      return this.readyState === "complete" ?? this.onload;
-    },
-    //authorize apps
-    async initClient() {
-      console.log("initClient");
-
-      await gapi.client
-        .init({
-          clientId: this.CLIENT_ID,
-          scope: this.SCOPES.join(" "),
-        })
-        .then((o) => {
-          console.log(
-            "signed in",
-            window.gapi.auth2.getAuthInstance().isSignedIn.get()
+    startSearch() {
+      this.searchItem().then((res) => {
+        // console.log(res);
+        if (res.files.length == 0) {
+          this.showErrorMessage(
+            "Folder not exist - need to be created first",
+            3000
           );
-          this.driveBox = window.gapi.auth2.getAuthInstance().isSignedIn.get();
-          this.notSignedIn = !this.driveBox;
-          if (this.driveBox) {
-            this.searchItem().then((res) => {
-              // console.log(res);
-              if (res.files.length == 0) {
-                this.showErrorMessage("folder not exist");
-              } else {
-                this.showStatus("folder available");
-              }
-            });
-
-            // Listen for sign-in state changes.
-            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-            this.updateSigninStatus(this.isGoogleSigned());
-            this.access_token = gapi.auth2
-              .getAuthInstance()
-              .currentUser.get()
-              .getAuthResponse().access_token;
-          }
-
-          // this.getDriveFiles();
-          // Handle the initial sign-in state.
-        })
-        .catch((err) => {
-          // this.driveBox=false;
-          console.log("err", err);
-        });
-    },
-    isGoogleSigned() {
-      console.log("isGoogleSignIN");
-      let isSigned = gapi.auth2.getAuthInstance().isSignedIn.get();
-      this.driveBox = isSigned;
-      return isSigned;
-    },
-    updateSigninStatus(isSignedIn) {
-      console.log("updateSigninStatus");
-      if (isSignedIn) {
-        // this.showLoading();
-        //  this.showdriveBox();
-        // this.getDriveFiles();
-      } else {
-        // this.hidedriveBox();
-      }
-      return;
-    },
-
-    async handleAuthClick(event) {
-      console.log("handleAuthClick");
-      await gapi.auth2.getAuthInstance().signIn();
-      this.handleClientLoad();
-    },
-
-    handleSignoutClick(event) {
-      console.log("handleSignoutClick");
-      if (confirm("Are you sure you want to logout?")) {
-        gapi.auth2.getAuthInstance().signOut();
-        this.hidedriveBox();
-      }
-    },
-    showStatus(text) {
-      this.statusMessage = true;
-      this.statusMessageTxt = text;
-    },
-    hideStatus() {
-      this.statusMessage = false;
-      this.statusMessageTxt = "";
-    },
-    showErrorMessage(errorMessage) {
-      this.errorMessage = true;
-      this.errorMessageTxt = errorMessage;
-      setTimeout(function () {
-        this.errorMessage = false;
-        this.errorMessageTxt = "";
-      }, 3000);
-    },
-    showLoading() {
-      this.setShowLoading = true;
-    },
-    hideLoading() {
-      this.setShowLoading = false;
-    },
-    btnAddFolder(event) {
-      //$("#box-AddFolder").hide();
-      this.showLoading();
-      this.showStatus("Creating folder in progress...");
-      var access_token = gapi.auth2
-        .getAuthInstance()
-        .currentUser.get()
-        .getAuthResponse().access_token;
-      var _this = this;
-      var request = gapi.client.request({
-        path: "/drive/v2/files/",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + access_token,
-        },
-        body: {
-          title: _this.newFolderName,
-          mimeType: "application/vnd.google-apps.folder",
-          parents: [
-            {
-              kind: "drive#file",
-              id: _this.FOLDER_ID,
-            },
-          ],
-        },
-      });
-
-      request.execute((resp) => {
-        if (!resp.error) {
-          console.log(resp);
-          //   _this.showStatus("Loading Google Drive files...");
-          //   _this.getDriveFiles();
-          _this.hideLoading();
-          _this.newFolderName = null;
         } else {
-          _this.hideStatus();
-          _this.hideLoading();
-          _this.showErrorMessage("Error: " + resp.error.message);
+          this.showStatus("Folder available", 2000);
         }
       });
-    },
-    workerfUpload() {
-      this.showLoading();
-      this.showStatus("Uploading file in progress...");
-      var _this = this;
-      var metadata = {
-        description: "File Upload",
-
-        parents: [
-          {
-            kind: "drive#file",
-            id: _this.FOLDER_ID,
-          },
-        ],
-      };
-      var progress = 0;
-      var fileNumber = 0;
-      var fileName = "";
-      var fileCount = 0;
-      var fileSize = 0;
-      this.showProgressPercentage(0);
-      _this.showUploadProgress = true;
-      try {
-        var worker = new Worker("./../../drive/uploadworker.js");
-
-        worker.onmessage = function (e) {
-          // console.log(e.data);
-          if (e.data.message == "Initiate") {
-            console.log({
-              fileName: e.data.fileName,
-              fileSize: e.data.fileSize,
-              totalFiles: e.data.totalFiles,
-            });
-            progress = 0;
-            fileName = e.data.fileName;
-            fileSize = e.data.fileSize;
-            fileCount = e.data.totalFiles;
-            fileNumber = e.data.fileNumber;
-          }
-
-          if (e.data.message == "onError") {
-            var errorResponse = JSON.parse(e.data.response);
-            _this.showErrorMessage("Error: " + errorResponse.error.message);
-            _this.file = null;
-            _this.showUploadProgress = false;
-            // _this.getDriveFiles();
-          }
-          if (e.data.message == "onProgress") {
-            _this.showProgressPercentage(
-              Math.round(
-                ((progress * 1048576 + e.data.eventLoaded / e.data.eventTotal) /
-                  fileSize) *
-                  100,
-                0
-              ),
-              fileName
-            );
-            if (e.data.eventLoaded == e.data.eventTotal) progress++;
-          }
-          if (e.data.message == "onComplete") {
-            var errorResponse = JSON.parse(e.data.response);
-            if (errorResponse.message != null) {
-              console.error("inside Mediauploader OnComplete Error");
-              _this.showErrorMessage("Error: " + errorResponse.error.message);
-              _this.files = null;
-              //   _this.getDriveFiles();
-            } else {
-              console.log("inside Mediauploader OnComplete Done");
-              console.log(errorResponse);
-              //   _this.showStatus("Loading Google Drive files...");
-              //   _this.getDriveFiles();
-              //  _this.showUploadProgress=false
-            }
-            _this.hideLoading();
-            // _this.addFiles=false;
-            _this.files.length = 0;
-            _this.showUploadProgress = false;
-          }
-        };
-        worker.onerror = werror;
-        function werror(e) {
-          console.log(
-            "ERROR: Line ",
-            e.lineno,
-            " in ",
-            e.filename,
-            ": ",
-            e.message
-          );
-          var errorResponse = JSON.parse(response);
-          _this.showErrorMessage("Error: " + errorResponse.error.message);
-          _this.file = null;
-          _this.showUploadProgress = false;
-          _this.getDriveFiles();
-        }
-        worker.postMessage({
-          files: _this.files,
-          metadata: metadata,
-          token: gapi.auth2
-            .getAuthInstance()
-            .currentUser.get()
-            .getAuthResponse().access_token,
-        });
-      } catch (exc) {
-        console.log("inside Mediauploader OnComplete on Catch");
-        _this.showErrorMessage("Error: " + exc);
-        _this.files = [];
-        // _this.getDriveFiles();
-        _this.hideLoading();
-        _this.showUploadProgress = false;
-        _this.hideStatus();
-      }
-    },
-    showProgressPercentage(percentageValue, message = "") {
-      /*  if (this.uploadPercentageTxt == 0) {
-               this.uploadPercentage=true;
-            } */
-
-      this.uploadPercentageTxt =
-        message + " : " + percentageValue.toString() + "%";
-      this.percentageValue = percentageValue;
     },
     async search() {
       var pageToken = null;
@@ -702,7 +405,7 @@ export default {
       return new Promise((resolve, reject) => {
         request.execute((resp) => {
           if (!resp.error) {
-            console.log(resp);
+            // console.log(resp);
             _this.FOLDER_ARRAY.length = 0;
             resp.files.forEach(function (file) {
               _this.FOLDER_ARRAY.push(file);
@@ -721,10 +424,12 @@ export default {
   },
   created() {
     this.initialize();
-    this.handleClientLoad();
-    console.log(this.$route.params);
-    console.log("-" + this.id + "-");
-    console.log(this.scanRequest);
+    if (!this.notSignedIn) {
+      this.handleClientLoad();
+    }
+    // console.log(this.$route.params);
+    // console.log("-" + this.id + "-");
+    // console.log(this.scanRequest);
   },
 };
 </script>

@@ -31,5 +31,6 @@
     "/js/xyz-Layout.js": "/js/xyz-Layout.js",
     "/js/dashboard~doctor-Layout.js": "/js/dashboard~doctor-Layout.js",
     "/js/vendors~dashboard~doctor-Layout.js": "/js/vendors~dashboard~doctor-Layout.js",
-    "/js/admin-gdrive~admin-requests~admin-storage.js": "/js/admin-gdrive~admin-requests~admin-storage.js"
+    "/js/admin-gdrive~admin-requests~admin-storage.js": "/js/admin-gdrive~admin-requests~admin-storage.js",
+    "/js/admin-requests~admin-storage.js": "/js/admin-requests~admin-storage.js"
 }
