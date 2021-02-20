@@ -8,13 +8,14 @@
     "/js/admin-Layout~dashboard~doctor-Layout.js": "/js/admin-Layout~dashboard~doctor-Layout.js",
     "/js/admin-doctors.js": "/js/admin-doctors.js",
     "/js/admin-gdrive.js": "/js/admin-gdrive.js",
-    "/js/admin-gdrive~admin-storage.js": "/js/admin-gdrive~admin-storage.js",
+    "/js/admin-gdrive~admin-requests~admin-storage.js": "/js/admin-gdrive~admin-requests~admin-storage.js",
     "/js/admin-messages.js": "/js/admin-messages.js",
     "/js/admin-notification.js": "/js/admin-notification.js",
     "/js/admin-offers.js": "/js/admin-offers.js",
     "/js/admin-patients.js": "/js/admin-patients.js",
     "/js/admin-request-print.js": "/js/admin-request-print.js",
     "/js/admin-requests.js": "/js/admin-requests.js",
+    "/js/admin-requests~admin-storage.js": "/js/admin-requests~admin-storage.js",
     "/js/admin-services.js": "/js/admin-services.js",
     "/js/admin-storage.js": "/js/admin-storage.js",
     "/js/admin-users.js": "/js/admin-users.js",
@@ -28,9 +29,5 @@
     "/js/vendors~admin-doctors.js": "/js/vendors~admin-doctors.js",
     "/js/vendors~admin-patients~admin-users.js": "/js/vendors~admin-patients~admin-users.js",
     "/js/vendors~admin-requests.js": "/js/vendors~admin-requests.js",
-    "/js/xyz-Layout.js": "/js/xyz-Layout.js",
-    "/js/dashboard~doctor-Layout.js": "/js/dashboard~doctor-Layout.js",
-    "/js/vendors~dashboard~doctor-Layout.js": "/js/vendors~dashboard~doctor-Layout.js",
-    "/js/admin-gdrive~admin-requests~admin-storage.js": "/js/admin-gdrive~admin-requests~admin-storage.js",
-    "/js/admin-requests~admin-storage.js": "/js/admin-requests~admin-storage.js"
+    "/js/xyz-Layout.js": "/js/xyz-Layout.js"
 }

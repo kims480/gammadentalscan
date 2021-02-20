@@ -16,7 +16,12 @@
           >Use your Google Account</v-card-text
         >
         <v-card-actions class="d-flex justify-content-center">
-          <v-btn color="green lighten-5 " light @click="handleAuthClick()">
+          <v-btn
+            right
+            color="green lighten-5 "
+            light
+            @click="handleAuthClick()"
+          >
             <v-icon left>mdi-login-variant</v-icon> Sign In
           </v-btn>
         </v-card-actions>

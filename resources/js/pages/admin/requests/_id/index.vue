@@ -48,152 +48,9 @@
         </v-card>
       </div>
     </v-row>
-    <v-row
-      align="start"
-      class="grey lighten-5 mb-3"
-      no-gutters
-      style="height: auto"
-    >
-      <v-card
-        class="flex-grow-1 col-12 pa-2 mr-1 justify-space-between align-center"
-        outlined
-        tile
-      >
-        <v-btn
-          color="green lighten-5 "
-          v-show="notSignedIn"
-          light
-          @click="handleAuthClick()"
-        >
-          <v-icon left>mdi-login-variant</v-icon> Sign In
-        </v-btn>
-        <template v-if="driveBox">
-          <!-- addFolder -->
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                class="ma-2"
-                text
-                icon
-                color="green"
-                v-bind="attrs"
-                v-on="on"
-                @click="addFolder = !addFolder"
-                dark
-              >
-                <v-icon dark>mdi-folder-multiple-plus </v-icon>
-              </v-btn>
-            </template>
-            <span>Add Folder</span>
-          </v-tooltip>
-          <!-- addFiles -->
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                class="ma-2"
-                text
-                icon
-                color="green"
-                v-bind="attrs"
-                v-on="on"
-                @click="addFiles = !addFiles"
-                dark
-              >
-                <v-icon dark>mdi-file-plus </v-icon>
-              </v-btn>
-            </template>
-            <span>Add Files</span>
-          </v-tooltip>
-        </template>
-        <v-divider class="mx-4"></v-divider>
-
-        <v-text-field
-          v-if="addFolder"
-          append-outer-icon="mdi-folder-plus"
-          append-icon="mdi-folder-search"
-          @click:append-outer="btnAddFolder"
-          @click:append="searchItem"
-          v-model="newFolderName"
-        >
-          <!-- <v-icon slot="prepend" color="green">mdi-minus</v-icon> -->
-        </v-text-field>
-        <template v-if="addFiles">
-          <div class="file-upload">
-            <v-file-input
-              v-model="files"
-              color="light-green accent-4"
-              counter
-              clearable
-              dense
-              outlined
-              v-if="addFiles"
-              label="Add Files"
-              multiple
-              placeholder="Select your files"
-              prepend-icon="mdi-paperclip"
-              :show-size="1000"
-            >
-              <template v-slot:selection="{ index, text }">
-                <v-chip
-                  v-if="index < 3"
-                  color="green accent-4"
-                  dark
-                  label
-                  small
-                >
-                  {{ text }}
-                </v-chip>
-
-                <span
-                  v-else-if="index === 3"
-                  class="overline grey--text text--darken-3 mx-2"
-                >
-                  +{{ files.length - 3 }} File(s)
-                </span>
-              </template>
-            </v-file-input>
-            <!-- upload -->
-            <v-btn
-              class="ma-2 white--text upload-btn"
-              depressed
-              :disabled="files.length == 0"
-              color="blue-grey"
-              @click="workerfUpload"
-            >
-              Upload
-              <v-icon right>mdi-cloud-upload</v-icon>
-            </v-btn>
-          </div>
-        </template>
-        <template v-if="FOLDER_ARRAY.length > 0">
-          <div class="folder-list d-flex flex-column">
-            <v-radio-group v-model="FOLDER_ID">
-              <template v-slot:label>
-                <div>Search <strong>Results</strong></div>
-              </template>
-              <v-radio
-                v-for="(folder, index) in FOLDER_ARRAY"
-                :key="index"
-                :value="folder.id"
-              >
-                <template v-slot:label>
-                  <div>
-                    <v-icon color="yellow accent-4">mdi-folder-open</v-icon>
-                    <strong class="success--text">{{ folder.name }}</strong>
-                  </div>
-                </template>
-              </v-radio>
-            </v-radio-group>
-          </div>
-        </template>
-      </v-card>
-    </v-row>
-    <v-row align="start" class="grey lighten-5" no-gutters style="height: auto">
-      <v-card
-        class="flex-grow-1 col-12 pa-2 mr-1 justify-space-between align-center"
-        outlined
-        tile
-      >
+    <v-divider></v-divider>
+    <v-row class="mb-3 elevation-0 border-0" style="height: auto">
+      <div class="col-12">
         <template v-if="errorMessage">
           <v-alert
             v-model="errorMessage"
@@ -220,19 +77,209 @@
             >{{ statusMessageTxt }}</v-alert
           >
         </template>
-      </v-card>
+      </div>
     </v-row>
-    <v-row align="start" class="grey lighten-5" no-gutters style="height: auto">
+    <v-row class="grey lighten-5 mb-3" no-gutters style="height: auto">
+      <v-col cols="12">
+        <v-card outlined tile class="text-left">
+          <v-card-text>
+            <!-- <h4 class="card-title mb-3">Basic Tab With Icon</h4> -->
+            <ul class="nav nav-tabs" id="myIconTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="contact-icon-tab"
+                  data-toggle="tab"
+                  href="#contactIcon"
+                  role="tab"
+                  aria-controls="contactIcon"
+                  aria-selected="false"
+                  ><i class="nav-icon i-Google-Drive mr-1"></i> G-Drive</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="home-icon-tab"
+                  data-toggle="tab"
+                  href="#homeIcon"
+                  role="tab"
+                  aria-controls="homeIcon"
+                  aria-selected="true"
+                  @click="addFolder = true"
+                  ><i class="nav-icon i-Folder-Open mr-1"></i>Folder</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="profile-icon-tab"
+                  data-toggle="tab"
+                  href="#profileIcon"
+                  role="tab"
+                  @click="addFiles = true"
+                  aria-controls="profileIcon"
+                  aria-selected="false"
+                  ><i class="nav-icon i-Files mr-1"></i> Files</a
+                >
+              </li>
+            </ul>
+            <div class="tab-content" id="myIconTabContent">
+              <div
+                class="tab-pane fade"
+                id="homeIcon"
+                role="tabpanel"
+                aria-labelledby="home-icon-tab"
+              >
+                <div class="folder-container-form d-flex align-center">
+                  <v-text-field
+                    v-model="newFolderName"
+                    color="green"
+                    class="mr-1"
+                    dense
+                  >
+                    <!-- <v-icon slot="prepend" color="green">mdi-minus</v-icon> -->
+                  </v-text-field>
+
+                  <v-btn
+                    small
+                    text
+                    outlined
+                    color="indigo"
+                    class="ml-auto"
+                    @click="searchItem"
+                  >
+                    Search
+                    <v-icon right>mdi-magnify</v-icon>
+                  </v-btn>
+                  <v-btn
+                    small
+                    text
+                    class="mr-1"
+                    outlined
+                    color="green"
+                    @click="btnAddFolder"
+                  >
+                    <v-icon left>mdi-folder-plus</v-icon>Create Folder
+                  </v-btn>
+                </div>
+                <template v-if="FOLDER_ARRAY.length > 0">
+                  <div class="folder-list d-flex flex-column">
+                    <v-radio-group v-model="FOLDER_ID">
+                      <template v-slot:label>
+                        <div>Search <strong>Results</strong></div>
+                      </template>
+                      <v-radio
+                        v-for="(folder, index) in FOLDER_ARRAY"
+                        :key="index"
+                        :value="folder.id"
+                      >
+                        <template v-slot:label>
+                          <div>
+                            <v-icon color="yellow accent-4"
+                              >mdi-folder-open</v-icon
+                            >
+                            <strong class="success--text">{{
+                              folder.name
+                            }}</strong>
+                          </div>
+                        </template>
+                      </v-radio>
+                    </v-radio-group>
+                  </div>
+                </template>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="profileIcon"
+                role="tabpanel"
+                aria-labelledby="profile-icon-tab"
+              >
+                <template v-if="addFiles">
+                  <v-card>
+                    <v-card-text>
+                      <v-file-input
+                        v-model="files"
+                        color="light-green accent-4"
+                        counter
+                        clearable
+                        dense
+                        outlined
+                        v-if="addFiles"
+                        label="Add Files"
+                        multiple
+                        placeholder="Select your files"
+                        prepend-icon="mdi-paperclip"
+                        :show-size="1000"
+                      >
+                        <template v-slot:selection="{ index, text }">
+                          <v-chip
+                            v-if="index < 3"
+                            color="green accent-4"
+                            dark
+                            label
+                            small
+                          >
+                            {{ text }}
+                          </v-chip>
+
+                          <span
+                            v-else-if="index === 3"
+                            class="overline grey--text text--darken-3 mx-2"
+                          >
+                            +{{ files.length - 3 }} File(s)
+                          </span>
+                        </template>
+                      </v-file-input>
+                    </v-card-text>
+                    <v-card-actions class="d-flex align-center justify-end">
+                      <!-- upload -->
+                      <v-btn
+                        class="ma-2 white--text upload-btn"
+                        depressed
+                        :disabled="files.length == 0"
+                        color="blue-grey"
+                        @click="workerfUpload"
+                      >
+                        Upload
+                        <v-icon right>mdi-cloud-upload</v-icon>
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </div>
+              <div
+                class="tab-pane fade show active"
+                id="contactIcon"
+                role="tabpanel"
+                aria-labelledby="contact-icon-tab"
+              >
+                <v-btn
+                  color="green lighten-5 "
+                  v-show="notSignedIn"
+                  light
+                  @click="handleAuthClick()"
+                >
+                  <v-icon left>mdi-login-variant</v-icon> Sign In
+                </v-btn>
+                <v-card class="pa-2 text-green" outlined tile>
+                  You Aleady Signed In
+                </v-card>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- <v-row align="start" class="grey lighten-5" no-gutters style="height: auto">
       <v-card
         class="flex-grow-1 col-12 pa-2 mr-1 justify-space-between align-center"
         outlined
         tile
       >
-        <v-btn small v-if="!accepted">Accept</v-btn>
-        <v-btn small>Add Result Files</v-btn>
-        <v-btn @click="searchItem" small> search</v-btn>
       </v-card>
-    </v-row>
+    </v-row> -->
     <v-alert
       v-model="showUploadProgress"
       transition="slide-y-reverse-transition"
@@ -281,6 +328,11 @@ export default {
       delivered: false,
       details: [],
       FOLDER_ID: "1Yzzo2skepl_U5Xirv9FwBEyEx_tzgWGE",
+      currentItem: "tab-Web",
+      items: ["Web", "Shopping", "Videos", "Images"],
+      more: ["News", "Maps", "Books", "Flights", "Apps"],
+      text:
+        "Lorem ipsum  incididunt exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
   },
   head() {
@@ -349,6 +401,14 @@ export default {
         }
       });
     },
+    addItem(item) {
+      const removed = this.items.splice(0, 1);
+      this.items.push(...this.more.splice(this.more.indexOf(item), 1));
+      this.more.push(...removed);
+      this.$nextTick(() => {
+        this.currentItem = "tab-" + item;
+      });
+    },
     async search() {
       var pageToken = null;
       return new Promise((resolve, reject) => {
@@ -409,6 +469,9 @@ export default {
             _this.FOLDER_ARRAY.length = 0;
             resp.files.forEach(function (file) {
               _this.FOLDER_ARRAY.push(file);
+              if (file.name == _this.newFolderName) {
+                _this.FOLDER_ID = file.id;
+              }
               console.log("Found file: ", file.name, file.id);
             });
             console.log(_this.FOLDER_ARRAY);

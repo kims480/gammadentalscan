@@ -409,114 +409,115 @@ export default {
                 }
             }
         },
-        fUpload() {
-            this.showLoading();
-            this.showStatus("Uploading file in progress...");
-            var _this = this;
-            // var file = this.files[0];
-            // console.dir(file)
-            if (this.files.length > 0) {
-                this.files.forEach(file => {
-                    var metadata = {
-                        title: file.name,
-                        description: "File Upload",
-                        mimeType: file.type || "application/octet-stream",
-                        parents: [
-                            {
-                                kind: "drive#file",
-                                id: _this.FOLDER_ID
-                            }
-                        ]
-                    };
-                    // console.dir(metadata)
 
-                    //if user upload an empty content, create a temp blob with a space content on it.
-                    if (file.size <= 0) {
-                        var emptyContent = " ";
-                        file = new Blob([emptyContent], {
-                            type: file.type || "application/octet-stream"
-                        });
-                    }
+        // fUpload() {
+        //     this.showLoading();
+        //     this.showStatus("Uploading file in progress...");
+        //     var _this = this;
+        //     // var file = this.files[0];
+        //     // console.dir(file)
+        //     if (this.files.length > 0) {
+        //         this.files.forEach(file => {
+        //             var metadata = {
+        //                 title: file.name,
+        //                 description: "File Upload",
+        //                 mimeType: file.type || "application/octet-stream",
+        //                 parents: [
+        //                     {
+        //                         kind: "drive#file",
+        //                         id: _this.FOLDER_ID
+        //                     }
+        //                 ]
+        //             };
+        //             // console.dir(metadata)
 
-                    this.showProgressPercentage(0);
-                    // console.log(MediaUploader);
-                    //   _this.showUploadProgress=false
-                    _this.showUploadProgress = true;
+        //             //if user upload an empty content, create a temp blob with a space content on it.
+        //             if (file.size <= 0) {
+        //                 var emptyContent = " ";
+        //                 file = new Blob([emptyContent], {
+        //                     type: file.type || "application/octet-stream"
+        //                 });
+        //             }
 
-                    try {
-                        var uploader = new MediaUploader({
-                            file: file,
-                            token: gapi.auth2
-                                .getAuthInstance()
-                                .currentUser.get()
-                                .getAuthResponse().access_token,
-                            metadata: metadata,
-                            onError: function(response) {
-                                var errorResponse = JSON.parse(response);
-                                _this.showErrorMessage(
-                                    "Error: " + errorResponse.error.message
-                                );
-                                _this.file = null;
-                                _this.showUploadProgress = false;
-                                _this.OnErrorUpload();
-                            },
-                            onComplete: function(response) {
-                                console.log("inside Mediauploader OnComplete");
-                                _this.hideStatus();
+        //             this.showProgressPercentage(0);
+        //             // console.log(MediaUploader);
+        //             //   _this.showUploadProgress=false
+        //             _this.showUploadProgress = true;
 
-                                console.log(response);
-                                var errorResponse = JSON.parse(response);
-                                if (errorResponse.message != null) {
-                                    console.log(
-                                        "inside Mediauploader OnComplete Error"
-                                    );
-                                    _this.showErrorMessage(
-                                        "Error: " + errorResponse.error.message
-                                    );
-                                    _this.files = null;
-                                    _this.OnErrorUpload();
-                                } else {
-                                    console.log(
-                                        "inside Mediauploader OnComplete Done"
-                                    );
-                                    _this.showStatus(
-                                        "Loading Google Drive files..."
-                                    );
-                                    _this.OnErrorUpload();
-                                    //  _this.showUploadProgress=false
-                                }
-                                _this.hideLoading();
-                                // _this.addFiles=false;
-                                _this.files.length = 0;
-                                _this.showUploadProgress = false;
-                            },
-                            onProgress: function(event) {
-                                // console.log('inside Mediauploader OnComplete on Progress')
-                                _this.showProgressPercentage(
-                                    Math.round(
-                                        (event.loaded / event.total) * 100,
-                                        0
-                                    )
-                                );
-                            },
-                            params: {
-                                convert: false,
-                                ocr: false
-                            }
-                        });
-                        uploader.upload();
-                    } catch (exc) {
-                        console.log("inside Mediauploader OnComplete on Catch");
-                        _this.showErrorMessage("Error: " + exc);
-                        _this.files = [];
-                        _this.OnErrorUpload();
-                        _this.hideLoading();
-                        _this.showUploadProgress = false;
-                        _this.hideStatus();
-                    }
-                });
-            }
-        },
+        //             try {
+        //                 var uploader = new MediaUploader({
+        //                     file: file,
+        //                     token: gapi.auth2
+        //                         .getAuthInstance()
+        //                         .currentUser.get()
+        //                         .getAuthResponse().access_token,
+        //                     metadata: metadata,
+        //                     onError: function(response) {
+        //                         var errorResponse = JSON.parse(response);
+        //                         _this.showErrorMessage(
+        //                             "Error: " + errorResponse.error.message
+        //                         );
+        //                         _this.file = null;
+        //                         _this.showUploadProgress = false;
+        //                         _this.OnErrorUpload();
+        //                     },
+        //                     onComplete: function(response) {
+        //                         console.log("inside Mediauploader OnComplete");
+        //                         _this.hideStatus();
+
+        //                         console.log(response);
+        //                         var errorResponse = JSON.parse(response);
+        //                         if (errorResponse.message != null) {
+        //                             console.log(
+        //                                 "inside Mediauploader OnComplete Error"
+        //                             );
+        //                             _this.showErrorMessage(
+        //                                 "Error: " + errorResponse.error.message
+        //                             );
+        //                             _this.files = null;
+        //                             _this.OnErrorUpload();
+        //                         } else {
+        //                             console.log(
+        //                                 "inside Mediauploader OnComplete Done"
+        //                             );
+        //                             _this.showStatus(
+        //                                 "Loading Google Drive files..."
+        //                             );
+        //                             _this.OnErrorUpload();
+        //                             //  _this.showUploadProgress=false
+        //                         }
+        //                         _this.hideLoading();
+        //                         // _this.addFiles=false;
+        //                         _this.files.length = 0;
+        //                         _this.showUploadProgress = false;
+        //                     },
+        //                     onProgress: function(event) {
+        //                         // console.log('inside Mediauploader OnComplete on Progress')
+        //                         _this.showProgressPercentage(
+        //                             Math.round(
+        //                                 (event.loaded / event.total) * 100,
+        //                                 0
+        //                             )
+        //                         );
+        //                     },
+        //                     params: {
+        //                         convert: false,
+        //                         ocr: false
+        //                     }
+        //                 });
+        //                 uploader.upload();
+        //             } catch (exc) {
+        //                 console.log("inside Mediauploader OnComplete on Catch");
+        //                 _this.showErrorMessage("Error: " + exc);
+        //                 _this.files = [];
+        //                 _this.OnErrorUpload();
+        //                 _this.hideLoading();
+        //                 _this.showUploadProgress = false;
+        //                 _this.hideStatus();
+        //             }
+        //         });
+        //     }
+        // },
         formatBytes(bytes) {
             if (bytes < 1024) return bytes + " Bytes";
             else if (bytes < 1048576) return (bytes / 1024).toFixed(3) + " KB";
