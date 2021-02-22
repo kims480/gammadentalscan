@@ -164,29 +164,71 @@
                   </v-btn>
                 </div>
                 <template v-if="FOLDER_ARRAY.length > 0">
-                  <div class="folder-list d-flex flex-column">
-                    <v-radio-group v-model="FOLDER_ID">
-                      <template v-slot:label>
-                        <div>Search <strong>Results</strong></div>
-                      </template>
-                      <v-radio
-                        v-for="(folder, index) in FOLDER_ARRAY"
+                  <v-row>
+                    <v-col cols="6" class="folder-list d-flex flex-column">
+                      <v-radio-group
+                        v-model="FOLDER_ID"
+                        @change="handleGetFiles(FOLDER_ID)"
+                      >
+                        <template v-slot:label>
+                          <div><strong>Related Folders</strong></div>
+                        </template>
+                        <v-radio
+                          v-for="(folder, index) in FOLDER_ARRAY"
+                          :key="index"
+                          :value="folder.id"
+                        >
+                          <template v-slot:label>
+                            <div>
+                              <v-icon color="amber">mdi-folder-open</v-icon>
+                              <strong class="success--text">{{
+                                folder.title
+                              }}</strong>
+                            </div>
+                          </template>
+                        </v-radio>
+                      </v-radio-group>
+                    </v-col>
+                    <v-col cols="6" class="folder-list d-flex flex-column">
+                      <p>{{ selectedRequestFiles }}</p>
+                      <v-checkbox
+                        v-for="(file, index) in RequestFiles"
                         :key="index"
-                        :value="folder.id"
+                        v-model="selectedRequestFiles"
+                        :value="{
+                          fileId: file.id,
+                          fileName: file.title,
+                          fileDownloadLink:
+                            'https://drive.google.com/u/0/uc?id=' +
+                            file.id +
+                            '&export=download',
+                        }"
                       >
                         <template v-slot:label>
                           <div>
-                            <v-icon color="yellow accent-4"
-                              >mdi-folder-open</v-icon
-                            >
-                            <strong class="success--text">{{
-                              folder.name
-                            }}</strong>
+                            <img
+                              v-if="file.fileExtension"
+                              alt="Avatar"
+                              :src="
+                                './../../../images/' +
+                                file.fileExtension +
+                                '-icon.png'
+                              "
+                              height="28px"
+                              width="28px"
+                            />
+                            <v-icon v-else color="green" v-text="File"></v-icon>
+
+                            {{ file.title }}
                           </div>
                         </template>
-                      </v-radio>
-                    </v-radio-group>
-                  </div>
+                      </v-checkbox>
+                    </v-col>
+                  </v-row>
+                </template>
+                <template v-else>
+                  <div><strong>Related Folders</strong></div>
+                  <div>no related folders available</div>
                 </template>
               </div>
               <div
@@ -327,10 +369,12 @@ export default {
       rejected: false,
       delivered: false,
       details: [],
+      selectedRequestFiles: [],
       FOLDER_ID: "1Yzzo2skepl_U5Xirv9FwBEyEx_tzgWGE",
       currentItem: "tab-Web",
       items: ["Web", "Shopping", "Videos", "Images"],
       more: ["News", "Maps", "Books", "Flights", "Apps"],
+
       text:
         "Lorem ipsum  incididunt exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     };
@@ -391,7 +435,7 @@ export default {
     startSearch() {
       this.searchItem().then((res) => {
         // console.log(res);
-        if (res.files.length == 0) {
+        if (this.FOLDER_ARRAY == 0) {
           this.showErrorMessage(
             "Folder not exist - need to be created first",
             3000
@@ -411,31 +455,56 @@ export default {
     },
     async search() {
       var pageToken = null;
+      var _this = this;
+      var access_token = gapi.auth2
+        .getAuthInstance()
+        .currentUser.get()
+        .getAuthResponse().access_token;
+      var query = {
+        q:
+          "name contains '" +
+          this.newFolderName +
+          "' and mimeType='application/vnd.google-apps.folder'",
+        fields: "nextPageToken, files(id, name)",
+        spaces: "drive",
+        pageToken: pageToken,
+      };
+      var request = gapi.client.request({
+        path: "/drive/v3/files?q=" + query.q,
+
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + access_token,
+        },
+        body: {
+          query,
+        },
+
+        //   body: {},
+      });
       return new Promise((resolve, reject) => {
-        drive.files
-          .list({
-            q:
-              "name = 'Gamma-Dental' and mimeType='application/vnd.google-apps.folder'",
-            fields: "nextPageToken, files(id, name)",
-            spaces: "drive",
-            pageToken: pageToken,
-          })
-          .then((res) => {
-            res.files.forEach(function (file) {
+        request.execute((resp) => {
+          if (!resp.error) {
+            console.log(resp);
+            _this.FOLDER_ARRAY.length = 0;
+            resp.files.forEach(function (file) {
+              file.title = file.name;
+              _this.FOLDER_ARRAY.push(file);
+
+              if (file.name == _this.newFolderName) {
+                _this.FOLDER_ID = file.id;
+              }
               console.log("Found file: ", file.name, file.id);
             });
-            pageToken = res.nextPageToken;
-            resolve(res.data);
-          })
-          .catch((err) => {
-            if (err) {
-              // Handle error
-              console.error(err);
-              reject(err);
-            } else {
-              return !!pageToken;
-            }
-          });
+            console.log(_this.FOLDER_ARRAY);
+            pageToken = resp.nextPageToken;
+            resolve(resp);
+          } else {
+            console.error(resp.error.message);
+            reject(resp);
+          }
+        });
       });
     },
     async searchItem() {
@@ -444,38 +513,108 @@ export default {
         .getAuthInstance()
         .currentUser.get()
         .getAuthResponse().access_token;
+      var query = {
+        q:
+          this.newFolderName == null
+            ? this.scanRequestData.request_Num
+            : this.newFolderName +
+              "' and mimeType='application/vnd.google-apps.folder'",
+        fields: "nextPageToken, files(id, name)",
+        spaces: "drive",
+        pageToken: pageToken,
+      };
       var _this = this;
       var request = gapi.client.request({
         path:
-          "/drive/v3/files?q=name contains '" +
-          this.newFolderName +
-          "' and mimeType='application/vnd.google-apps.folder'",
+          "/drive/v2/files?q=" + "trashed=false and title contains '" + query.q,
+
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + access_token,
-          q:
-            "name='Gamma-Dental' and mimeType='application/vnd.google-apps.folder'",
-          fields: "nextPageToken, files(id, name)",
-          spaces: "drive",
-          pageToken: pageToken,
-          //   body: {},
         },
+        body: {
+          query,
+        },
+
+        //   body: {},
       });
       return new Promise((resolve, reject) => {
         request.execute((resp) => {
           if (!resp.error) {
-            // console.log(resp);
+            console.log(resp);
             _this.FOLDER_ARRAY.length = 0;
-            resp.files.forEach(function (file) {
+            resp.items.forEach(function (file) {
               _this.FOLDER_ARRAY.push(file);
-              if (file.name == _this.newFolderName) {
+              if (file.title == _this.newFolderName) {
                 _this.FOLDER_ID = file.id;
+                _this.getFiles(file.id);
               }
-              console.log("Found file: ", file.name, file.id);
+
+              console.log("Found file: ", file.title, file.id);
             });
             console.log(_this.FOLDER_ARRAY);
             pageToken = resp.nextPageToken;
+            resolve(resp);
+          } else {
+            console.error(resp.error.message);
+            reject(resp);
+          }
+        });
+      });
+    },
+
+    afterGetFiles() {},
+    handleGetFiles(FOLDER_ID) {
+      this.RequestFiles.length = 0;
+      //   this.selectedRequestFiles.length = 0;
+      this.getFiles(FOLDER_ID);
+    },
+    async searchItemById(id) {
+      var pageToken = null;
+      var access_token = gapi.auth2
+        .getAuthInstance()
+        .currentUser.get()
+        .getAuthResponse().access_token;
+      var query = {
+        q:
+          "title contains '" +
+          this.newFolderName +
+          "' and mimeType='application/vnd.google-apps.folder'",
+        fields: "nextPageToken, files(id, name)",
+        spaces: "drive",
+        pageToken: pageToken,
+      };
+      var _this = this;
+      var request = gapi.client.request({
+        path: "/drive/v3/files/" + id,
+
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + access_token,
+        },
+        body: {
+          query,
+        },
+
+        //   body: {},
+      });
+      return new Promise((resolve, reject) => {
+        request.execute((resp) => {
+          if (!resp.error) {
+            console.log(resp);
+            // _this.FOLDER_ARRAY.length = 0;
+            // resp.items.forEach(function (file) {
+            //   _this.FOLDER_ARRAY.push(file);
+            //   if (file.title == _this.newFolderName) {
+            //     _this.FOLDER_ID = file.id;
+            //   }
+
+            //   console.log("Found file: ", file.title, file.id);
+            // });
+            // console.log(_this.FOLDER_ARRAY);
+            // pageToken = resp.nextPageToken;
             resolve(resp);
           } else {
             console.error(resp.error.message);

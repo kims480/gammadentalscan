@@ -38,6 +38,7 @@ export default {
             DRIVE_FILES: [],
             FILE_COUNTER: 0,
             FOLDER_ARRAY: [],
+            RequestFiles: [],
             uploadPercentage: false,
             uploadPercentageTxt: "",
             showUploadProgress: false,
@@ -532,6 +533,47 @@ export default {
         },
         afterButtonReload() {
             return;
+        },
+        afterGetFiles(resp = null) {
+            return;
+        },
+        async getFiles(id = null) {
+            var query = isNull(id)
+                ? "trashed=false and '" + this.FOLDER_ID + "' in parents"
+                : "trashed=false and '" +
+                  id +
+                  "' in parents and mimeType != 'application/vnd.google-apps.folder'";
+            // console.log('resp')
+            var _this = this;
+            await gapi.load("client", function() {
+                gapi.client.load("drive", "v2", function() {
+                    var request = gapi.client.drive.files.list({
+                        maxResults: _this.NO_OF_FILES,
+                        q: query
+                    });
+                    request.execute(resp => {
+                        // console.log(resp)
+                        if (!resp.error) {
+                            // console.log(resp);
+                            _this.afterGetFiles(resp.items);
+                            _this.RequestFiles.length = 0;
+                            resp.items.forEach(function(file) {
+                                _this.RequestFiles.push(file);
+                            });
+                            console.log(_this.RequestFiles);
+                            // _this.showUserInfo();
+                            // _this.DRIVE_FILES = resp.items;
+                            // _this.buildFiles();
+                            // _this.hideLoading();
+                            // _this.hideStatus();
+                        } else {
+                            _this.showErrorMessage(
+                                "Error: " + resp.error.message
+                            );
+                        }
+                    });
+                });
+            });
         }
     },
     computed: {

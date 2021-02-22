@@ -29,5 +29,6 @@
     "/js/vendors~admin-doctors.js": "/js/vendors~admin-doctors.js",
     "/js/vendors~admin-patients~admin-users.js": "/js/vendors~admin-patients~admin-users.js",
     "/js/vendors~admin-requests.js": "/js/vendors~admin-requests.js",
-    "/js/xyz-Layout.js": "/js/xyz-Layout.js"
+    "/js/xyz-Layout.js": "/js/xyz-Layout.js",
+    "/js/admin-gdrive~admin-storage.js": "/js/admin-gdrive~admin-storage.js"
 }
