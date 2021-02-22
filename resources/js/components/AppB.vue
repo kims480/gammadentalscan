@@ -129,7 +129,7 @@ export default {
         },
       ],
       base: {
-        href: "https://gamma-dental-scan.dev/dashboard",
+        href: "https://gamma-dental-scan.com/dashboard",
         target: "_Self",
       },
       bodyAttrs: {
