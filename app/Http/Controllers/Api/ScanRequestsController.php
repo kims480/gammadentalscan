@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
+
 class ScanRequestsController extends Controller
 {
     /**
@@ -62,7 +63,7 @@ class ScanRequestsController extends Controller
     {
         //
         // $scanRequest = ScanRequests::get();
-        $scanRequest = ScanRequests::whereId($id)->with([
+        $scanRequests = ScanRequests::select('id', 'rq_num', 'status', 'created_at', 'updated_at', 'patient_id', 'refered_by', 'scan_name')->whereId($id)->orWhere('rq_num', $id)->with([
             'user' => function ($q) {
                 $q->select('id', 'name');
             },
@@ -70,12 +71,12 @@ class ScanRequestsController extends Controller
                 $q->select('id', 'name_en', 'name_ar');
             }
         ])->orderBy('id', 'desc')->get();
-        $scanRequest = $scanRequest->makeVisible(['created_at', 'updated_at']);
-        $scanRequest = collect($scanRequest);
+        $scanRequests = $scanRequests->makeVisible(['created_at', 'updated_at']);
+        $scanRequest = collect($scanRequests);
         $requestList = $scanRequest->transform(function ($value, $key) {
             return  [
                 'id' => $value['id'],
-                'request_Num' => $value['rq_num'],
+                'rqNum' => $value['rq_num'],
                 'patient' => $value['patient_name'],
                 'doctor' => $value['doctor_name'],
                 'status' =>  $value['status'],
@@ -93,6 +94,7 @@ class ScanRequestsController extends Controller
         return response()->json(
             [
                 'data' => $requestList->all(),
+                'extra' => $scanRequests,
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
                 'message' => 'Requests Collected Sucessfully'
@@ -278,12 +280,12 @@ class ScanRequestsController extends Controller
             date_default_timezone_set('Africa/Cairo');
 
             if ((int)$temp[1] == (int)date('Ymd')) {
-                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', (int)$temp[2] + 1));
+                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%06d', (int)$temp[2] + 1));
             } else {
-                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', 1));
+                $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%06d', 1));
             }
         } else {
-            $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%05d', 1));
+            $rqNum = 'RQ-' . date('Ymd') . '-' . (sprintf('%06d', 1));
         }
         return $rqNum;
     }

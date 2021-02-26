@@ -27,6 +27,8 @@ export default {
   }),
   created() {
     ServicesConst.apiClient.get("/sanctum/csrf-cookie");
+    // console.log(process.env.MIX_APP_DASHBOARD_URL);
+    // console.log(process.env.MIX_APP_SPA_BASE_URL);
   },
   methods: {
     getBread() {
@@ -129,7 +131,9 @@ export default {
         },
       ],
       base: {
-        href: "https://gamma-dental-scan.com/dashboard",
+        href:
+          process.env.MIX_APP_DASHBOARD_URL ??
+          "https://gamma-dental-scan.com/dashboard",
         target: "_Self",
       },
       bodyAttrs: {

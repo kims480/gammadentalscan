@@ -7,9 +7,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ScanRequests extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'scan_requests';
 
@@ -114,5 +116,14 @@ class ScanRequests extends Model
     public function patient()
     {
         return $this->belongsTo('App\Models\Patient', 'patient_id', 'id');
+    }
+    /**
+     * Get all of the scanResults for the ScanRequests
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function scan_results()
+    {
+        return $this->hasMany('App\Models\ScanResults', 'request_id');
     }
 }

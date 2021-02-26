@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ScanCateg;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategController extends Controller
 {
@@ -15,6 +17,15 @@ class CategController extends Controller
     public function index()
     {
         //
+        $scanCategs = ScanCateg::select('id', 'categ_name')->where('active', 1)->get();
+        return response()->json(
+            [
+                'scanCategs' => $scanCategs->all(),
+                'message' => 'Scan Categories Collected Sucessfully',
+                'success' => true
+            ],
+            Response::HTTP_ACCEPTED
+        );
     }
 
     /**

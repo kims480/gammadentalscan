@@ -30,5 +30,7 @@
     "/js/vendors~admin-patients~admin-users.js": "/js/vendors~admin-patients~admin-users.js",
     "/js/vendors~admin-requests.js": "/js/vendors~admin-requests.js",
     "/js/xyz-Layout.js": "/js/xyz-Layout.js",
-    "/js/admin-gdrive~admin-storage.js": "/js/admin-gdrive~admin-storage.js"
+    "/js/admin-Layout~default-Layout~doctor-Layout.js": "/js/admin-Layout~default-Layout~doctor-Layout.js",
+    "/js/default-Layout.js": "/js/default-Layout.js",
+    "/js/vendors~admin-Layout~default-Layout~doctor-Layout.js": "/js/vendors~admin-Layout~default-Layout~doctor-Layout.js"
 }

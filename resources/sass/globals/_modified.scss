@@ -151,7 +151,7 @@ table tbody tr td {
     font-family: kufi;
 }
 table tbody tr:nth-child(even) {
-    background: beige;
+    // background: beige;
 }
 table tbody tr {
     font-weight: 400;
@@ -758,4 +758,13 @@ div.master-tab {
         font-weight: bold;
         columns: #0ed407f5;
     }
+}
+.table-td-flex {
+    justify-content: center;
+
+    align-items: center;
+    // flex-direction: column;
+    align-content: center;
+    justify-items: center;
+    height: 100%;
 }

@@ -7,9 +7,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Patient extends Model
 {
+    use SoftDeletes;
     //
     /* The attributes that are mass assignable.
      *
@@ -36,10 +38,10 @@ class Patient extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at','pivot',
+        'updated_at', 'pivot',
         'interstedToRecvMails',
         'interstedToRecvNot',
-        'photo' ,
+        'photo',
         'address',
         'dob',
 
@@ -56,6 +58,6 @@ class Patient extends Model
 
     public function scanrequests()
     {
-        return $this->hasMany('App\Models\ScanRequest','patient_id', 'id');
+        return $this->hasMany('App\Models\ScanRequest', 'patient_id', 'id');
     }
 }

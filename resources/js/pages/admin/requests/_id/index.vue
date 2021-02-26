@@ -190,39 +190,101 @@
                       </v-radio-group>
                     </v-col>
                     <v-col cols="6" class="folder-list d-flex flex-column">
-                      <p>{{ selectedRequestFiles }}</p>
-                      <v-checkbox
+                      <v-btn
+                        small
+                        text
+                        class="mr-1"
+                        outlined
+                        color="green"
+                        @click="handleGetFiles(FOLDER_ID)"
+                      >
+                        <v-icon left>mdi-file-search</v-icon>Check Files
+                      </v-btn>
+                      <v-btn
+                        small
+                        text
+                        class="mr-1"
+                        outlined
+                        color="green"
+                        @click="saveFiles"
+                      >
+                        <v-icon left>mdi-file-cloud</v-icon>Save Files
+                      </v-btn>
+                      <v-btn
+                        small
+                        text
+                        class="mr-1"
+                        outlined
+                        color="green"
+                        @click="getSavedFiles"
+                      >
+                        <v-icon left>mdi-file-cloud</v-icon>Get Files
+                      </v-btn>
+                      <v-combobox
+                        v-model="fileCateg"
+                        :items="fileCategItems"
+                        label="File Category"
+                        item-text="categ_name"
+                        return-object
+                        dense
+                        outlined
+                        small-chips
+                      ></v-combobox>
+
+                      <div
+                        class="d-flex align-center justify-between"
                         v-for="(file, index) in RequestFiles"
                         :key="index"
-                        v-model="selectedRequestFiles"
-                        :value="{
-                          fileId: file.id,
-                          fileName: file.title,
-                          fileDownloadLink:
-                            'https://drive.google.com/u/0/uc?id=' +
-                            file.id +
-                            '&export=download',
-                        }"
                       >
-                        <template v-slot:label>
-                          <div>
-                            <img
-                              v-if="file.fileExtension"
-                              alt="Avatar"
-                              :src="
-                                './../../../images/' +
-                                file.fileExtension +
-                                '-icon.png'
-                              "
-                              height="28px"
-                              width="28px"
-                            />
-                            <v-icon v-else color="green" v-text="File"></v-icon>
+                        <v-checkbox
+                          v-model="selectedRequestFiles"
+                          :value="{ id: file.id, name: file.title }"
+                        >
+                          <template v-slot:label>
+                            <div>
+                              <img
+                                v-if="file.fileExtension"
+                                alt="Avatar"
+                                :src="
+                                  './../../../images/' +
+                                  file.fileExtension +
+                                  '-icon.png'
+                                "
+                                height="28px"
+                                width="28px"
+                              />
+                              <v-icon
+                                v-else
+                                color="green"
+                                v-text="File"
+                              ></v-icon>
 
-                            {{ file.title }}
-                          </div>
-                        </template>
-                      </v-checkbox>
+                              {{ file.title }}
+                            </div>
+                          </template>
+                        </v-checkbox>
+                        <div class="d-inline-flex">
+                          <a
+                            :href="
+                              'https://drive.google.com/uc?id=' +
+                              file.id +
+                              '&export=download'
+                            "
+                            target="blank"
+                            >download</a
+                          >
+
+                          <a
+                            :href="
+                              'https://drive.google.com/file/d/' +
+                              file.id +
+                              '/preview?usp=drivesdk'
+                            "
+                            target="blank"
+                            >View</a
+                          >
+                        </div>
+                      </div>
                     </v-col>
                   </v-row>
                 </template>
@@ -240,6 +302,16 @@
                 <template v-if="addFiles">
                   <v-card>
                     <v-card-text>
+                      <v-combobox
+                        v-model="fileCateg"
+                        :items="fileCategItems"
+                        label="File Category"
+                        item-text="categ_name"
+                        return-object
+                        dense
+                        outlined
+                        small-chips
+                      ></v-combobox>
                       <v-file-input
                         v-model="files"
                         color="light-green accent-4"
@@ -313,7 +385,90 @@
         </v-card>
       </v-col>
     </v-row>
-
+    <v-row>
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="card-title mb-3">Form Inputs Rounded</div>
+            <form>
+              <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                  <label for="firstName2">First name</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="firstName2"
+                    type="text"
+                    placeholder="Enter your first name"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="lastName2">Last name</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="lastName2"
+                    type="text"
+                    placeholder="Enter your last name"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="exampleInputEmail2">Email address</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="exampleInputEmail2"
+                    type="email"
+                    placeholder="Enter email"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="phone1">Phone</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="phone1"
+                    placeholder="Enter phone"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="credit2">Cradit card number</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="credit2"
+                    placeholder="Card"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="website2">Website</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="website2"
+                    placeholder="Web address"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="picker3">Birth date</label>
+                  <input
+                    class="form-control form-control-rounded"
+                    id="picker3"
+                    placeholder="yyyy-mm-dd"
+                    name="dp"
+                  />
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                  <label for="picker1">Select</label>
+                  <select class="form-control form-control-rounded">
+                    <option>Option 1</option>
+                    <option>Option 1</option>
+                    <option>Option 1</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <button class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </v-row>
     <!-- <v-row align="start" class="grey lighten-5" no-gutters style="height: auto">
       <v-card
         class="flex-grow-1 col-12 pa-2 mr-1 justify-space-between align-center"
@@ -341,12 +496,133 @@
       ></v-progress-linear>
       <span>{{ uploadPercentageTxt }}</span>
     </v-alert>
+    <div class="row">
+      <div class="col-sm-12">
+        <table
+          class="display table table-striped table-bordered dataTable dtr-inline"
+          id="hidden_column_table"
+          style="width: 100%"
+          role="grid"
+          aria-describedby="hidden_column_table_info"
+        >
+          <thead>
+            <tr role="row">
+              <th
+                class="sorting_asc"
+                tabindex="0"
+                aria-controls="hidden_column_table"
+                rowspan="1"
+                colspan="1"
+                style="width: 350px"
+                aria-sort="ascending"
+                aria-label="Name: activate to sort column descending"
+              >
+                File Name
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="hidden_column_table"
+                rowspan="1"
+                colspan="1"
+                style="width: 110px"
+                aria-label="Position: activate to sort column ascending"
+              >
+                Category
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="hidden_column_table"
+                rowspan="1"
+                colspan="1"
+                style="width: 136px"
+                aria-label="Start date: activate to sort column ascending"
+              >
+                File Type
+              </th>
+              <th
+                tabindex="0"
+                aria-controls="hidden_column_table"
+                rowspan="1"
+                colspan="1"
+                style="width: 99px"
+                aria-label="Actions: activate to sort column ascending"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(file, index) in storedFiles"
+              :key="index"
+              role="row"
+              :class="index % 2 == 1 ? 'odd' : 'even'"
+            >
+              <td style="padding: 0.15rem" tabindex="0" class="">
+                <div class="d-flex table-td-flex justify-start">
+                  {{ file.file_name }}
+                </div>
+              </td>
+              <td style="padding: 0.15rem">
+                <div class="d-flex table-td-flex">
+                  {{ file.file_categ }}
+                </div>
+              </td>
+
+              <td style="padding: 0.15rem">
+                <div class="d-flex table-td-flex">
+                  {{ file.file_ext }}
+                </div>
+              </td>
+              <td style="padding: 0.15rem">
+                <div class="d-flex table-td-flex">
+                  <a
+                    :href="file.view_link"
+                    target="blank"
+                    class="btn btn-info btn-icon btn-sm m-1 white--text"
+                    color="white"
+                    type="button"
+                    ><v-icon small class="white--text">mdi-eye</v-icon></a
+                  >
+                  <a
+                    :href="file.download_link"
+                    target="blank"
+                    color="white"
+                    class="btn btn-success btn-sm btn-icon m-1 white--text"
+                    type="button"
+                  >
+                    <v-icon small class="white--text"
+                      >mdi-cloud-download</v-icon
+                    ></a
+                  >
+                  <v-btn @click="GivePermission_Gdrive(file.file_id)">
+                    <v-icon>mdi-fingerprint</v-icon>
+                  </v-btn>
+                  <button
+                    class="btn btn-danger btn-sm btn-icon m-1"
+                    type="button"
+                  >
+                    <v-icon small class="white--text">mdi-delete</v-icon>
+                    <!-- <span class="ul-btn__icon"
+                      ><i class="i-RSS white--text"></i
+                    ></span> -->
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import gapiMixins from "@/mixins/gapiMixins.js";
-
+import formatDateTimeMixin from "@/mixins/formatDateTimeMixin.js";
+//import { mapGetters } from "vuex";
 export default {
   props: {
     scanRequest: {
@@ -358,7 +634,7 @@ export default {
       required: true,
     },
   },
-  mixins: [gapiMixins],
+  mixins: [gapiMixins, formatDateTimeMixin],
   data() {
     return {
       scanRequestData: {},
@@ -369,11 +645,17 @@ export default {
       rejected: false,
       delivered: false,
       details: [],
+      fileCateg: {
+        categ_name: "General",
+        id: 1,
+      },
+      fileCategItems: [],
       selectedRequestFiles: [],
-      FOLDER_ID: "1Yzzo2skepl_U5Xirv9FwBEyEx_tzgWGE",
+      FOLDER_ID: process.env.MIX_GDRIVE_FOLDER_ID ?? "root",
       currentItem: "tab-Web",
       items: ["Web", "Shopping", "Videos", "Images"],
       more: ["News", "Maps", "Books", "Flights", "Apps"],
+      storedFiles: [],
 
       text:
         "Lorem ipsum  incididunt exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
@@ -385,7 +667,9 @@ export default {
     };
   },
   mounted() {},
-
+  computed: {
+    // ...mapGetters(["user"]),
+  },
   methods: {
     initialize() {
       //   this.scanRequest.length = 0;
@@ -395,6 +679,8 @@ export default {
         this.scanRequestData = this.scanRequest;
         this.newFolderName = this.scanRequest.rqNum;
       }
+      this.getScanCateg();
+      this.getSavedFiles();
     },
     getRequestsListById(id) {
       this.$store
@@ -416,22 +702,23 @@ export default {
         })
         .catch((err) => {});
     },
-    GetFormattedDate(date) {
-      let current_datetime = new Date(date);
-      let formatted_date =
-        current_datetime.getFullYear() +
-        "-" +
-        (current_datetime.getMonth() + 1) +
-        "-" +
-        current_datetime.getDate() +
-        " " +
-        current_datetime.getHours() +
-        ":" +
-        current_datetime.getMinutes() +
-        ":" +
-        current_datetime.getSeconds();
-      return formatted_date;
+    async getScanCateg() {
+      var _this = this;
+      await this.$store
+        .dispatch("scanResult/getScanCategs")
+        .then((res) => {
+          console.log(res);
+          res.scanCategs.forEach(function (categ) {
+            //console.log(categ)
+            _this.fileCategItems.push(categ);
+          });
+          console.log(_this.fileCategItems);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
+
     startSearch() {
       this.searchItem().then((res) => {
         // console.log(res);
@@ -548,7 +835,6 @@ export default {
               _this.FOLDER_ARRAY.push(file);
               if (file.title == _this.newFolderName) {
                 _this.FOLDER_ID = file.id;
-                _this.getFiles(file.id);
               }
 
               console.log("Found file: ", file.title, file.id);
@@ -566,8 +852,8 @@ export default {
 
     afterGetFiles() {},
     handleGetFiles(FOLDER_ID) {
-      this.RequestFiles.length = 0;
-      //   this.selectedRequestFiles.length = 0;
+      this.RequestFiles = [];
+      this.selectedRequestFiles.length = 0;
       this.getFiles(FOLDER_ID);
     },
     async searchItemById(id) {
@@ -620,6 +906,60 @@ export default {
             console.error(resp.error.message);
             reject(resp);
           }
+        });
+      });
+    },
+    async saveFiles() {
+      await this.$store
+        .dispatch("scanResult/saveRequestFile", {
+          requestFiles: this.selectedRequestFiles,
+          request_id: this.id,
+          file_categ: this.fileCateg,
+          folder_id: this.FOLDER_ID,
+          //uploaded_by: this.user.name,
+          comment: "test",
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async getSavedFiles() {
+      this.storedFiles = [];
+      var _this = this;
+      await this.$store
+        .dispatch("scanResult/getRequestFileById", _this.id)
+        .then((res) => {
+          if (res.files.length > 0) {
+            res.files.forEach(function (file) {
+              _this.storedFiles.push(file);
+            });
+          } else {
+            console.log(res);
+          }
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    GivePermission_Gdrive(fileId) {
+      console.log(fileId);
+      gapi.load("client", function () {
+        gapi.client.load("drive", "v2", function () {
+          var request = gapi.client.drive.permissions.insert({
+            fileId: fileId,
+            resource: {
+              type: "anyone",
+              role: "reader",
+              withLink: true,
+            },
+          });
+          request.execute(function (executed) {
+            console.log(executed);
+          });
         });
       });
     },

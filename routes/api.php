@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/doctors-patients-list', 'Api\\ScanRequestsController@getDoctorsPatientsList')->name('doctors.patients.list');
     Route::post('/dispatch-request', 'Api\\ScanRequestsController@dispatchRequest')->name('dispatch.request');
     Route::get('/scanrequest/{id}', 'Api\\ScanRequestsController@scanRequest')->name('scan.request.id');
+    Route::post('/scanresult/{id}', 'Api\\ScanRequestsController@scanResult')->name('scan.result.id');
 
     Route::apiResources([
 

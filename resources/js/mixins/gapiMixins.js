@@ -16,7 +16,11 @@ export default {
         return {
             files: [],
             optBtn: true,
-            SCOPES: ["https://www.googleapis.com/auth/drive", "profile"],
+            SCOPES: [
+                "https://www.googleapis.com/auth/drive",
+                "profile",
+                "https://www.googleapis.com/auth/drive.file"
+            ],
             CLIENT_ID:
                 "909780462877-7uqkksfdop3v16avj4ae077134aluoim.apps.googleusercontent.com",
             FOLDER_NAME: "",

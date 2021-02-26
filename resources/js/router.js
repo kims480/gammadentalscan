@@ -11,8 +11,9 @@ const routes = [
     // { path: "/", component: Default },
     {
         path: "/", //auth/sign-in
-        meta: { layout: "large-sidebar" },
+        meta: { layout: "large-sidebar", guard: "auth" },
         component: Home,
+
         name: "home",
         beforeEnter: (to, from, next) => {
             var auth = localStorage.getItem("token");
@@ -67,6 +68,7 @@ const routes = [
         path: "/signin", //auth/sign-in
         meta: { layout: require("@/pages/auth/signin").default.layout },
         component: Signin,
+        meta: { layout: "auth", guard: "guest" },
         name: "sign-in"
     },
     {
@@ -81,7 +83,17 @@ const routes = [
         meta: { layout: "auth" },
         component: () =>
             import(/* webpackChunkName: 'auth' */ "@/pages/auth/register"),
-        name: "register"
+        meta: { guard: "guest" },
+        name: "register",
+        beforeEnter: (to, from, next) => {
+            var auth = localStorage.getItem("token");
+            if (!auth) {
+                store.dispatch("auth/logout");
+                next();
+            } else {
+                next({ name: "home" });
+            }
+        }
     },
     {
         path: "/loginclean",
@@ -98,7 +110,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/index.vue"
             ),
-        meta: { guard: "SUPER_ADMIN" },
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         // children: administrationRoutes,
         name: "users"
     },
@@ -108,7 +120,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
             ),
-        meta: { guard: "SUPER_ADMIN" },
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         // children: administrationRoutes,
         name: "add-user"
     },
@@ -118,7 +130,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/add.vue"
             ),
-        meta: { guard: "SUPER_ADMIN" },
+        meta: { guard: "auth" },
         // children: administrationRoutes,
         name: "edit-user",
         props: true
@@ -129,7 +141,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/profile.vue"
             ),
-        meta: { guard: "SUPER_ADMIN" },
+        meta: { guard: "auth" },
         // children: administrationRoutes,
         name: "admin-user-profile"
     },
@@ -141,6 +153,7 @@ const routes = [
             ),
         // meta: { guard: 'SUPER_ADMIN' },
         // children: administrationRoutes,
+        meta: { guard: "auth" },
         name: "user-profile"
     },
     {
@@ -150,6 +163,7 @@ const routes = [
                 /* webpackChunkName: 'admin-users' */ "@/pages/admin/users/_name/_id.vue"
             ),
         name: "admin-users-name",
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         props: true
     },
     {
@@ -158,7 +172,8 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-doctors' */ "@/pages/admin/doctors/index.vue"
             ),
-        name: "doctors"
+        name: "doctors",
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] }
     },
     {
         path: "/admin/doctors/show",
@@ -166,6 +181,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-doctors' */ "@/pages/admin/doctors/show.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "doctor-show"
     },
     {
@@ -174,6 +190,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-doctors' */ "@/pages/admin/doctors/_name/_id"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "admin-doctors-name"
     },
     //////////////////////Patients Routes///////////////////////////
@@ -183,6 +200,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "patients"
     },
     {
@@ -191,6 +209,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "add-patient"
     },
     {
@@ -200,6 +219,7 @@ const routes = [
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
             ),
         name: "edit-patient",
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         props: true
     },
     {
@@ -208,6 +228,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/_name/_id"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "admin-patients"
     },
 
@@ -218,6 +239,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "request-new"
     },
     {
@@ -226,6 +248,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/_id/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "request-view",
         props: true
     },
@@ -235,6 +258,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-requests' */ "@/pages/admin/requests/list.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "request-list",
         props: true
     },
@@ -244,6 +268,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-request-print' */ "@/pages/admin/requests/print.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "request-print",
         props: true
     },
@@ -256,6 +281,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-notification' */ "@/pages/admin/notification/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "notification"
     },
     {
@@ -264,6 +290,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-messages' */ "@/pages/admin/messages/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "messages"
     },
     {
@@ -272,6 +299,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-services' */ "@/pages/admin/services/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "services"
     },
     {
@@ -280,6 +308,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-offers' */ "@/pages/admin/offers/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "offers"
     },
     {
@@ -288,6 +317,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-rating' */ "@/pages/admin/points/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "points"
     },
     {
@@ -296,6 +326,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-storage' */ "@/pages/admin/storage/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "storage"
     },
     {
@@ -304,6 +335,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-gdrive' */ "@/pages/admin/storage/gdrive.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "gdrive"
     },
     {
@@ -312,6 +344,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'admin-gdrive' */ "@/pages/admin/storage/gdriveTest.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "gdrive-test"
     },
     {
@@ -320,6 +353,7 @@ const routes = [
             import(
                 /* webpackChunkName: 'crud-test' */ "@/pages/admin/points/index.vue"
             ),
+        meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "points-crud"
     },
     {
@@ -328,6 +362,85 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: 'Not-Found' */ "@/pages/error/404.vue"),
         name: "404"
+    },
+    {
+        path: "/dentist/new-Case",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/new.vue"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-request-new"
+    },
+    {
+        path: "/dentist/case-details/:rqNum/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/_id/index.vue"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-request-view",
+        props: true
+    },
+
+    {
+        path: "/dentist/case-details/:rqNum",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/_id/index.vue"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-request-show",
+        props: true
+    },
+    {
+        path: "/dentist/Cases-list",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/list.vue"
+            ),
+        meta: { guard: ["DOCTOR", "SUPER_ADMIN", "DEVELOPER"] },
+        name: "doctor-request-list",
+        props: true
+    },
+
+    /////////////////////////////////////////////////////
+    {
+        path: "/admin/patients",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/index.vue"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-patients"
+    },
+    {
+        path: "/admin/patients/add",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-add-patient"
+    },
+    {
+        path: "/admin/patient/:name/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
+            ),
+        name: "doctor-edit-patient",
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        props: true
+    },
+    {
+        path: "/admin/patients/:name/:id",
+        component: () =>
+            import(
+                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/_name/_id"
+            ),
+        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+        name: "doctor-patients"
     }
 ];
 const router = new VueRouter({
@@ -337,16 +450,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach(function(to, from, next) {
-    let middleware;
+    let middleware, requeireAuth;
     store.state.page = null;
     to.matched.some(m => {
         middleware = m.meta.guard;
     });
-    if (typeof middleware === "undefined") {
+    console.log(middleware);
+    if (typeof middleware === "undefined" || middleware === "guest") {
         next();
+    } else if (middleware === "auth") {
+        store.getters["isAuth"] ? next() : next({ name: "sign-in" });
     } else {
         if (store.getters["checkPermission"](middleware)) {
-            console.log("checkPermission:", store.getters["checkPermission"]);
+            // console.log("checkPermission:", store.getters["checkPermission"]);
             console.log(
                 "checkPermission-middleware:",
                 store.getters["checkPermission"](middleware)
@@ -362,7 +478,7 @@ router.beforeEach(function(to, from, next) {
             toasted.global.Not_Authorized();
             next({ name: "home" });
         } else {
-            next({ name: "signin" });
+            next({ name: "sign-in" });
         }
     }
 });

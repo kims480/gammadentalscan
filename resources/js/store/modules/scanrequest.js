@@ -339,7 +339,7 @@ export const actions = {
             ServicesConst.myApiClient
                 .post("dispatch-request", requestData)
                 .then(res => {
-                    console.log(res);
+                    console.log(res.data);
 
                     resolve(res.data);
                 })

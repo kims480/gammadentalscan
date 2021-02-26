@@ -7,12 +7,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable ,HasRoles;
+    use HasApiTokens, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone','active','whatsapp','photo'
+        'name', 'email', 'password', 'phone', 'active', 'whatsapp', 'photo'
     ];
 
     /**
@@ -29,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','created_at','updated_at','pivot','photo',"email_verified_at"
+        'password', 'remember_token', 'created_at', 'updated_at', 'pivot', 'photo', "email_verified_at"
     ];
 
     /**
@@ -60,13 +61,9 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany('APP\Models\Notifications', 'user_id');
-
     }
     public function usersocial()
     {
         return $this->hasMany(UserSocial::class, 'user_id');
-
     }
-
-
 }

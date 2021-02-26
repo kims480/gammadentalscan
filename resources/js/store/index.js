@@ -12,12 +12,13 @@ import scrumboard from "@/store/modules/scrumboard";
 import * as users from "@/store/modules/users";
 import * as patient from "@/store/modules/patient";
 import * as scanRequest from "@/store/modules/scanrequest";
+import * as scanResult from "@/store/modules/scanresult";
 import * as doctor from "@/store/modules/doctor";
 import * as validation from "@/store/modules/validation";
 import * as notifications from "@/store/modules/notifications";
 // crud
-import crud from '@/store/modules/crud/'
-import app from '@/store/modules/app/'
+import crud from "@/store/modules/crud/";
+import app from "@/store/modules/app/";
 // Load Vuex
 Vue.use(Vuex);
 
@@ -31,6 +32,7 @@ export default new Vuex.Store({
         doctor,
         patient,
         scanRequest,
+        scanResult,
         notifications,
         // compactSidebar,
         // chat,
@@ -40,26 +42,25 @@ export default new Vuex.Store({
         // verticalSidebar,
         validation,
         scrumboard,
-        crud,app
+        crud,
+        app
     },
-    state:{
-        isLoggedIn:false,
-        isLoading:false,
-        loggedInUserID:null,
-        loggedInUser:{},
-        user:{},
-        error:null,
-        roles: localStorage.getItem('permissions'),
-        token: localStorage.getItem('token'),
+    state: {
+        isLoggedIn: false,
+        isLoading: false,
+        loggedInUserID: null,
+        loggedInUser: {},
+        user: {},
+        error: null,
+        roles: localStorage.getItem("permissions"),
+        token: localStorage.getItem("token")
     },
     mutations: {
         setUser(state, data) {
-          state.loggedInUserID = data.userId;
-          state.loggedInUser = data.userData;
-          state.isLoggedIn= data.isLoggedIn,
-          state.loading = false;
-          state.error = null;
-
+            state.loggedInUserID = data.userId;
+            state.loggedInUser = data.userData;
+            (state.isLoggedIn = data.isLoggedIn), (state.loading = false);
+            state.error = null;
         },
         setLogout(state) {
             state.loggedInUserID = null;
@@ -68,40 +69,54 @@ export default new Vuex.Store({
             state.isLoggedIn = false;
             state.error = null;
             // this.$router.go("/");
-          },
-    },
-    actions:{
-        // async loadStoredState({commit}){},
-        async loadUserState({commit}){
-            const userInfo = localStorage.getItem("userInfo")
-            if(userInfo){
-                commit('setUser',JSON.parse(userInfo))
-             }
-        },
-        async signOut({commit}) {
-
-            localStorage.removeItem("userInfo");
-            commit("setLogout");
-
         }
     },
-    getters:{
-        isAuth:state=>{ return state.isLoggedIn},
-        loggedUserID:state=>{ return state.loggedInUserID},
-        loggedUser:state=>{ return state.loggedInUser},
-        User:state=>{ return state.user},
-        userPermissions: state => JSON.parse(state.roles) || [],
-        checkPermission: (state, getters) => (roleCode) => {
-            const result = !!(roleCode === undefined || getters.userPermissions.filter(el => el === roleCode).length > 0)
-            return result
-        },
-        token:state=>{return state.token},
-        userInfo: state => {
-            return JSON.parse(state.user) || {
-            active: null,
-            email: null,
-            name: null,
+    actions: {
+        // async loadStoredState({commit}){},
+        async loadUserState({ commit }) {
+            const userInfo = localStorage.getItem("userInfo");
+            if (userInfo) {
+                commit("setUser", JSON.parse(userInfo));
             }
         },
+        async signOut({ commit }) {
+            localStorage.removeItem("userInfo");
+            commit("setLogout");
+        }
+    },
+    getters: {
+        isAuth: state => {
+            return state.isLoggedIn;
+        },
+        loggedUserID: state => {
+            return state.loggedInUserID;
+        },
+        loggedUser: state => {
+            return state.loggedInUser;
+        },
+        User: state => {
+            return state.user;
+        },
+        userPermissions: state => JSON.parse(state.roles) || [],
+        checkPermission: (state, getters) => roleCode => {
+            const result = !!(roleCode === undefined || Array.isArray(roleCode)
+                ? //
+                  roleCode.some(item => getters.userPermissions.includes(item))
+                : getters.userPermissions.filter(el => el === roleCode).length >
+                  0);
+            return result;
+        },
+        token: state => {
+            return state.token;
+        },
+        userInfo: state => {
+            return (
+                JSON.parse(state.user) || {
+                    active: null,
+                    email: null,
+                    name: null
+                }
+            );
+        }
     }
 });
