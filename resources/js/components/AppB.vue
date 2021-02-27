@@ -132,8 +132,7 @@ export default {
       ],
       base: {
         href:
-          process.env.MIX_APP_DASHBOARD_URL ??
-          "https://gamma-dental-scan.dev/dashboard",
+          process.env.MIX_APP_DASHBOARD_URL ,
         target: "_Self",
       },
       bodyAttrs: {
