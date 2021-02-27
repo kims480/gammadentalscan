@@ -28,7 +28,7 @@ export default {
   created() {
     ServicesConst.apiClient.get("/sanctum/csrf-cookie");
     // console.log(process.env.MIX_APP_DASHBOARD_URL);
-    // console.log(process.env.MIX_APP_SPA_BASE_URL);
+    console.log(process.env.MIX_APP_API_MYAPIBASEURL);
   },
   methods: {
     getBread() {

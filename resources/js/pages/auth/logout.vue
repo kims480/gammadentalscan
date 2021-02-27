@@ -1,38 +1,51 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
-import {mapActions} from 'vuex';
 export default {
   created() {
     this.logout();
-
 
     /*  this.$store.dispatch("user/destroyToken").then(res => {
       console.log(res);
     }); */
   },
-  layout:'auth',
+  layout: "auth",
   methods: {
     async logout() {
-      await this.$store.dispatch('auth/logout')
+      try {
+        await this.$store
+          .dispatch("auth/logout")
 
-        .then(res => {
+          .then((res) => {
+            // localStorage.setItem("Logout_resp", JSON.stringify(res));
 
-            this.$router.push({ name: "home" });
+            this.$store.dispatch(
+              "notifications/pushSuccessNotify",
+              res.status == 204
+                ? "GoodBy Successfully Signed OUt"
+                : "Seems Some Errors"
+            );
+            this.$router.push({ name: "sign-in" });
             location.reload();
-          // console.log(res);
-          // this.$store.dispatch("validation/setErrors", res);
-        })
-        .catch(err => {
-          let data = { errors: "Username or passord Incorrect", details: err };
+            // console.log(res);
+            // this.$store.dispatch("validation/setErrors", res);
+          })
+          .catch((err) => {
+            let data = {
+              errors: "Username or passord Incorrect",
+              details: err,
+            };
+            localStorage.setItem("Logout_ERR", JSON.stringify(err));
 
-          this.$store.dispatch("validation/setErrors", data);
-          this.$store.dispatch('notifications/pushNotif',err,'error')
-        });
-    }
-  }
+            this.$store.dispatch("validation/setErrors", data);
+            this.$store.dispatch("notifications/pushErrorNotify", err);
+          });
+      } catch (error) {
+        console.log(error);
+        localStorage.setItem("Logout_ERR", JSON.stringify(error));
+      }
+    },
+  },
 };
 </script>
 

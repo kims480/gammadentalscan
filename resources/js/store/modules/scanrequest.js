@@ -323,7 +323,7 @@ export const actions = {
             ServicesConst.myApiClient
                 .post("doctors-patients-list")
                 .then(res => {
-                    // console.log(res);
+                    console.log(res);
                     commit("SET_PATIENTS", res.data.patients);
                     commit("SET_DOCTORS", res.data.doctors);
                     resolve(res.data);

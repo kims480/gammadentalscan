@@ -1,11 +1,13 @@
 /** @format */
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios";
 const myBaseURL =
-    process.env.MIX_APP_SPA_BASE_URL ?? "https://gamma-dental-scan.dev";
-const myBaseURLPort = "/";
-const myFullBaseURL = myBaseURL + myBaseURLPort;
-const myApiBaseURL = myFullBaseURL + "api";
+    process.env.MIX_APP_API_BASEURL ?? "https://gamma-dental-scan.com";
+const myBaseURLPort = process.env.MIX_APP_API_PORT ?? "/";
+const myFullBaseURL =
+    process.env.MIX_APP_API_MYFULLBASEURL ?? myBaseURL + myBaseURLPort;
+const myApiBaseURL =
+    process.env.MIX_APP_API_MYAPIBASEURL ?? myFullBaseURL + "api";
 // let token = localStorage.getItem("token") ||= {...mapState(["token"])};
 export const myApiClient = axios.create({
     baseURL: myApiBaseURL,

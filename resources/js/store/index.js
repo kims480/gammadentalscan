@@ -19,6 +19,7 @@ import * as notifications from "@/store/modules/notifications";
 // crud
 import crud from "@/store/modules/crud/";
 import app from "@/store/modules/app/";
+import { isNull } from "lodash";
 // Load Vuex
 Vue.use(Vuex);
 
@@ -50,7 +51,7 @@ export default new Vuex.Store({
         isLoading: false,
         loggedInUserID: null,
         loggedInUser: {},
-        user: {},
+        user: null,
         error: null,
         roles: localStorage.getItem("permissions"),
         token: localStorage.getItem("token")
@@ -95,7 +96,7 @@ export default new Vuex.Store({
             return state.loggedInUser;
         },
         User: state => {
-            return state.user;
+            return isNull(state.user) ? {} : JSON.parse(state.user);
         },
         userPermissions: state => JSON.parse(state.roles) || [],
         checkPermission: (state, getters) => roleCode => {

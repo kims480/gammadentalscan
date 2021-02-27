@@ -432,15 +432,6 @@ const routes = [
         name: "doctor-edit-patient",
         meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
         props: true
-    },
-    {
-        path: "/admin/patients/:name/:id",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/_name/_id"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-patients"
     }
 ];
 const router = new VueRouter({

@@ -16,15 +16,6 @@
 
         <!-- OUTPUT -->
         <img :src="output" />
-
-        <!-- <v-btn
-          color=" darken-3"
-          class="no-print"
-          elevation="2"
-          @click="printFacture"
-        >
-          <v-icon> mdi-print </v-icon> PDF
-        </v-btn> -->
         <v-spacer></v-spacer>
         <v-btn
           color=" darken-3"
@@ -73,34 +64,7 @@
           class=""
         >
         </v-autocomplete>
-        <v-spacer></v-spacer>
-        <div id="doctor-name">Doctor :</div>
-        <v-autocomplete
-          v-model="doctor"
-          v-if="is_SuperAdmin"
-          dense
-          label="Ref Doctor Name"
-          prepend-icon="mdi-database-search"
-          return-object
-          :items="doctors"
-          class=""
-          color="white"
-          item-text="name"
-          chips
-          clearable
-          deletable-chips
-          filled
-          rounded
-          small-chips
-          @change="setDoctor"
-          solo
-        >
-        </v-autocomplete>
       </v-card-text>
-
-      <!-- <v-snackbar v-model="hasSaved" :timeout="2000" absolute bottom left>
-        Your profile has been updated
-      </v-snackbar> -->
     </v-card>
     <!-- End Patient Data -->
 
@@ -913,17 +877,8 @@ export default {
       upperRight: false,
       lowerRight: false,
       lowerLeft: false,
-      patients: [
-        // {id: 6,name:'Ahmed'},
-        // {id: 7,name:'Hatem'},
-        // {id: 8,name:'Reda'},
-      ],
+      patients: [],
       output: null,
-      doctors: [
-        { id: 1, name: "Hany" },
-        { id: 3, name: "emad" },
-        { id: 6, name: "mohamed" },
-      ],
       patient: null,
       doctor: null,
       purposeInfo: {
@@ -1005,7 +960,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["checkPermission"]),
+    ...mapGetters({ user: ["User"] }),
     ...mapGetters({ purposesFinal: ["scanRequest/purposesFinal"] }),
     ...mapGetters({ getOtherPurpose: ["scanRequest/otherPurpose"] }),
     ...mapGetters({ getTeethFinal: ["scanRequest/getTeethFinal"] }),
@@ -1014,7 +969,6 @@ export default {
     ...mapGetters({ getThreeDPrinting: ["scanRequest/getThreeDPrinting"] }),
     ...mapGetters({ getPhotography: ["scanRequest/getPhotography"] }),
     ...mapGetters({ getPatient: ["scanRequest/getPatient"] }),
-    ...mapGetters({ getDoctor: ["scanRequest/getDoctor"] }),
 
     fields() {
       if (!this.model) return [];
@@ -1026,8 +980,11 @@ export default {
         };
       });
     },
-    is_SuperAdmin() {
-      return this.checkPermission("SUPER_ADMIN");
+    User() {
+      return {
+        id: this.user.id,
+        name: this.user.name,
+      };
     },
     items() {
       return this.entries.map((entry) => {
@@ -1041,9 +998,8 @@ export default {
     },
   },
   created() {
-    this.loadPatientsDoctors();
+    this.loadPatients();
     this.$store.dispatch("scanRequest/loadRequest");
-
     this.threeDImaging = this.getTeethFinal;
     this.twoDImaging = this.getTwoDImaging;
     this.requiredPhoto = this.getRequiredPhoto;
@@ -1052,8 +1008,7 @@ export default {
     this.purposeInfo = this.purposesFinal;
     this.otherPurpose = this.getOtherPurpose;
     this.patient = this.getPatient;
-    this.doctor = this.getDoctor;
-    //    console.log(this.threeDImaging)
+    this.doctor = this.user;
   },
   head() {
     return {
@@ -1076,7 +1031,6 @@ export default {
       });
       const options = {
         scale: 3,
-        // dpi: 300,
       };
       var element = document.getElementById("request-form");
       let compStyles = window.getComputedStyle(element);
@@ -1085,30 +1039,10 @@ export default {
       console.log(compStyles.height);
       var height = compStyles.height;
       await this.$html2canvas(element, options).then((canvas) => {
-        // window.open(canvas.toDataURL("image/png"));
-        // canvas.scale(2, 2);
         var image = canvas.toDataURL("image/png");
         pdf.addImage(image, "JPEG", 1, 1, width, height);
         pdf.save("Scan-Request" + ".pdf");
       });
-      //   }).then((canvas) => {
-      //     var image = canvas.toDataURL("image/png");
-      //     pdf.addImage(image, "JPEG", 1, 1, width, height);
-      //     pdf.save(
-      //       "Scan-Request" +
-      //         // moment(this.facture.date_debut).format("LL") +
-      //         // "_" +
-      //         // moment(this.facture.date_fin).format("LL") +
-      //         ".pdf"
-      //     );
-      //   });
-
-      //   this.output = await this.$html2canvas(element, options);
-      //   pdf.html(element, {
-      //     // width,
-      //     // height,
-      //   });
-      //   pdf.save("request.pdf");
     },
     setTwoDImaging(item) {
       this.twoDImaging[`${item}`]
@@ -1157,35 +1091,15 @@ export default {
       }
     },
     print() {
-      // Pass the element id here
-
       this.$htmlToPaper("request-form");
     },
     printPreview() {
       var printArea = document.getElementById("request-form").innerHTML;
       var myWindow = window.open("", "_blank");
       myWindow.document.write(printArea);
-      //   window.open(
-      //     "",
-      //     "_blank",
-      //     "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400"
-      //   );
     },
 
     submit() {
-      //   console.log(this.purposesFinal)
-      //   console.log(this.getPurposesFinal)
-      // console.log('patient: ')
-      // console.dir(this.patient)
-      // console.log('doctor: ')
-      // console.dir(this.doctor)
-      //     console.dir(this.threeDImaging);
-      //    console.dir(this.twoDImaging);
-      //    console.dir(this.requiredPhoto);
-      //    console.dir(this.ThreeDPrinting);
-      //    console.dir(this.Photography);
-      //    console.dir(this.purposesFinal);
-      //    console.log(this.getOtherPurpose);
       let fm = {
         patient: this.patient,
         doctor: this.doctor,
@@ -1197,48 +1111,8 @@ export default {
         purposesFinal: this.purposesFinal,
         getOtherPurpose: this.getOtherPurpose,
       };
-      // formData.append('patient',this.patient)
-      // formData.append('doctor',this.doctor)
-      // formData.append('threeDImaging',this.threeDImaging)
-      // formData.append('twoDImaging',this.twoDImaging)
-      // formData.append('requiredPhoto',this.requiredPhoto)
-      // formData.append('ThreeDPrinting',this.ThreeDPrinting)
-      // formData.append('Photography',this.Photography)
-      // formData.append('purposesFinal',this.purposesFinal)
-      // formData.append('getOtherPurpose',this.getOtherPurpose)
-
-      // formData.append('photo',this.myForm.image)
-      // this.myForm.append
       let formData = new FormData();
-      // for ( var key in fm ) {
-      //  for ( var subkey in fm[key] ) {
-      //     formData.append(key+'[]', `{${subkey}:${fm[key][subkey]}}`);
-      //     }
       buildFormData(formData, fm);
-
-      // }
-      // let fa =Object.entries(fm);
-      //    fa.forEach((value)=>{               //    console.log(value)
-      //         if (!Array.isArray(value[1])){
-      //             formData.append(value[0],value[1])
-      //         }else{
-      //             value[1].forEach((valueb,index)=>{
-      //                 // console.log(index)
-      //                 // console.log(valueb)
-      //                 // console.log(value[0])
-      //                 formData.append(value[0]+'[]',valueb)
-      //                 })
-      //             }
-
-      //    });
-      // formData.append('photo',this.myForm.image)
-      // console.log(fa)
-      // console.dir(formData)
-      // let myData ={
-      //     data:this.myForm,
-      //     file:formData
-      // }
-      // console.log(myData)
       this.$store
         .dispatch("scanRequest/dispatchRequest", formData)
         .then((res) => {
@@ -1250,25 +1124,16 @@ export default {
         });
     },
 
-    loadPatientsDoctors() {
+    loadPatients() {
       // Items have already been loaded
       if (this.patients.length > 0) return;
-      // Items have already been requested
       if (this.isLoading) return;
       this.isLoading = true;
       // Lazily load input items
       this.$store
         .dispatch("scanRequest/getPatientDoctorList", true)
         .then((res) => {
-          //console.log()
-          // const patients=[];
-          /* res.list.forEach(element => {
-                    this.patients.push(element) ;
-                }) */
           this.patients = res.patients;
-          this.doctors = res.doctors;
-          // console.log(this.patients)
-          // console.log(this.doctors)
         })
         .catch((err) => {
           console.log(err);
