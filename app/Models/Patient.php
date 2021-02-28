@@ -43,12 +43,23 @@ class Patient extends Model
         'interstedToRecvNot',
         'photo',
         'address',
-        'dob',
 
         'others',
         'refered_by',
         'whatsapp'
     ];
+    /**
+     * Accessor
+     * Get the Patinet Name
+     *
+     * @return string
+     */
+    public function getGenderAttribute($value)
+    {
+        if ($value == 1) return "Male";
+        if ($value == 2) return "Female";
+        return 'NA';
+    }
 
 
     public function user()

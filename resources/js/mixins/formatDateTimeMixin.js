@@ -23,6 +23,21 @@ export default {
                     .padStart(2, 0);
 
             return formatted_date;
+        },
+        statusColor(status) {
+            return status == "Dispatched"
+                ? "primary"
+                : status == "Accepted"
+                ? "lime darken-4"
+                : status == "On-Process"
+                ? "warning"
+                : status == "Done"
+                ? "light-green accent-3"
+                : status == "Delivered"
+                ? "success"
+                : status == "Rejected"
+                ? "error"
+                : "teal darken-4";
         }
     }
 };

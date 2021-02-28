@@ -1,33 +1,30 @@
 <template>
-
   <div class="main-content">
     <v-card>
       <v-card-title class="index">
         <div class="title">
-            <div class="text-h4"> Patients List </div>
-           <v-spacer></v-spacer>
-            <v-btn
-                class="mx-2"
-                fab
-                dark
-                x-small
-                color="success"
-                @click=" $router.push({ name: 'add-patient' }) "
-                >
-                <v-icon dark>
-                    mdi-plus
-                </v-icon>
-            </v-btn>
+          <div class="text-h4">Patients List</div>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="mx-2"
+            fab
+            dark
+            x-small
+            color="success"
+            @click="$router.push({ name: 'add-patient' })"
+          >
+            <v-icon dark> mdi-plus </v-icon>
+          </v-btn>
         </div>
         <div class="search">
-             <div class="space"></div>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
+          <div class="space"></div>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
         </div>
       </v-card-title>
       <v-data-table
@@ -51,15 +48,19 @@
             }"
             >{{ item.name }}</nuxt-link
           >-->
-          <span class="username" @click="
-                        $router.push({
-                            name: 'edit-patient',
-                            //path:'/admin/patient/edit/'+item.id,
-                            params: { id: item.id, name: item.name_en }
-                        })">
-                 {{ item.name_en }}
-                </span>
-<!-- ,
+          <span
+            class="username"
+            @click="
+              $router.push({
+                name: 'edit-patient',
+                //path:'/admin/patient/edit/'+item.id,
+                params: { id: item.id, name: item.name_en },
+              })
+            "
+          >
+            {{ item.name_en }}
+          </span>
+          <!-- ,
                 query:{doctor: item }
                 query:{patient: item}-->
         </template>
@@ -73,7 +74,7 @@
           {{ item.name_ar }}
         </template>
         <template v-slot:item.refered_by="{ item }">
-                <!--<nuxt-link
+          <!--<nuxt-link
             :to="{
               path: '/admin/users/' + item.name + '?',
               params: { id: item.id, name: item.name }
@@ -81,28 +82,27 @@
             >{{ item.name }}</nuxt-link
             name: 'admin-users-name',
           >-->
-                <span
-                    class="username"
-                    @click="
-                        $router.push({
-                            name: 'edit-user',
+          <span
+            class="username"
+            @click="
+              $router.push({
+                name: 'edit-user',
 
-                            params: { id: item.user.id, name: item.user.name }
-                        })
-                    "
-                >
-                    {{ item.user.name }}
-                </span>
-            </template>
-        <template v-slot:item.gender="{ item }">
-          {{ //new Date(item.created_at).toDateString()
-          item.gender=='1'?'Male':item.gender=='2'?'Female':'NA'
-          }}
+                params: { id: item.user.id, name: item.user.name },
+              })
+            "
+          >
+            {{ item.user.name }}
+          </span>
         </template>
+
         <template v-slot:item.telephone="{ item }">
-         <a :href="`tel: ${ item.telephone }`"> {{ //new Date(item.created_at).toDateString()
-          item.telephone
-          }}</a>
+          <a :href="`tel: ${item.telephone}`">
+            {{
+              //new Date(item.created_at).toDateString()
+              item.telephone
+            }}</a
+          >
         </template>
 
         <template v-slot:item.action="{ item }">
@@ -122,7 +122,6 @@
       </v-data-table>
     </v-card>
   </div>
-
 </template>
 
 <script>
@@ -131,7 +130,7 @@ import Edit from "./edit";
 export default {
   components: {
     breadcumb,
-    Edit
+    Edit,
   },
   middleware: "admin",
   data: () => ({
@@ -142,26 +141,32 @@ export default {
     loading: true,
     headers: [
       {
-        text: "Patient Name",
+        text: "First Name",
         align: "start",
         sortable: true,
         //  filterable: false, if we want to disable search
         value: "name",
-        color: "primary"
+        color: "primary",
       },
-      { text: "Arabic Name", value: "name_ar", width: "15%" },
+      { text: "Last Name", value: "name_ar", width: "15%" },
       { text: "Refered By", value: "refered_by" },
       { text: "Gender", value: "gender" },
 
       { text: "telephone", value: "telephone" },
-      { text: "Action", value: "action", width: "15%" }
+      {
+        text: "Action",
+        filterable: false,
+        sortable: false,
+        value: "action",
+        width: "15%",
+      },
     ],
-    desserts: []
+    desserts: [],
   }),
 
   head() {
     return {
-      title: "Patients List"
+      title: "Patients List",
     };
   },
   methods: {
@@ -183,11 +188,11 @@ export default {
     },
     goUser(user) {
       //this.$router.push("/admin/users/" + user.id);
-    }
+    },
   },
   created() {
     // this.$toast.show("Loading table in...");
-    this.$store.dispatch("patient/getPatients").then(res => {
+    this.$store.dispatch("patient/getPatients").then((res) => {
       this.fetchUsers(res.data);
       this.loading = false;
       this.$toasted
@@ -197,13 +202,13 @@ export default {
           type: "success",
           icon: {
             name: "check",
-            after: true
-          }
+            after: true,
+          },
         })
         .goAway(3000);
     });
   },
-  computed: {}
+  computed: {},
 };
 </script>
 
@@ -224,26 +229,25 @@ export default {
   color: rgb(2, 185, 84);
   cursor: pointer;
 }
-.index{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}.title{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between ;
+.index {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.search{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+.title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.space{
-    flex-grow: 3;
-    line-height: 1rem;
-
+.search {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
-
+.space {
+  flex-grow: 3;
+  line-height: 1rem;
+}
 </style>

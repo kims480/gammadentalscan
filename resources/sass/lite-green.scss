@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:200,600');
+@import url("https://fonts.googleapis.com/css?family=Nunito:200,600");
 @import "~vuetify/dist/vuetify.min.css";
 @import "~vue2-daterange-picker/dist/vue2-daterange-picker.css";
 @import "./fonts/iconsmind/iconsmind.css";
@@ -6,12 +6,13 @@
 @import "~vue2-daterange-picker/dist/vue2-daterange-picker.css";
 //import material-icon scss
 @import "~font-awesome/css/font-awesome.min.css";
-@import './themes/lite-purple.scss';
+@import "./themes/lite-purple.scss";
+// @import "~progress-tracker/app/styles/progress-tracker.scss";
 @font-face {
     font-family: Kufi;
-    src: url('/css/DroidKufi-Regular.ttf');
-  }
+    src: url("/css/DroidKufi-Regular.ttf");
+}
 @font-face {
     font-family: Naskh;
-    src: url('/css/DroidNaskh-Regular.ttf');
-  }
+    src: url("/css/DroidNaskh-Regular.ttf");
+}

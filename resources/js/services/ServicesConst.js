@@ -1,7 +1,7 @@
 /** @format */
 import { mapGetters } from "vuex";
 import axios from "axios";
-const myBaseURL = "https://gamma-dental-scan.com"; //process.env.MIX_APP_API_BASEURL ??
+const myBaseURL = "https://gamma-dental-scan.dev"; //process.env.MIX_APP_API_BASEURL ??
 const myBaseURLPort = "/"; //process.env.MIX_APP_API_PORT ??
 const myFullBaseURL = myBaseURL + myBaseURLPort; //process.env.MIX_APP_API_MYFULLBASEURL ??
 const myApiBaseURL = myFullBaseURL + "api"; //process.env.MIX_APP_API_MYAPIBASEURL ??

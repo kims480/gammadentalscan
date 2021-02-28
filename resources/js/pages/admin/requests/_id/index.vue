@@ -1,5 +1,19 @@
 <template>
   <div>
+    <progress-tracker text alignment="center" v-if="scanRequestData.status">
+      <step-item
+        v-for="n in trackerSteps"
+        :key="n.id"
+        :is-complete="n.id <= scanRequestData.status.id"
+        :is-active="n.id === scanRequestData.status.id + 1"
+        :is-rejected="scanRequestData.status.id === 9"
+        :title="!$vuetify.breakpoint.mobile ? n.title : ''"
+        :marker="n.labelmob"
+        :textmob="$vuetify.breakpoint.mobile ? n.title : ''"
+        :text="n.text"
+        v-if="n.id !== 9"
+      ></step-item>
+    </progress-tracker>
     <v-row align="start" class="mb-3" no-gutters style="height: auto">
       <div
         class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1"
@@ -622,6 +636,7 @@
 <script>
 import gapiMixins from "@/mixins/gapiMixins.js";
 import formatDateTimeMixin from "@/mixins/formatDateTimeMixin.js";
+import ProgressTrackerMixin from "@/mixins/ProgressTrackerMixin.js";
 //import { mapGetters } from "vuex";
 export default {
   props: {
@@ -634,7 +649,7 @@ export default {
       required: true,
     },
   },
-  mixins: [gapiMixins, formatDateTimeMixin],
+  mixins: [gapiMixins, formatDateTimeMixin, ProgressTrackerMixin],
   data() {
     return {
       scanRequestData: {},

@@ -1,5 +1,37 @@
 <template>
   <div>
+    <!-- <ul class="progress-tracker">
+  <li class="progress-step is-complete">
+    <div class="progress-marker"></div>
+  </li>
+  <li class="progress-step is-complete">
+    <div class="progress-marker"></div>
+  </li>
+  <li class="progress-step is-active">
+    <div class="progress-marker"></div>
+  </li>
+  <li class="progress-step">
+    <div class="progress-marker"></div>
+  </li>
+  <li class="progress-step">
+    <div class="progress-marker"></div>
+  </li>
+</ul> -->
+    <progress-tracker text alignment="center" v-if="scanRequestData.status">
+      <step-item
+        v-for="n in trackerSteps"
+        :key="n.id"
+        :is-complete="n.id <= scanRequestData.status.id"
+        :is-active="n.id === scanRequestData.status.id + 1"
+        :is-rejected="scanRequestData.status.id === 9"
+        :title="!$vuetify.breakpoint.mobile ? n.title : ''"
+        :marker="n.labelmob"
+        :textmob="$vuetify.breakpoint.mobile ? n.title : ''"
+        :text="n.text"
+        v-if="n.id !== 9"
+      ></step-item>
+    </progress-tracker>
+
     <v-row align="start" class="mb-3" no-gutters style="height: auto">
       <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1">
         <v-card
@@ -54,7 +86,7 @@
         <v-card
           class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
           outlined
-          >{{ scanRequestData.status }}
+          >{{ scanRequestData.status ? scanRequestData.status.text : "" }}
         </v-card>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1">
@@ -63,7 +95,7 @@
           outlined
           tile
         >
-          Request Date
+          Created
         </v-card>
 
         <v-card
@@ -136,6 +168,12 @@
             <tr v-if="!loadfiles && storedFiles.length == 0">
               <td colspan="4">
                 <span class="d-flex justify-center align-center">
+                  <span
+                    ><v-progress-circular
+                      indeterminate
+                      color="green"
+                    ></v-progress-circular
+                  ></span>
                   Looding Files ...
                 </span>
               </td>
@@ -203,6 +241,7 @@
 <script>
 import formatDateTimeMixin from "@/mixins/formatDateTimeMixin.js";
 import tableResizeMixin from "@/mixins/tableResizeMixin.js";
+import ProgressTrackerMixin from "@/mixins/ProgressTrackerMixin.js";
 
 export default {
   props: {
@@ -247,7 +286,7 @@ export default {
       loadfiles: false,
     };
   },
-  mixins: [formatDateTimeMixin, tableResizeMixin],
+  mixins: [formatDateTimeMixin, tableResizeMixin, ProgressTrackerMixin],
   head() {
     return {
       title: "Case Info | " + this.$route.params.rqNum,

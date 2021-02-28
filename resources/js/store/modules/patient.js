@@ -42,8 +42,7 @@ export const actions = {
         //     "" + this.$auth.getToken("local");
 
         return new Promise((resolve, reject) => {
-            PatientServices
-                .getPatients()
+            PatientServices.getPatients()
                 .then(res => {
                     console.log(res);
                     commit("SET_PATIENTS", res.data);
@@ -53,7 +52,6 @@ export const actions = {
                     // console.log(this.$store.state.auth.user);
                 })
                 .catch(err => {
-
                     console.log(err);
 
                     reject(err);
@@ -65,7 +63,8 @@ export const actions = {
         //     "" + this.$auth.getToken("local");
 
         return new Promise((resolve, reject) => {
-            ServicesConst.myApiClient.get('/patient-list')
+            ServicesConst.myApiClient
+                .get("/patient-list")
 
                 .then(res => {
                     console.log(res);
@@ -76,7 +75,29 @@ export const actions = {
                     // console.log(this.$store.state.auth.user);
                 })
                 .catch(err => {
+                    console.log(err);
 
+                    reject(err);
+                });
+        });
+    },
+    getPatientListOfDoctor({ commit, rootState }) {
+        // PatientServices.defaults.headers.common["Authorization"] =
+        //     "" + this.$auth.getToken("local");
+
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .post("/getPatientListOfDoctor")
+
+                .then(res => {
+                    console.log(res);
+                    commit("SET_PATIENTS", res.data);
+                    resolve(res.data);
+                    //
+                    // console.log(this.$store.state.auth.loggedIn);
+                    // console.log(this.$store.state.auth.user);
+                })
+                .catch(err => {
                     console.log(err);
 
                     reject(err);
@@ -86,8 +107,8 @@ export const actions = {
     addPatient({ commit, rootState }, data) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient
-                .post("patient", data
-                ).then(res => {
+                .post("patient", data)
+                .then(res => {
                     commit("SET_PATIRNT_CREATE", res.data);
                     resolve(res.data);
                 })
@@ -96,18 +117,18 @@ export const actions = {
                 });
         });
     },
-    getPatientById({commit},id){
+    getPatientById({ commit }, id) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient
-                .get("patient/"+ id)
-                    .then(res => {
-                        console.log(res)
-                        commit("SET_PATIENT_CREATE", res.data);
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
+                .get("patient/" + id)
+                .then(res => {
+                    console.log(res);
+                    commit("SET_PATIENT_CREATE", res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
         });
     },
     clearErrors({ commit }) {

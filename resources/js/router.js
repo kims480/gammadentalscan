@@ -406,10 +406,10 @@ const routes = [
 
     /////////////////////////////////////////////////////
     {
-        path: "/admin/patients",
+        path: "/dentist/patients",
         component: () =>
             import(
-                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/index.vue"
+                /* webpackChunkName: 'admin-patients' */ "@/pages/doctors/patient/index.vue"
             ),
         meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
         name: "doctor-patients"

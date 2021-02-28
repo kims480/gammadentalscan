@@ -52,10 +52,10 @@
               <v-chip
                 v-if="item.status !== null"
                 class="ma-2"
-                :color="statusColor(item.status)"
+                :color="statusColor(item.status ? item.status.text : '')"
                 x-small
               >
-                {{ item.status }}</v-chip
+                {{ item.status ? item.status.text : "" }}</v-chip
               >
             </template>
             <template v-slot:item.actions="{ item }">
@@ -73,22 +73,47 @@
                   </template>
                   <span>View</span>
                 </v-tooltip>
-
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
                       icon
                       v-bind="attrs"
                       v-on="on"
-                      @click="rejectItem(item)"
+                      @click="
+                        $router.push({
+                          name: 'doctor-request-view',
+                          params: {
+                            id: item.id,
+                            rqNum: item.rqNum,
+                            scanRequest: item,
+                          },
+                        })
+                      "
                     >
-                      <v-icon color="error">
-                        mdi-close-circle-outline
-                      </v-icon></v-btn
-                    >
+                      <v-icon class="mr-2" color="teal darken-4"
+                        >mdi-open-in-new
+                      </v-icon>
+                    </v-btn>
                   </template>
-                  <span>Cancel</span>
+                  <span>Open</span>
                 </v-tooltip>
+                <template v-if="item.status ? item.status.id < 4 : false">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        icon
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="rejectItem(item)"
+                      >
+                        <v-icon color="error">
+                          mdi-close-circle-outline
+                        </v-icon></v-btn
+                      >
+                    </template>
+                    <span>Cancel</span>
+                  </v-tooltip>
+                </template>
               </div>
             </template>
             <template v-slot:no-data>
@@ -213,16 +238,6 @@ export default {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
-    },
-
-    statusColor(status) {
-      return status == "Dispatched"
-        ? "primary"
-        : status == "Accpted"
-        ? "warning"
-        : status == "Completed"
-        ? "success"
-        : "light";
     },
 
     deleteItem(item) {

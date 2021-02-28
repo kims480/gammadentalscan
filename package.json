@@ -46,6 +46,7 @@
         "tiptap-vuetify": "^2.24.0",
         "v-calendar": "^1.0.3",
         "vue-apexcharts": "^1.5.3",
+        "vue-bulma-progress-tracker": "0.0.4",
         "vue-chartjs": "^3.5.0",
         "vue-clickaway": "^2.2.2",
         "vue-cropperjs": "^4.0.1",

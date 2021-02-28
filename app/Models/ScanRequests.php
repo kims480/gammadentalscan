@@ -58,11 +58,12 @@ class ScanRequests extends Model
      */
     public function getStatusAttribute($value)
     {
-        if ($value == 1) return "Dispatched";
-        if ($value == 2) return "Accepted";
-        if ($value == 3) return "On-Process";
-        if ($value == 4) return "Done";
-        if ($value == 9) return "Rejected";
+        if ($value == 1) return json_decode('{"id" : ' . $value . ' , "text":"Dispatched"}');
+        if ($value == 2) return json_decode('{"id" : ' . $value . ' , "text":"Accepted"}');
+        if ($value == 3) return json_decode('{"id" : ' . $value . ' , "text":"On-Process"}');
+        if ($value == 4) return json_decode('{"id" : ' . $value . ' , "text":"Done"}');
+        if ($value == 5) return json_decode('{"id" : ' . $value . ' , "text":"Delivered"}');
+        if ($value == 9) return json_decode('{"id" : ' . $value . ' , "text":"Rejected"}');
     }
     /**
      * Accessor
@@ -103,8 +104,12 @@ class ScanRequests extends Model
             $this->attributes['status'] = 3;
         if ($value == "Done")
             $this->attributes['status'] = 4;
+        if ($value == "Delivered")
+            $this->attributes['status'] = 5;
         if ($value == "Rejected")
             $this->attributes['status'] = 9;
+        if (is_numeric($value))
+            $this->attributes['status'] = $value;
     }
 
 
