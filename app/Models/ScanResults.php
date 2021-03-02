@@ -67,6 +67,7 @@ class ScanResults extends Model
         return "https://drive.google.com/file/d/{$this->file_id}/preview?usp=drivesdk";
     }
 
+
     /**
      * Get the scanRequests that owns the ScanResults
      *
@@ -81,7 +82,7 @@ class ScanResults extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function scanCategs()
+    public function scanCateg()
     {
         return $this->belongsTo(ScanCateg::class, 'file_categ', 'id');
     }

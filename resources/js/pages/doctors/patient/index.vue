@@ -199,7 +199,7 @@ export default {
     loading: true,
     user: null,
     // date: new Date().toISOString().substr(0, 10),
-    dateFormatted: "",
+    // dateFormatted: "",
     menu: false,
     editActive: false,
     headers: [

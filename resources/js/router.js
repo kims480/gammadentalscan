@@ -14,23 +14,7 @@ const routes = [
         meta: { layout: "large-sidebar", guard: "auth" },
         component: Home,
 
-        name: "home",
-        beforeEnter: (to, from, next) => {
-            var auth = localStorage.getItem("token");
-            if (!auth) {
-                store.dispatch("auth/logout");
-                next("/signin");
-            } else {
-                store.dispatch("auth/user").then(
-                    response => {
-                        next();
-                    },
-                    response => {
-                        next("/signin");
-                    }
-                );
-            }
-        }
+        name: "home"
     },
 
     {
@@ -68,8 +52,13 @@ const routes = [
         path: "/signin", //auth/sign-in
         meta: { layout: require("@/pages/auth/signin").default.layout },
         component: Signin,
-        meta: { layout: "auth", guard: "guest" },
+        meta: { layout: "auth", guard: "NotLogged" },
         name: "sign-in"
+        // beforeEnter: (to, from, next) => {
+        //     console.log(store.getters["isAuth"]);
+        //     console.log(store.getters.isAuth);
+        //     localStorage.getItem("token") ? next({ name: "home" }) : next();
+        // }
     },
     {
         path: "/auth/logout", //auth/sign-in
@@ -450,7 +439,21 @@ router.beforeEach(function(to, from, next) {
     if (typeof middleware === "undefined" || middleware === "guest") {
         next();
     } else if (middleware === "auth") {
-        store.getters["isAuth"] ? next() : next({ name: "sign-in" });
+        if (store.getters["isAuth"]) {
+            console.log("auth success:" + store.getters["isAuth"]);
+            next();
+        } else {
+            next({ name: "sign-in" });
+            console.log("auth false:" + store.getters["isAuth"]);
+        }
+    } else if (middleware === "NotLogged") {
+        if (store.getters["isAuth"]) {
+            console.log("notlogged success::" + store.getters["isAuth"]);
+            next({ name: "home" });
+        } else {
+            console.log("notlogged false:" + store.getters["isAuth"]);
+            next();
+        }
     } else {
         if (store.getters["checkPermission"](middleware)) {
             // console.log("checkPermission:", store.getters["checkPermission"]);

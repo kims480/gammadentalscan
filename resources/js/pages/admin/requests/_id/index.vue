@@ -15,6 +15,94 @@
       ></step-item>
     </progress-tracker>
     <v-row align="start" class="mb-3" no-gutters style="height: auto">
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Case ID
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.rqNum }} - {{ scanRequestData.id }}
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Patient
+        </v-card>
+        <v-card
+          class="flex-grow-1 col-8 blue-grey lighten-5 text-no-wrap rounded-r-xl pa-2"
+          outlined
+          style="font-family: 'Kufi', 'Helvetica Neue', Helvetica, Arial"
+        >
+          <router-link
+            style="
+              font-family: 'Kufi', 'Helvetica Neue', Helvetica, Arial,
+                sans-serif;
+            "
+            :to="{
+              name: 'edit-patient',
+              params: scanRequestData.patient,
+            }"
+            >{{ scanRequestData.patient["name"] }}</router-link
+          >
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Status
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.status ? scanRequestData.status.text : "" }}
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Created
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.created_at }}
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 col-sm-6 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Last Update
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 col-sm-6 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.updated_at }}
+        </v-card>
+      </div>
+    </v-row>
+    <!-- <v-row align="start" class="mb-3" no-gutters style="height: auto">
       <div
         class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1"
         v-for="(item, name, index) in scanRequestData"
@@ -61,7 +149,7 @@
           >
         </v-card>
       </div>
-    </v-row>
+    </v-row> -->
     <v-divider></v-divider>
     <v-row class="mb-3 elevation-0 border-0" style="height: auto">
       <div class="col-12">
@@ -581,7 +669,7 @@
               </td>
               <td style="padding: 0.15rem">
                 <div class="d-flex table-td-flex">
-                  {{ file.file_categ }}
+                  {{ file.scan_categ.categ_name }}
                 </div>
               </td>
 
@@ -947,6 +1035,7 @@ export default {
       await this.$store
         .dispatch("scanResult/getRequestFileById", _this.id)
         .then((res) => {
+          console.log(res);
           if (res.files.length > 0) {
             res.files.forEach(function (file) {
               _this.storedFiles.push(file);

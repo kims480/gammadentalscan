@@ -198,7 +198,11 @@
               </td>
               <td style="padding: 0.15rem">
                 <div class="d-flex table-td-flex">
-                  {{ file.file_categ }}
+                  {{
+                    file.scan_categ
+                      ? file.scan_categ.categ_name
+                      : file.file_categ
+                  }}
                 </div>
               </td>
 

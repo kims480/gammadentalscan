@@ -47,7 +47,11 @@ export default new Vuex.Store({
         app
     },
     state: {
-        isLoggedIn: false,
+        isLoggedIn: JSON.parse(
+            localStorage.getItem("userInfo") ?? localStorage.getItem("userInfo")
+        )
+            ? JSON.parse(localStorage.getItem("userInfo")).isLoggedIn
+            : false,
         isLoading: false,
         loggedInUserID: null,
         loggedInUser: {},

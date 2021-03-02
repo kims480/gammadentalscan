@@ -35,7 +35,14 @@
         >
           <v-icon> mdi-printer </v-icon>
         </v-btn>
-        <v-btn color=" darken-3" class="no-print" elevation="2" fab x-small>
+        <v-btn
+          color=" darken-3"
+          @click="addPatient"
+          class="no-print"
+          elevation="2"
+          fab
+          x-small
+        >
           <v-icon> mdi-plus </v-icon>
         </v-btn>
       </v-toolbar>
@@ -763,6 +770,116 @@
     >
       <v-icon> mdi-save </v-icon> Dispatch Request
     </v-btn>
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <!-- <v-card class="dialog-edit">
+        <v-card-title>
+          <span class="headline">Add Patient</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Patient First name*"
+                  required
+                  :value="newPatient.name_ar"
+                  :disabled="!editActive"
+                  v-model="newPatient.name_ar"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Patient Last name*"
+                  :value="newPatient.name_en"
+                  :disabled="!editActive"
+                  v-model="newPatient.name_en"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  label="Email*"
+                  :value="newPatient.email"
+                  :disabled="!editActive"
+                  v-model="newPatient.email"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="4" md="4" sm="6">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="newPatient.dob"
+                  :disabled="!editActive"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="newPatient.dob"
+                      :disabled="!editActive"
+                      label="Date of Birth"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="newPatient.dob" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="menu = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(newPatient.dob)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+                <p></p>
+              </v-col>
+              <v-col cols="12" lg="4" md="4" sm="6">
+                <v-text-field
+                  v-model="newPatient.telephone"
+                  label="Phone"
+                  :disabled="!editActive"
+                  placeholder="Phone"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" lg="6" md="4">
+                <v-checkbox
+                  color="green"
+                  v-model="editActive"
+                  label="Allow Modify"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false"
+            >Close</v-btn
+          >
+          <v-btn
+            color="green darken-1"
+            depressed
+            :disabled="!editActive"
+            @click="dialog = false"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card> -->
+      <AddPatient />
+      <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+    </v-dialog>
   </div>
 </template>
 
@@ -824,6 +941,7 @@ import GammaTeethUR6 from "@/components/requests/teeth/GammaTeethUR6.vue";
 import GammaTeethUR7 from "@/components/requests/teeth/GammaTeethUR7.vue";
 import GammaTeethUR8 from "@/components/requests/teeth/GammaTeethUR8.vue";
 import Logo from "@/components/Logo.vue";
+import AddPatient from "@/pages/admin/patients/Add.vue";
 
 import { jsPDF } from "jspdf";
 // import { html2canvas } from "html2convas";
@@ -832,6 +950,7 @@ export default {
   components: {
     Purposes,
     Logo,
+    AddPatient,
     ThreeDPrint,
     GammaTeethLL1,
     GammaTeethLL2,
@@ -881,6 +1000,18 @@ export default {
       output: null,
       patient: null,
       doctor: null,
+      newPatient: {
+        name_ar: null,
+        name_en: null,
+        email: null,
+        dob: "",
+        telephone: "",
+      },
+      // date: new Date().toISOString().substr(0, 10),
+      // dateFormatted: "",
+      menu: false,
+      editActive: false,
+      dialog: false,
       purposeInfo: {
         Impaction: false,
         threeDPrint: false,
@@ -980,7 +1111,7 @@ export default {
         };
       });
     },
-    User() {
+    currentUser() {
       return {
         id: this.user.id,
         name: this.user.name,
@@ -1043,6 +1174,13 @@ export default {
         pdf.addImage(image, "JPEG", 1, 1, width, height);
         pdf.save("Scan-Request" + ".pdf");
       });
+    },
+    addPatient() {
+      this.dialog = true;
+      this.editActive = true;
+
+      //   this.$swal.fire("edit : " + user.id + " // " + user.name);
+      console.dir(this.selected);
     },
     setTwoDImaging(item) {
       this.twoDImaging[`${item}`]

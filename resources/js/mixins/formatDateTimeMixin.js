@@ -26,18 +26,37 @@ export default {
         },
         statusColor(status) {
             return status == "Dispatched"
-                ? "primary"
+                ? "cyan darken-1"
                 : status == "Accepted"
-                ? "lime darken-4"
+                ? "indigo darken-3"
                 : status == "On-Process"
                 ? "warning"
                 : status == "Done"
-                ? "light-green accent-3"
+                ? "light-green darken-2"
                 : status == "Delivered"
-                ? "success"
+                ? "green darken-4"
                 : status == "Rejected"
                 ? "error"
+                : status == "Canceled"
+                ? "grey darken-2"
                 : "teal darken-4";
+        },
+        statusAColor(status) {
+            return status == "Dispatched"
+                ? "cyan--text text--darken-1"
+                : status == "Accepted"
+                ? "indigo--text text--darken-3"
+                : status == "On-Process"
+                ? "warning"
+                : status == "Done"
+                ? "light-green--text text--darken-2"
+                : status == "Delivered"
+                ? "green--text text--darken-4"
+                : status == "Rejected"
+                ? "error"
+                : status == "Canceled"
+                ? "grey--text text--darken-2"
+                : "teal--text text--darken-4";
         }
     }
 };

@@ -1,6 +1,19 @@
 <template>
   <v-card class="elevation-2">
-    <v-card-title>Cases List</v-card-title>
+    <v-card-title class="green darken-3 white--text">
+      <span class="headline">Cases List</span>
+      <v-spacer></v-spacer>
+      <v-btn
+        color=" darken-3"
+        class="no-print"
+        @click="$router.push({ name: 'doctor-request-new' })"
+        elevation="2"
+        fab
+        x-small
+      >
+        <v-icon> mdi-plus </v-icon>
+      </v-btn>
+    </v-card-title>
     <v-card-text>
       <v-row class="justify-space-between">
         <v-col cols="12" sm="4" class="py-0" md="6">
@@ -45,10 +58,14 @@
                   name: 'doctor-request-view',
                   params: { id: item.id, rqNum: item.rqNum, scanRequest: item },
                 }"
+                :class="
+                  statusAColor(item.status ? item.status.text : '') +
+                  `--text subtitle-2`
+                "
                 >{{ item.rqNum }}</router-link
               >
             </template>
-            <template v-slot:item.status="{ item }">
+            <template v-slot:item.status="{ item }" class="text-center">
               <v-chip
                 v-if="item.status !== null"
                 class="ma-2"
@@ -104,7 +121,7 @@
                         icon
                         v-bind="attrs"
                         v-on="on"
-                        @click="rejectItem(item)"
+                        @click="cancelRequest(item.id)"
                       >
                         <v-icon color="error">
                           mdi-close-circle-outline
@@ -249,6 +266,17 @@ export default {
     deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1);
       this.closeDelete();
+    },
+    cancelRequest(id) {
+      this.$store
+        .dispatch("scanRequest/acceptRequest", { id: id, action: "Canceled" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          this.desserts[objIndex].status = res[0]["status"];
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
     },
 
     close() {

@@ -399,5 +399,35 @@ export const actions = {
                     reject(err);
                 });
         });
+    },
+    acceptRequest({ commit }, action) {
+        console.log(action);
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .put("accept-request/" + action.id, { status: action.action })
+                .then(res => {
+                    console.log(res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
+    },
+    delRequest({ commit }, action) {
+        console.log(action);
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .delete("scanrequests/" + action.id)
+                .then(res => {
+                    console.log(res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
     }
 };

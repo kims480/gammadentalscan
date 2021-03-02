@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ScanRequests extends Model
@@ -64,6 +65,7 @@ class ScanRequests extends Model
         if ($value == 4) return json_decode('{"id" : ' . $value . ' , "text":"Done"}');
         if ($value == 5) return json_decode('{"id" : ' . $value . ' , "text":"Delivered"}');
         if ($value == 9) return json_decode('{"id" : ' . $value . ' , "text":"Rejected"}');
+        if ($value == 10) return json_decode('{"id" : ' . $value . ' , "text":"Canceled"}');
     }
     /**
      * Accessor
@@ -108,6 +110,8 @@ class ScanRequests extends Model
             $this->attributes['status'] = 5;
         if ($value == "Rejected")
             $this->attributes['status'] = 9;
+        if ($value == "Canceled")
+            $this->attributes['status'] = 10;
         if (is_numeric($value))
             $this->attributes['status'] = $value;
     }
@@ -129,6 +133,17 @@ class ScanRequests extends Model
      */
     public function scan_results()
     {
-        return $this->hasMany('App\Models\ScanResults', 'request_id');
+        return $this->hasMany('App\Models\ScanResults', 'request_id', 'id');
+    }
+    /**
+     * Get the users that owns the ScanResults
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function scanCategs()
+
+    {
+
+        return $this->hasManyThrough(ScanCateg::class, ScanRequests::class);
     }
 }

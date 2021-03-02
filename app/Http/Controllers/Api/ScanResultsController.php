@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ScanCateg;
 use App\Models\ScanRequests;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
@@ -12,6 +13,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ScanResultsController extends Controller
 {
+    // protected $id;
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function __construct()
+    {
+        # code...
+        //$this->auth = $auth;
+        // $this->$id = $id;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,12 +50,13 @@ class ScanResultsController extends Controller
 
                 ['file_id' => $item['id']],
                 [
-                    'file_id' => $item['id'],
+                    // 'file_id' => $item['id'],
                     'file_name' => $item['name'],
                     'request_id' => $request->request_id,
-                    'file_categ' => $request->file_categ,
+                    'file_categ' => $request->file_categ['id'],
                     'folder_id' => $request->folder_id,
-                    'uploaded_by' => Auth::user(),
+                    'file_ext' => pathinfo($item['name'], PATHINFO_EXTENSION),
+                    'uploaded_by' => Auth::user()->id,
                     'comment' => $request->comment,
                 ]
             );
@@ -78,8 +92,19 @@ class ScanResultsController extends Controller
      */
     public function show($id)
     {
-        $scanResult = ScanRequests::select('id', 'rq_num')->with(['scan_results'])->where('id', $id)
+        $scanResult = ScanRequests::select('id', 'rq_num')
+            ->with(['scan_results' => function ($q) {
+                $q->with(['scanCateg' => function ($r) {
+                    $r->select('id', 'categ_name', 'points');
+                }]);
+            }])->where('id', $id)
             ->orWhere('rq_num', $id)->get();
+        // $scanResult = ScanResults::with(['scan_request' => function ($q, $myId = $this->id) {
+        //     $q->select('id', 'rqNum')->where('id', $myId)->orWhere('rq_num', $myId);
+        // }, 'scanCategs' => function ($q) {
+        //     $q->select('id', 'scan_name', 'points');
+        // }])->where('request_id', $id)
+        //     ->get();
         // $scanResults = collect($scanResults);
         // $scanFiles = $scanResults->transform(function ($value, $key) {
         //     return  [

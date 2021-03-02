@@ -35,6 +35,10 @@
                   name: 'request-view',
                   params: { id: item.id, scanRequest: item },
                 }"
+                :class="
+                  statusAColor(item.status ? item.status.text : '') +
+                  `--text subtitle-2`
+                "
                 >{{ item.rqNum }}</router-link
               >
             </template>
@@ -69,21 +73,6 @@
                       icon
                       v-bind="attrs"
                       v-on="on"
-                      @click="acceptItem(item)"
-                    >
-                      <v-icon class="mr-2" color="success">
-                        mdi-checkbox-marked-circle-outline
-                      </v-icon></v-btn
-                    >
-                  </template>
-                  <span>Accept</span>
-                </v-tooltip>
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      icon
-                      v-bind="attrs"
-                      v-on="on"
                       @click="
                         $router.push({
                           name: 'request-view',
@@ -98,13 +87,50 @@
                   </template>
                   <span>Open</span>
                 </v-tooltip>
+                <v-menu bottom left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn dark icon v-bind="attrs" v-on="on">
+                      <v-icon color="green">mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <v-list>
+                    <v-list-item @click="acceptRequest(item.id)">
+                      <v-list-item-title>Accept</v-list-item-title>
+                    </v-list-item>
+
+                    <v-list-item @click="doneRequest(item.id)">
+                      <v-list-item-title>Done</v-list-item-title>
+                    </v-list-item>
+
+                    <v-list-item @click="deliverRequest(item.id)">
+                      <v-list-item-title>Delivered</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
                 <v-tooltip top>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
                       icon
                       v-bind="attrs"
                       v-on="on"
-                      @click="rejectItem(item)"
+                      @click="acceptRequest(item.id)"
+                    >
+                      <v-icon class="mr-2" color="indigo darken-3">
+                        mdi-checkbox-marked-circle-outline
+                      </v-icon></v-btn
+                    >
+                  </template>
+                  <span>Accept</span>
+                </v-tooltip>
+
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="rejectRequest(item.id)"
                     >
                       <v-icon color="error">
                         mdi-close-circle-outline
@@ -112,6 +138,19 @@
                     >
                   </template>
                   <span>Reject</span>
+                </v-tooltip>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                      @click="delRequest(item.id)"
+                    >
+                      <v-icon color="error"> mdi-trash-can </v-icon></v-btn
+                    >
+                  </template>
+                  <span>Delete</span>
                 </v-tooltip>
               </div>
             </template>
@@ -357,6 +396,63 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+    },
+    acceptRequest(id) {
+      console.log(id);
+      this.$store
+        .dispatch("scanRequest/acceptRequest", { id: id, action: "Accepted" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          this.desserts[objIndex].status = res[0]["status"];
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+    doneRequest(id) {
+      this.$store
+        .dispatch("scanRequest/acceptRequest", { id: id, action: "Done" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          this.desserts[objIndex].status = res[0]["status"];
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+    deliverRequest(id) {
+      this.$store
+        .dispatch("scanRequest/acceptRequest", { id: id, action: "Delivered" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          this.desserts[objIndex].status = res[0]["status"];
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+    rejectRequest(id) {
+      this.$store
+        .dispatch("scanRequest/acceptRequest", { id: id, action: "Rejected" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          this.desserts[objIndex].status = res[0]["status"];
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+    delRequest(id) {
+      this.$store
+        .dispatch("scanRequest/delRequest", { id: id, action: "Deleted" })
+        .then((res) => {
+          //Find index of specific object using findIndex method.
+          let objIndex = this.desserts.findIndex((obj) => obj.id == id);
+          //   this.desserts[objIndex].status = res[0]["status"];
+          if (objIndex !== -1) this.desserts.splice(objIndex, 1);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
     },
   },
   mounted() {},
