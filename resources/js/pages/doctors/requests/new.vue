@@ -770,8 +770,8 @@
     >
       <v-icon> mdi-save </v-icon> Dispatch Request
     </v-btn>
-    <v-dialog v-model="dialog" persistent max-width="600px">
-      <!-- <v-card class="dialog-edit">
+    <!-- <v-dialog v-model="dialog" persistent max-width="600px"> -->
+    <!-- <v-card class="dialog-edit">
         <v-card-title>
           <span class="headline">Add Patient</span>
         </v-card-title>
@@ -877,9 +877,9 @@
           >
         </v-card-actions>
       </v-card> -->
-      <AddPatient />
-      <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-    </v-dialog>
+    <!-- <AddPatient /> -->
+    <!-- <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+    </v-dialog> -->
   </div>
 </template>
 
@@ -941,7 +941,7 @@ import GammaTeethUR6 from "@/components/requests/teeth/GammaTeethUR6.vue";
 import GammaTeethUR7 from "@/components/requests/teeth/GammaTeethUR7.vue";
 import GammaTeethUR8 from "@/components/requests/teeth/GammaTeethUR8.vue";
 import Logo from "@/components/Logo.vue";
-import AddPatient from "@/pages/admin/patients/Add.vue";
+// import AddPatient from "@/pages/admin/patients/Add.vue";
 
 import { jsPDF } from "jspdf";
 // import { html2canvas } from "html2convas";
@@ -950,7 +950,7 @@ export default {
   components: {
     Purposes,
     Logo,
-    AddPatient,
+    // AddPatient,
     ThreeDPrint,
     GammaTeethLL1,
     GammaTeethLL2,
