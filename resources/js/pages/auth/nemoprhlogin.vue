@@ -58,7 +58,7 @@ body {
   box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
 }
 .logo {
-  background: url("@/assets/images/logo.png");
+  background: url("/images/logo.png");
   width: 100px;
   height: 100px;
   border-radius: 50%;
