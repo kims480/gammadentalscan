@@ -1,7 +1,7 @@
 <template>
   <div class="login-div">
     <div class="logo"></div>
-    <div class="title">Red Stapler</div>
+    <div class="title">GAMMA Dental</div>
     <div class="sub-title">BETA</div>
     <div class="fields">
       <div class="username">
@@ -58,7 +58,7 @@ body {
   box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
 }
 .logo {
-  background: url("Logo.png");
+  background: url("@/assets/images/logo.png");
   width: 100px;
   height: 100px;
   border-radius: 50%;
