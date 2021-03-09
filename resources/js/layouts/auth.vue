@@ -1,12 +1,12 @@
 <template>
-  <div class="green lighten-5">
+  <v-main class="green lighten-5">
     <transition name="page" mode="out-in">
       <router-view />
     </transition>
     <!-- <template v-if="show">
         <notifications :snackbar="notifications.show" :text="notifications.message" ></notifications>
     </template> -->
-  </div>
+  </v-main>
 </template>
 
 <script>

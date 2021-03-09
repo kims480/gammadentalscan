@@ -54,7 +54,7 @@
     <div id="app">
         <img src="/images/SVG/left-highligh.svg" id="left" alt="">
         <img src="/images/SVG/right-highlight.svg" id="right" alt="">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm p-0">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
