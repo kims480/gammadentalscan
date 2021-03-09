@@ -1,12 +1,12 @@
 <template>
-    <div
-        class="side-content-wrap"
-        @mouseenter="isMenuOver = true"
-        @mouseleave="isMenuOver = false"
-        @touchstart="isMenuOver = true"
-        v-if="true /* $auth.loggedIn */"
-    >
-        <vue-perfect-scrollbar
+  <div
+    class="side-content-wrap"
+    @mouseenter="isMenuOver = true"
+    @mouseleave="isMenuOver = false"
+    @touchstart="isMenuOver = true"
+    v-if="true /* $auth.loggedIn */"
+  >
+    <vue-perfect-scrollbar
       :settings="{ suppressScrollX: true, wheelPropagation: false }"
       :class="{ open: getSideBarToggleProperties.isSideNavOpen }"
       ref="myData"
@@ -14,8 +14,7 @@
     >
       <div>
         <ul class="navigation-left">
-
-<!-- Dashboard Menu -->
+          <!-- Dashboard Menu -->
           <li
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'dashboard' }"
@@ -25,16 +24,13 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Bar-Chart"></i>
-              <span class="nav-text">
-                  Dashboard{{
-                /*$t("dashboard") */
-              }}</span>
+              <span class="nav-text"> {{ $t("sidebar.dashboard") }}</span>
             </router-link>
 
             <div class="triangle"></div>
           </li>
 
-<!-- Users Menu -->
+          <!-- Users Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -44,12 +40,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Library"></i>
-              <span class="nav-text">Users</span>
+              <span class="nav-text">{{ $t("sidebar.users") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Doctors Menu -->
+          <!-- Doctors Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -59,12 +55,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Suitcase"></i>
-              <span class="nav-text">Doctors</span>
+              <span class="nav-text">{{ $t("sidebar.doctors") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Doctors Menu -->
+          <!-- Doctors Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -74,12 +70,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Computer-Secure"></i>
-              <span class="nav-text">Patients</span>
+              <span class="nav-text">{{ $t("sidebar.patients") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Storage Menu -->
+          <!-- Storage Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -89,12 +85,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Pie-Chart-2"></i>
-              <span class="nav-text">Storage</span>
+              <span class="nav-text">{{ $t("sidebar.storage") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Requests Menu -->
+          <!-- Requests Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -104,12 +100,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Windows-2"></i>
-              <span class="nav-text">Requests</span>
+              <span class="nav-text">{{ $t("sidebar.requests") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Results Menu -->
+          <!-- Results Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -119,12 +115,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-File-Clipboard-File--Text"></i>
-              <span class="nav-text">Results</span>
+              <span class="nav-text">{{ $t("sidebar.results") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Points Menu -->
+          <!-- Points Menu -->
           <li
             class="nav-item"
             @mouseenter="toggleSubMenu"
@@ -134,12 +130,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-File-Horizontal-Text"></i>
-              <span class="nav-text">Points</span>
+              <span class="nav-text">{{ $t("sidebar.points") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Ads Menu -->
+          <!-- Ads Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -149,12 +145,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Administrator"></i>
-              <span class="nav-text">Ads</span>
+              <span class="nav-text">{{ $t("sidebar.ads") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Complaints Menu -->
+          <!-- Complaints Menu -->
           <li
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'complaints' }"
@@ -164,12 +160,12 @@
           >
             <router-link class="nav-item-hold" to="#">
               <i class="nav-icon i-Double-Tap"></i>
-              <span class="nav-text">Complaints</span>
+              <span class="nav-text">{{ $t("sidebar.complaints") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Settings Menu -->
+          <!-- Settings Menu -->
           <li
             @mouseenter="toggleSubMenu"
             class="nav-item"
@@ -177,38 +173,29 @@
             :class="{ active: selectedParentMenu == 'settings' }"
             :data-submenu="false"
           >
-            <router-link class="nav-item-hold" to="{name:'settings'}" >
+            <router-link class="nav-item-hold" to="{name:'settings'}">
               <i class="nav-icon i-Safe-Box1"></i>
-              <span class="nav-text">Settings</span>
+              <span class="nav-text">{{ $t("sidebar.settings") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
 
-<!-- Points main Menu -->
+          <!-- Points main Menu -->
+
+          <!-- Points Docs Menu -->
           <li
             @mouseenter="toggleSubMenu"
-            :class="{ active: selectedParentMenu == 'points' }"
             class="nav-item"
-            data-item="points"
-            :data-submenu="true"
+            data-item="doc"
+            :class="{ active: selectedParentMenu == 'doc' }"
+            :data-submenu="false"
           >
-            <router-link class="nav-item-hold" to="#">
-              <i class="nav-icon i-Double-Tap"></i>
-              <span class="nav-text">Points</span>
-            </router-link>
-            <div class="triangle"></div>
-          </li>
-
-<!-- Points Docs Menu -->
-          <li   @mouseenter="toggleSubMenu" class="nav-item"    data-item="doc"
-               :class="{ active: selectedParentMenu == 'doc' }" :data-submenu="false">
-            <router-link class="nav-item-hold"  to="" >
+            <router-link class="nav-item-hold" to="">
               <i class="nav-icon i-Safe-Box1"></i>
-              <span class="nav-text">Doc</span>
+              <span class="nav-text">{{ $t("sidebar.about") }}</span>
             </router-link>
             <div class="triangle"></div>
           </li>
-
         </ul>
       </div>
     </vue-perfect-scrollbar>
@@ -219,7 +206,7 @@
       class="sidebar-left-secondary ps rtl-ps-none"
     >
       <div ref="sidebarChild">
- <!-- Submenu Dashboards -->
+        <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="dashboard"
@@ -228,122 +215,117 @@
           <li class="nav-item">
             <router-link tag="a" class to="/admin/users">
               <i class="nav-icon i-Clock-3"></i>
-              <span class="item-name">
-                users List
-              </span>
+              <span class="item-name"> {{ $t("sidebar.usersList") }} </span>
             </router-link>
           </li>
           <li class="nav-item">
             <router-link tag="a" class to="/admin/users/add">
               <i class="nav-icon i-Clock-3"></i>
-              <span class="item-name">
-                Add user
-              </span>
+              <span class="item-name">{{ $t("sidebar.addUser") }} </span>
             </router-link>
           </li>
         </ul>
- <!-- Submenu Users -->
+        <!-- Submenu Users -->
         <ul
           class="childNav d-none"
           data-parent="users"
           :class="{ 'd-block': selectedParentMenu == 'users' }"
         >
-        <!-- Users-list -->
+          <!-- Users-list -->
           <li
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
             <router-link to="#">
               <i class="nav-icon i-File"></i>
-              <span class="item-name">Users</span>
+              <span class="item-name">{{ $t("sidebar.usersList") }}</span>
               <i class="dd-arrow i-Arrow-Down"></i>
             </router-link>
             <ul class="submenu">
               <li>
                 <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Files"></i>
-                  <span class="item-name">Users List</span>
+                  <span class="item-name">{{ $t("sidebar.usersList") }}</span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link tag="a" class to="/admin/users/add">
                   <i class="nav-icon i-Clock-3"></i>
-                  <span class="item-name">
-                    Add user
-                  </span>
+                  <span class="item-name">{{ $t("sidebar.addUser") }} </span>
                 </router-link>
               </li>
-
             </ul>
           </li>
-         <!-- Roles-list -->
+          <!-- Roles-list -->
           <li
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
             <router-link to="#">
               <i class="nav-icon i-File"></i>
-              <span class="item-name">Roles</span>
+              <span class="item-name">{{ $t("sidebar.roles") }}</span>
               <i class="dd-arrow i-Arrow-Down"></i>
             </router-link>
             <ul class="submenu">
               <li>
                 <router-link tag="a" class to="/app/apps/invoice">
                   <i class="nav-icon i-Files"></i>
-                  <span class="item-name">Roles List</span>
+                  <span class="item-name">{{ $t("sidebar.rolesList") }}</span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Clock-3"></i>
-                  <span class="item-name">Add Roles </span>
+                  <span class="item-name">{{ $t("sidebar.addRole") }} </span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Clock-3"></i>
-                  <span class="item-name">
-                    Assign Roles
-                  </span>
+                  <span class="item-name">{{ $t("sidebar.assignRole") }} </span>
                 </router-link>
               </li>
-
             </ul>
           </li>
-         <!-- Permission-list -->
+          <!-- Permission-list -->
           <li
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
             <router-link to="#">
               <i class="nav-icon i-File"></i>
-              <span class="item-name">Permisisons</span>
+              <span class="item-name">{{ $t("sidebar.permissions") }}</span>
               <i class="dd-arrow i-Arrow-Down"></i>
             </router-link>
             <ul class="submenu">
               <li>
                 <router-link tag="a" class to="/app/apps/invoice">
                   <i class="nav-icon i-Files"></i>
-                  <span class="item-name">Permissions List</span>
+                  <span class="item-name">{{
+                    $t("sidebar.permissionsList")
+                  }}</span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Clock-3"></i>
-                  <span class="item-name"> Add Permissions</span>
+                  <span class="item-name"
+                    >{{ $t("sidebar.addPermissions") }}
+                  </span>
                 </router-link>
               </li>
               <li class="nav-item">
                 <router-link tag="a" class to="/admin/users">
                   <i class="nav-icon i-Clock-3"></i>
-                  <span class="item-name">Assign Permissions</span>
+                  <span class="item-name">{{
+                    $t("sidebar.assignPermissions")
+                  }}</span>
                 </router-link>
               </li>
             </ul>
           </li>
-
         </ul>
- <!-- Submenu Doctors -->
+        <!-- Submenu Doctors -->
         <ul
           class="childNav d-none"
           data-parent="doctors"
@@ -352,264 +334,76 @@
           <li class="nav-item">
             <router-link tag="a" class to="/admin/users/">
               <i class="nav-icon i-Split-Four-Square-Window"></i>
-              <span class="item-name">list</span>
+              <span class="item-name">{{ $t("sidebar.doctorsList") }}</span>
             </router-link>
           </li>
-
+          <li class="nav-item">
+            <router-link tag="a" class to="/admin/users/">
+              <i class="nav-icon i-Split-Four-Square-Window"></i>
+              <span class="item-name">{{ $t("sidebar.doctorProfile") }}</span>
+            </router-link>
+          </li>
         </ul>
- <!-- Submenu Patients -->
+        <!-- Submenu Patients -->
         <ul
           class="childNav d-none"
           data-parent="patients"
           :class="{ 'd-block': selectedParentMenu == 'patients' }"
         >
-
-
-          <!-- contact app -->
           <li
             @click.prevent="toggleSidebarDropdwon($event)"
             class="nav-item dropdown-sidemenu"
           >
             <router-link to="#">
-              <i class="nav-icon i-File-CSV"></i>
-              <span class="item-name">
-                Contacts
-                <span class="ml-2 badge badge-pill badge-danger">New</span>
-              </span>
+              <i class="nav-icon i-File"></i>
+              <span class="item-name">{{ $t("sidebar.patients") }}</span>
               <i class="dd-arrow i-Arrow-Down"></i>
             </router-link>
             <ul class="submenu">
               <li>
-                <router-link tag="a" class to="/app/apps/contact-list">
-                  <i class="nav-icon i-File-CSV"></i>
-                  <span class="item-name">Contact Lists</span>
+                <router-link tag="a" class to="#">
+                  <i class="nav-icon i-Files"></i>
+                  <span class="item-name">{{
+                    $t("sidebar.patientsList")
+                  }}</span>
                 </router-link>
               </li>
-
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/products">
-              <i class="nav-icon i-Add-File"></i>
-              <span class="item-name"
-                >Ecommerce
-                <span class=" ml-2 badge badge-pill badge-danger"
-                  >New</span
-                ></span
-              >
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/taskManager">
-              <i class="nav-icon i-Add-File"></i>
-              <span class="item-name">Task Manager</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/todo-list">
-              <i class="nav-icon i-Add-File"></i>
-              <span class="item-name"
-                >Todo App
-                <span class=" ml-2 badge badge-pill badge-danger"
-                  >New</span
-                ></span
-              >
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/contact-list-table">
-              <i class="nav-icon i-Add-File"></i>
-              <span class="item-name"
-                >Contacts Table
-                <span class=" ml-2 badge badge-pill badge-danger"
-                  >New</span
-                ></span
-              >
-            </router-link>
-          </li>
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/calendar">
-              <i class="nav-icon i-Calendar-3"></i>
-              <span class="item-name">Calendar</span>
-            </router-link>
-          </li>
-
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/apps/scrumboard">
-              <i class="nav-icon i-Add-File"></i>
-              <span class="item-name"
-                >scrumboard
-                <span class=" ml-2 badge badge-pill badge-danger"
-                  >New</span
-                ></span
-              >
-            </router-link>
-          </li>
-        </ul>
- <!-- Submenu Dashboards -->
-        <ul
-          class="childNav d-none"
-          data-parent="doctors"
-          :class="{ 'd-block': selectedParentMenu == 'doctors' }"
-        >
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/doctors/dropdown">
-              <i class="nav-icon i-Arrow-Down"></i>
-              <span class="item-name">Dropdown</span>
-            </router-link>
-          </li>
-
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/doctors/vueDraggable">
-              <i class="nav-icon i-Two-Windows"></i>
-              <span class="item-name">Vue Draggable</span>
-              <span class="ml-2 badge badge-pill badge-danger">New</span>
-            </router-link>
-          </li>
-
-
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/doctors/vueTree">
-              <i class="nav-icon i-Up---Down-3"></i>
-              <span class="item-name">Vue Tree</span>
-              <span class="ml-2 badge badge-pill badge-danger">New</span>
-            </router-link>
-          </li>
-          <!-- <li class="nav-item">
-            <router-link to="ladda.button.html">
-              <i class="nav-icon i-Loading-2"></i>
-              <span class="item-name">Ladda Buttons</span>
-            </router-link>
-          </li>-->
-
-        </ul>
- <!-- Submenu Dashboards -->
-        <ul
-          class="childNav d-none"
-          data-parent="ui-kits"
-          :class="{ 'd-block': selectedParentMenu == 'ui-kits' }"
-        >
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/ui-kits/alerts">
-              <i class="nav-icon i-Bell1"></i>
-              <span class="item-name">Alerts</span>
-            </router-link>
-          </li>
-          <!-- <li
-            @click.prevent="toggleSidebarDropdwon($event)"
-            class="nav-item dropdown-sidemenu"
-          >
-            <router-link to="accordion.html">
-              <i class="nav-icon i-Split-Horizontal-2-Window"></i>
-              <span class="item-name">Accordion</span>
-              <i class="dd-arrow i-Arrow-Down"></i>
-            </router-link>
-            <ul class="submenu">
-              <li>
-                <router-link href>Sub menu item 1</router-link>
+              <li class="nav-item">
+                <router-link tag="a" class to="#">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name"
+                    >{{ $t("sidebar.addpatients") }}
+                  </span>
+                </router-link>
               </li>
-              <li>
-                <router-link href>Sub menu item 1</router-link>
-              </li>
-              <li>
-                <router-link href>Sub menu item 1</router-link>
+              <li class="nav-item">
+                <router-link tag="a" class to="/admin/users">
+                  <i class="nav-icon i-Clock-3"></i>
+                  <span class="item-name">{{
+                    $t("sidebar.patientProfile")
+                  }}</span>
+                </router-link>
               </li>
             </ul>
-          </li>-->
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/ui-kits/accordion">
-              <i class="nav-icon i-Split-Horizontal-2-Window"></i>
-              <span class="item-name">Accordion</span>
-            </router-link>
           </li>
-
-
-
-
-          <!-- <li class="nav-item">
-            <router-link to="tables.html">
-              <i class="nav-icon i-File-Horizontal-Text"></i>
-              <span class="item-name">Tables</span>
-            </router-link>
-          </li>-->
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/ui-kits/bootstrap-tab">
-              <i class="nav-icon i-New-Tab"></i>
-              <span class="item-name">Tabs</span>
-            </router-link>
-          </li>
-          <!-- <li class="nav-item">
-            <router-link to="tooltip.html">
-              <i class="nav-icon i-Speach-Bubble-8"></i>
-              <span class="item-name">Tooltip</span>
-            </router-link>
-          </li>-->
-
-
+          <!-- contact app -->
         </ul>
- <!-- Submenu storage -->
+        <!-- Submenu Patinys -->
+
+        <!-- Submenu storage -->
         <ul
           class="childNav d-none"
           data-parent="storage"
           :class="{ 'd-block': selectedParentMenu == 'storage' }"
         >
           <li class="nav-item">
-            <router-link tag="a" class to="/admin/gdrive">
+            <router-link tag="a" class to="/storage">
               <i class="nav-icon i-Line-Chart-2"></i>
-              <span class="item-name">Google Drive</span>
+              <span class="item-name">{{ $t("sidebar.googleDrive") }}</span>
             </router-link>
-          </li>
-          <li
-            @click.prevent="toggleSidebarDropdwon($event)"
-            class="nav-item dropdown-sidemenu"
-          >
-            <router-link to="#">
-              <i class="nav-icon i-Line-Chart"></i>
-              <span class="item-name">Apex storage</span>
-              <i class="dd-arrow i-Arrow-Down"></i>
-            </router-link>
-            <ul class="submenu">
-              <li>
-                <router-link tag="a" class to="/app/storage/apexAreaChart">
-                  <i class="nav-icon i-Line-Chart-2"></i>
-                  <span class="item-name">Area Chart</span>
-                </router-link>
-              </li>
-
-
-
-              <li>
-                <router-link tag="a" class to="/app/storage/apexColumnChart">
-                  <i class="nav-icon i-Line-Chart-2"></i>
-                  <span class="item-name">Column Chart</span>
-                </router-link>
-              </li>
-              <li>
-                <router-link tag="a" class to="/app/storage/apexPieDonutsChart">
-                  <i class="nav-icon i-Line-Chart-2"></i>
-                  <span class="item-name">Pie Donut Chart</span>
-                </router-link>
-              </li>
-
-              <li>
-                <router-link tag="a" class to="/app/storage/apexSparklineChart">
-                  <i class="nav-icon i-Line-Chart-2"></i>
-                  <span class="item-name">Sparkline Chart</span>
-                </router-link>
-                <router-link tag="a" class to="/app/storage/apexAreaChart">
-                  <i class="nav-icon i-Line-Chart-2"></i>
-                  <span class="item-name">Apex Area Chart</span>
-                </router-link>
-              </li>
-            </ul>
           </li>
         </ul>
- <!-- Submenu Request -->
+        <!-- Submenu Request -->
         <ul
           class="childNav d-none"
           data-parent="widgets"
@@ -618,59 +412,25 @@
           <li class="nav-item">
             <router-link tag="a" class to="/admin/request/new">
               <i class="nav-icon i-Two-Windows"></i>
-              <span class="item-name">New Scan Request</span>
+              <span class="item-name">{{ $t("sidebar.newScanRequest") }}</span>
             </router-link>
           </li>
           <li class="nav-item">
             <router-link tag="a" class to="/admin/requests/list">
               <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name">List Request</span>
-            </router-link>
-          </li>
-
-          <li class="nav-item">
-            <router-link tag="a" class to="/admin/request/list">
-              <i class="nav-icon i-Windows-2"></i>
-              <span class="item-name"> ___ </span>
-            </router-link>
-          </li>
-
-        </ul>
- <!-- Submenu Dashboards -->
-        <ul
-          class="childNav d-none"
-          data-parent="sessions"
-          :class="{ 'd-block': selectedParentMenu == 'sessions' }"
-        >
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/sessions/signIn">
-              <i class="nav-icon i-Checked-User"></i>
-              <span class="item-name">Sign in</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/sessions/signUp">
-              <i class="nav-icon i-Add-User"></i>
-              <span class="item-name">Sign up</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link tag="a" class to="/app/sessions/forgot">
-              <i class="nav-icon i-Find-User"></i>
-              <span class="item-name">Forgot</span>
+              <span class="item-name">{{
+                $t("sidebar.scanRequestslist")
+              }}</span>
             </router-link>
           </li>
         </ul>
- <!-- Submenu Dashboards -->
+
+        <!-- Submenu Dashboards -->
         <ul
           class="childNav d-none"
           data-parent="others"
           :class="{ 'd-block': selectedParentMenu == 'pages' }"
         >
-
-
-
-
           <!-- <li class="nav-item">
             <router-link to="blank.html" class="open">
               <i class="nav-icon i-File-Horizontal"></i>
@@ -680,13 +440,13 @@
         </ul>
       </div>
     </vue-perfect-scrollbar>
-        <div
-            @click="removeOverlay()"
-            class="sidebar-overlay"
-            :class="{ open: getSideBarToggleProperties.isSecondarySideNavOpen }"
-        ></div>
-    </div>
-    <!--=============== Left side End ================-->
+    <div
+      @click="removeOverlay()"
+      class="sidebar-overlay"
+      :class="{ open: getSideBarToggleProperties.isSecondarySideNavOpen }"
+    ></div>
+  </div>
+  <!--=============== Left side End ================-->
 </template>
 
 <script>
@@ -696,143 +456,133 @@ import { PerfectScrollbar as VuePerfectScrollbar } from "vue2-perfect-scrollbar"
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-    components: {
-        Topnav,
-        VuePerfectScrollbar
-    },
+  components: {
+    Topnav,
+    VuePerfectScrollbar,
+  },
 
-    data() {
-        return {
-            isDisplay: false,
-            isMenuOver: false,
-            isStyle: true,
-            selectedParentMenu: "",
-            isMobile
-        };
-    },
-    mounted() {
-        // this.toggleSelectedParentMenu();
-        // window.addEventListener("resize", this.handleWindowResize);
-        // document.addEventListener("click", this.returnSelectedParentMenu);
-        // this.handleWindowResize();
-    },
+  data() {
+    return {
+      isDisplay: false,
+      isMenuOver: false,
+      isStyle: true,
+      selectedParentMenu: "",
+      isMobile,
+    };
+  },
+  mounted() {
+    // this.toggleSelectedParentMenu();
+    // window.addEventListener("resize", this.handleWindowResize);
+    // document.addEventListener("click", this.returnSelectedParentMenu);
+    // this.handleWindowResize();
+  },
 
-    beforeDestroy() {
-        document.removeEventListener("click", this.returnSelectedParentMenu);
-        window.removeEventListener("resize", this.handleWindowResize);
+  beforeDestroy() {
+    document.removeEventListener("click", this.returnSelectedParentMenu);
+    window.removeEventListener("resize", this.handleWindowResize);
+  },
+  computed: {
+    ...mapGetters(["largeSidebarM/getSideBarToggleProperties"]),
+    getSideBarToggleProperties() {
+      return this.$store.getters["largeSidebarM/getSideBarToggleProperties"];
     },
-    computed: {
-        ...mapGetters(["largeSidebarM/getSideBarToggleProperties"]),
-        getSideBarToggleProperties() {
-            return this.$store.getters[
-                "largeSidebarM/getSideBarToggleProperties"
-            ];
-        },
-        isSideNavOpen() {
-            return this.$store.getters[
-                "largeSidebarM/getSideBarToggleProperties"
-            ].isSideNavOpen;
-        },
-        isSearchOpen() {
-            return this.$store.getters[
-                "largeSidebarM/getSideBarToggleProperties"
-            ].isSideNavOpen;
-        }
-        /*  getSideBarToggleProperties() {
+    isSideNavOpen() {
+      return this.$store.getters["largeSidebarM/getSideBarToggleProperties"]
+        .isSideNavOpen;
+    },
+    isSearchOpen() {
+      return this.$store.getters["largeSidebarM/getSideBarToggleProperties"]
+        .isSideNavOpen;
+    },
+    /*  getSideBarToggleProperties() {
             console.log(this.SideBarToggleProperties);
             return this.SideBarToggleProperties;
         } */
+  },
+
+  methods: {
+    ...mapActions("largeSidebarM", [
+      "changeSecondarySidebarProperties",
+      "changeSecondarySidebarPropertiesViaMenuItem",
+      "changeSecondarySidebarPropertiesViaOverlay",
+      "changeSidebarProperties",
+    ]),
+
+    handleWindowResize() {
+      //  console.log('not working is Mobile');
+      if (window.innerWidth <= 1200) {
+        if (this.getSideBarToggleProperties.isSideNavOpen) {
+          this.$store.dispatch("largeSidebarM/changeSidebarProperties");
+        }
+        if (this.getSideBarToggleProperties.isSecondarySideNavOpen) {
+          this.$store.dispatch(
+            "largeSidebarM/changeSecondarySidebarProperties"
+          );
+        }
+      } else {
+        if (!this.getSideBarToggleProperties.isSideNavOpen) {
+          this.$store.dispatch("largeSidebarM/changeSidebarProperties");
+          // this.changeSidebarProperties();
+        }
+      }
+    },
+    toggleSelectedParentMenu() {
+      const currentParentUrl = this.$route.path
+        .split("/")
+        .filter((x) => x !== "")[1];
+      console.log(currentParentUrl);
+      if (currentParentUrl !== undefined && currentParentUrl !== null) {
+        // console.log(currentParentUrl);
+        this.selectedParentMenu = currentParentUrl.toLowerCase();
+      } else {
+        this.selectedParentMenu = "home";
+      }
+    },
+    toggleSubMenu(e) {
+      let hasSubmenu = e.target.dataset.submenu;
+      let parent = e.target.dataset.item;
+      if (hasSubmenu) {
+        this.selectedParentMenu = parent;
+
+        this.$store.dispatch(
+          "largeSidebarM/changeSecondarySidebarPropertiesViaMenuItem",
+          true
+        );
+      } else {
+        this.selectedParentMenu = parent;
+        this.$store.dispatch(
+          "largeSidebarM/changeSecondarySidebarPropertiesViaMenuItem",
+          false
+        );
+        // this.changeSecondarySidebarPropertiesViaMenuItem(false);
+      }
     },
 
-    methods: {
-        ...mapActions("largeSidebarM", [
-            "changeSecondarySidebarProperties",
-            "changeSecondarySidebarPropertiesViaMenuItem",
-            "changeSecondarySidebarPropertiesViaOverlay",
-            "changeSidebarProperties"
-        ]),
+    removeOverlay() {
+      this.$store.dispatch(
+        "largeSidebarM/changeSecondarySidebarPropertiesViaOverlay"
+      );
+      if (window.innerWidth <= 1200) {
+        this.$store.dispatch("largeSidebarM/changeSidebarProperties");
+      }
+      this.toggleSelectedParentMenu();
+    },
+    returnSelectedParentMenu() {
+      if (!this.isMenuOver) {
+        this.$store.dispatch("largeSidebarM/toggleSelectedParentMenu");
+      }
+    },
 
-        handleWindowResize() {
-            //  console.log('not working is Mobile');
-            if (window.innerWidth <= 1200) {
-                if (this.getSideBarToggleProperties.isSideNavOpen) {
-                    this.$store.dispatch(
-                        "largeSidebarM/changeSidebarProperties"
-                    );
-                }
-                if (this.getSideBarToggleProperties.isSecondarySideNavOpen) {
-                    this.$store.dispatch(
-                        "largeSidebarM/changeSecondarySidebarProperties"
-                    );
-                }
-            } else {
-                if (!this.getSideBarToggleProperties.isSideNavOpen) {
-                    this.$store.dispatch(
-                        "largeSidebarM/changeSidebarProperties"
-                    );
-                    // this.changeSidebarProperties();
-                }
-            }
-        },
-        toggleSelectedParentMenu() {
-            const currentParentUrl = this.$route.path
-                .split("/")
-                .filter(x => x !== "")[1];
-                console.log(currentParentUrl);
-            if (currentParentUrl !== undefined && currentParentUrl !== null) {
-                // console.log(currentParentUrl);
-                this.selectedParentMenu = currentParentUrl.toLowerCase();
-            } else {
-                this.selectedParentMenu = "home";
-            }
-        },
-        toggleSubMenu(e) {
-            let hasSubmenu = e.target.dataset.submenu;
-            let parent = e.target.dataset.item;
-            if (hasSubmenu) {
-                this.selectedParentMenu = parent;
+    toggleSidebarDropdwon(event) {
+      let dropdownMenus = this.$el.querySelectorAll(".dropdown-sidemenu.open");
 
-                this.$store.dispatch(
-                    "largeSidebarM/changeSecondarySidebarPropertiesViaMenuItem",
-                    true
-                );
-            } else {
-                this.selectedParentMenu = parent;
-                this.$store.dispatch(
-                    "largeSidebarM/changeSecondarySidebarPropertiesViaMenuItem",
-                    false
-                );
-                // this.changeSecondarySidebarPropertiesViaMenuItem(false);
-            }
-        },
+      event.currentTarget.classList.toggle("open");
 
-        removeOverlay() {
-            this.$store.dispatch(
-                "largeSidebarM/changeSecondarySidebarPropertiesViaOverlay"
-            );
-            if (window.innerWidth <= 1200) {
-                this.$store.dispatch("largeSidebarM/changeSidebarProperties");
-            }
-            this.toggleSelectedParentMenu();
-        },
-        returnSelectedParentMenu() {
-            if (!this.isMenuOver) {
-                this.$store.dispatch("largeSidebarM/toggleSelectedParentMenu");
-            }
-        },
-
-        toggleSidebarDropdwon(event) {
-            let dropdownMenus = this.$el.querySelectorAll(
-                ".dropdown-sidemenu.open"
-            );
-
-            event.currentTarget.classList.toggle("open");
-
-            dropdownMenus.forEach(dropdown => {
-                dropdown.classList.remove("open");
-            });
-        }
-    }
+      dropdownMenus.forEach((dropdown) => {
+        dropdown.classList.remove("open");
+      });
+    },
+  },
 };
 </script>
 <style src="vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css" />

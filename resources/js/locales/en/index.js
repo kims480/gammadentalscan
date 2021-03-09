@@ -5,6 +5,7 @@ import profile from "./profile";
 import datatable from "./datatable";
 import details from "./details";
 import itemElements from "./item-elements";
+import sidebar from "./sidebar";
 
 export default {
     alerts,
@@ -13,5 +14,6 @@ export default {
     profile,
     datatable,
     details,
-    itemElements
+    itemElements,
+    sidebar
 };

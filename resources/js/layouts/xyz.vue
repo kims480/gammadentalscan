@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <v-main class="green lighten-5">
+    <router-view></router-view>
+  </v-main>
 </template>
 
 <script>

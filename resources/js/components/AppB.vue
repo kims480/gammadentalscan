@@ -74,7 +74,7 @@ export default {
     },
     forceLayoutIfNotLoggedIn() {
       // console.log(this.isLoggedIn);
-      return this.isLoggedIn ? this.layoutName : "xyz-layout";
+      return this.isLoggedIn ? this.layoutName : "auth-layout";
     },
     isLoggedIn() {
       return this.isAuth;

@@ -1,0 +1,35 @@
+export default {
+    dashboard: "الرئيسية",
+    users: "المستخدمون",
+    doctors: "الاطباء",
+    patients: "المرضي",
+    storage: "التخزين",
+    requests: "الطلبات",
+    results: "النتائج",
+    points: "النقاط",
+    ads: "اعلانات",
+    complaints: "شكوي",
+    settings: "اعدادات",
+    about: "عنا",
+
+    /* Sub Menus */
+
+    usersList: "جدول المستخدمين",
+    addUser: "اضافة مستخدم",
+    roles: "الصلاحيات",
+    rolesList: "قائمة الصلاحيات",
+    addRole: "اضافة صلاحية",
+    assignRole: "تخويل صلاحية",
+    permissions: "أذونات",
+    permissionsList: "قائمة الأذونات",
+    addPermissions: "إضافة أذونات",
+    assignPermissions: "تخويل أذونات",
+    doctorsList: "قاشمة الأطباء",
+    doctorProfile: "الملف الشخصي",
+    patientsList: "قائمة المرضي",
+    addpatients: "ضافة مريض",
+    patientProfile: "الملف الشخصي",
+    googleDrive: "Google Drive",
+    newScanRequest: "طلب فحص جديد",
+    scanRequestslist: "قائمة طليات الفحص"
+};

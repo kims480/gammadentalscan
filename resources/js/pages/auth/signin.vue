@@ -71,37 +71,40 @@
               </span>
             </form>
           </v-card-text>
-          <v-card-actions class="br-t-1">
-            <v-col cols="4" class="py-0">
+          <v-card-actions class="align-center justify-content-between">
+            <v-col cols="3" class="p-0">
               <v-combobox
-                class="py-0"
+                :class="{ arabic: false }"
+                solo
+                item-color="green"
                 v-model="lang"
                 :items="langs"
                 label="Language"
+                hide-details
+                prepend-inner-icon="mdi-translate"
                 dense
-                solo
                 @change="changeLocale"
               ></v-combobox>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col cols="4" class="mx-auto py-0">
-              <v-btn
-                :loading="loading"
-                :disabled="disabled"
-                large
-                color="success"
-                type="submit"
-                @click.prevent="login"
-              >
-                {{ $t("login.submit") }}
-                <v-progress-circular
-                  v-if="loading"
-                  :size="50"
-                  color="primary"
-                  indeterminate
-                ></v-progress-circular>
-              </v-btn>
-            </v-col>
+
+            <v-btn
+              :loading="loading"
+              :disabled="disabled"
+              large
+              class="ml-auto"
+              color="success"
+              type="submit"
+              @click.prevent="login"
+            >
+              {{ $t("login.submit") }}
+              <v-progress-circular
+                v-if="loading"
+                :size="50"
+                color="primary"
+                indeterminate
+              ></v-progress-circular>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -213,7 +216,7 @@ export default {
         this.loading = false;
         this.disabled = false;
         console.log(err);
-        this.$store.dispatch("notifications/pushNotif", err, "error");
+        this.$store.dispatch("notifications/pushNotif", err);
 
         // this.$store.dispatch("validation/setErrors", data);
         // this.$swal.fire(data);

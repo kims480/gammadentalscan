@@ -50,7 +50,7 @@ const routes = [
     },
     {
         path: "/signin", //auth/sign-in
-        meta: { layout: require("@/pages/auth/signin").default.layout },
+        // meta: { layout: require("@/pages/auth/signin").default.layout },
         component: Signin,
         meta: { layout: "auth", guard: "NotLogged" },
         name: "sign-in"

@@ -26,13 +26,13 @@ myApiClient.interceptors.request.use(config => {
 });
 myApiClient.interceptors.response.use(response => {
     nProgress.done();
-    console.log(response.data);
-    if (response.data.success == true) {
-        store.dispatch(
-            "notifications/pushSuccessNotify",
-            response.data.messsage
-        );
-    }
+    // console.log(response.data);
+    // if (response.data.success == true) {
+    //     store.dispatch(
+    //         "notifications/pushSuccessNotify",
+    //         response.data.messsage
+    //     );
+    // }
     return response;
 });
 export default {

@@ -207,6 +207,7 @@ export default {
         this.$vuetify.lang.current == "en" ? "ar" : "en";
       this.$store.dispatch("changeLang", this.$vuetify.lang.current);
       this.$store.dispatch("configM/changeThemeRtl");
+      this.$root.$i18n.locale = this.$vuetify.lang.current;
     },
     toCapitalize(text) {
       return text
