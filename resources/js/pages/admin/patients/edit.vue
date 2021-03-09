@@ -1,9 +1,9 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent  max-width="600px">
+    <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="success" dark small rounded v-bind="attrs" v-on="on">
-          <i class="i-File-Edit icon-font"></i>
+        <v-btn dark icon rounded v-bind="attrs" v-on="on">
+          <v-icon color="success">mdi-account-edit</v-icon>
         </v-btn>
       </template>
       <v-card class="dialog-edit">
@@ -63,7 +63,7 @@
                     'Reading',
                     'Writing',
                     'Coding',
-                    'Basejump'
+                    'Basejump',
                   ]"
                   label="Interests"
                   multiple
@@ -90,13 +90,13 @@ export default {
   props: ["user"],
   data: () => ({
     dialog: false,
-    email: null
+    email: null,
   }),
   computed: {
     userEmail() {
       this.email = this.user.email;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

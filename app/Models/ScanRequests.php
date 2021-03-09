@@ -87,7 +87,7 @@ class ScanRequests extends Model
     public function getDoctorNameAttribute()
     {
         //  return $value;
-        return ['id' => $this->refered_by, 'name' => $this->user->name];
+        return ['id' => $this->refered_by, 'name' => $this->user->name ?? null];
     }
     /**
      * Mutator

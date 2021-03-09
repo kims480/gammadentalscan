@@ -21,11 +21,10 @@ import DateRangePicker from "vue2-daterange-picker";
 
 // import "v2-datepicker/lib/index.css"; // v2 need to improt css
 // import V2Datepicker from "v2-datepicker";
-import AuthLayout from '@/layouts/auth'
+import AuthLayout from "@/layouts/auth";
 // locale.use(lang);
 // register the plugin on vue
-import Toasted from 'vue-toasted';
-
+import Toasted from "vue-toasted";
 
 export default {
     install(Vue) {
@@ -54,10 +53,7 @@ export default {
                     /* webpackChunkName: 'default-Layout' */ "@/layouts/default"
                 )
         );
-        Vue.component(
-            'AuthLayout',AuthLayout
-
-        );
+        Vue.component("AuthLayout", AuthLayout);
         Vue.component(
             "doctor-layout",
             // The `import` function returns a Promise.
@@ -69,10 +65,7 @@ export default {
         Vue.component(
             "xyz-layout",
             // The `import` function returns a Promise.
-            () =>
-                import(
-                    /* webpackChunkName: 'xyz-Layout' */ "@/layouts/xyz"
-                )
+            () => import(/* webpackChunkName: 'xyz-Layout' */ "@/layouts/xyz")
         );
 
         // Vue.component(
@@ -90,7 +83,7 @@ export default {
         //     // The `import` function returns a Promise.
         //     () => import("../components/common/customizer.vue")
         // );
-        Vue.component("vue-perfect-scrollbar", (rfe) =>
+        Vue.component("vue-perfect-scrollbar", rfe =>
             import("vue2-perfect-scrollbar")
         );
         Vue.component("v-errors", () =>
@@ -136,22 +129,29 @@ export default {
         //   // ...other defaults
         // });
 
-
         // you can also pass options, check options reference below
 
-
-        Vue.use(Toasted)
-        Vue.toasted.register('my_app_error', 'Oops.. Something Went Wrong..', {
-            type : 'error',
-            icon : 'error_outline'
-        })
-        Vue.toasted.register('Not_Authorized', 'You are not authorized to access this Page/Data', "Toasted !!", {
-            theme: "bubble",
-            position: "top-center",
-            duration : 5000,
-            type : 'error',
-            icon : 'error_outline'
-        })
+        Vue.use(Toasted);
+        Vue.toasted.register("my_app_error", "Oops.. Something Went Wrong..", {
+            type: "error",
+            icon: "error_outline"
+        });
+        Vue.toasted.register(
+            "Not_Authorized",
+            "You are not authorized to access this Page/Data",
+            // "Toasted !!",
+            {
+                theme: "bubble",
+                position: "top-center",
+                duration: 5000,
+                type: "error",
+                iconPack: "mdi",
+                icon: {
+                    name: "check-circle-outline",
+                    after: true
+                }
+            }
+        );
         // console.log(Toasted.global)
         Vue.use(VueTour);
         Vue.use(VueLazyload, {
@@ -163,5 +163,4 @@ export default {
             }
         });
     }
-
 };

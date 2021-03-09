@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\User as Authinticated;
 use App\Models\User;
 use App\Traits\UserTrait;
+use Error;
+use Exception;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Http\Client\Request;
@@ -66,18 +68,15 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-        if($user->save()){
+        if ($user->save()) {
             return response()->json([
                 'message' => 'Successfully created user!'
             ], 201);
-
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Error creating User!'
             ], 422);
         }
-
-
     }
 
     /**
@@ -174,14 +173,14 @@ class UserController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required','string'],
+            'phone' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8'],
             'confirm_password' => ['required', 'string', 'same:password'],
             // 'photo'=>'image|null|max:1999'
         ]);
     }
 
-     /**
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -190,13 +189,13 @@ class UserController extends Controller
      */
     protected function create(Request $request)
     {
-        $imageName = $this->saveImage($request->file('image'),'uploads/users');
+        $imageName = $this->saveImage($request->file('image'), 'uploads/users');
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request['phone'],
             'password' => Hash::make($request['password']),
-            'active' => $request['active']?1:0,
+            'active' => $request['active'] ? 1 : 0,
             'whatsapp' => $request['whatsapp'],
             'photo' => $imageName,
         ]);
@@ -224,16 +223,16 @@ class UserController extends Controller
      */
     public function createWithRolesPremissions(Request $request)
     {
-        if(!$request->user()->hasRole('SUPER_ADMIN'))
-             return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        if (!$request->user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message' => 'You are not authorized for this request'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
 
-            //  return    response()->json([
-            //     'success' => true,
-            //    // 'Message' => 'User '.$user->name.' Registered Successfully',
-            //     'myRequest' => $request->all(),
-            //     //'image' => $request->file('image')->getClientOriginalName(),
-            //     'photo' => $request->file('image')?$request->file('photo')->getClientOriginalName():'NoImage.jpg'
-            // ], HttpFoundationResponse::HTTP_CREATED);
+        //  return    response()->json([
+        //     'success' => true,
+        //    // 'Message' => 'User '.$user->name.' Registered Successfully',
+        //     'myRequest' => $request->all(),
+        //     //'image' => $request->file('image')->getClientOriginalName(),
+        //     'photo' => $request->file('image')?$request->file('photo')->getClientOriginalName():'NoImage.jpg'
+        // ], HttpFoundationResponse::HTTP_CREATED);
 
         $validator = $this->validator($request->all());
 
@@ -243,28 +242,27 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'Message' => 'Failed to register',
-                'error' =>$validator->errors()//$data->validated(), //$validator->errors()
+                'error' => $validator->errors() //$data->validated(), //$validator->errors()
             ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
-            // return response()->json([
-            //     'success' => true, 'data'=>$data->all()],200);
+        // return response()->json([
+        //     'success' => true, 'data'=>$data->all()],200);
 
-        $user = $this->create($request);//only('name','phone','email', 'password','active','whatsapp','image')
-        $roles= $user->syncRoles($request->only('userRoles'));
-        $permissions= $user->syncPermissions($request->only('userPermissions'));
+        $user = $this->create($request); //only('name','phone','email', 'password','active','whatsapp','image')
+        $roles = $user->syncRoles($request->only('userRoles'));
+        $permissions = $user->syncPermissions($request->only('userPermissions'));
 
-        if($user && $roles && $permissions)
+        if ($user && $roles && $permissions)
             return response()->json([
                 'success' => true,
-                'Message' => 'User '.$user->name.' Registered Successfully',
+                'Message' => 'User ' . $user->name . ' Registered Successfully',
                 'user' => $user,
 
             ], HttpFoundationResponse::HTTP_CREATED);
 
         return response()->json([
             'success' => false,
-            'Message' => 'General Error',], HttpFoundationResponse::HTTP_CREATED);
-
-
+            'Message' => 'General Error',
+        ], HttpFoundationResponse::HTTP_CREATED);
     }
 
     /**
@@ -280,13 +278,13 @@ class UserController extends Controller
         $myUser = User::with('doctors')->find($id);
         // $doctors = $myUser->doctors;
         // $user=User::find($id);
-        if(!$myUser){
-            return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        if (!$myUser) {
+            return response()->json(['message' => 'User Not valid'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
         }
-        if(!Auth::user()->hasRole('SUPER_ADMIN'))
-            return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        if (!Auth::user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message' => 'You are not authorized for this request'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
 
-        return response()->json(['user'=>$myUser,"roles" => $myUser->getRoleNames(),'permissions'=> $myUser->getPermissionNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+        return response()->json(['user' => $myUser, "roles" => $myUser->getRoleNames(), 'permissions' => $myUser->getPermissionNames(), 'message' => 'My Roles Successfuly Collected', "success" => true], HttpFoundationResponse::HTTP_ACCEPTED);
         // return response()->json(["roles" => $myUser->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
 
     }
@@ -301,7 +299,77 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return response()->json([
+        //     'message' => 'Testing response',
+
+
+        //     'success' => true,
+        //     // 'Message' => 'User '.$user->name.' Registered Successfully',
+        //     'myRequest' => $request->all(),
+        //     //'image' => $request->file('image')->getClientOriginalName(),
+        //     'photo' => $request->file('image') ? $request->file('image')->getClientOriginalName() : 'NoImage.jpg'
+
+        // ], HttpFoundationResponse::HTTP_ACCEPTED);
+        if (!$request->user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message' => 'You are not authorized for this request'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        // $validator = $this->validator($request->all());
+
+
+
+        // if ($validator->fails())
+        //     return response()->json([
+        //         'success' => false,
+        //         'Message' => 'Failed to register',
+        //         'error' => $validator->errors()
+        //     ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        $imageName = $this->saveImage($request->file('image'), 'uploads/users');
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'id' => $id,
+                'Message' => 'User Not Vailable',
+            ], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
+        // $user = $request->all();
+        // $user->email = $request->email;
+        // $user->phone = $request['phone'];
+        // $user->password = Hash::make($request['password']);
+        // $user->active = $request['active'] ? 1 : 0;
+        // $user->whatsapp = $request['whatsapp'];
+        // $user->photo = $imageName;
+        try {
+
+            $user->update($request->all());
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'id' => $id,
+                'Message' => $e,
+                'request' => $request->all()
+            ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        }
+
+        $roles = $user->syncRoles($request->only('userRoles') ? $request->only('userRoles') : $request->only('roles'));
+        $permissions = $user->syncPermissions($request->only('userPermissions'));
+
+        if ($user && $roles && $permissions) {
+
+            return response()->json([
+                'success' => true,
+                'Message' => 'User ' . $user->name . ' Updated Successfully',
+                'user' => $user,
+                // 'request' => $request->all()
+
+            ], HttpFoundationResponse::HTTP_CREATED);
+        }
+
+        return response()->json([
+            'success' => false,
+            'Message' => 'General Error',
+        ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
     }
 
     /**
@@ -313,8 +381,39 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        $result = user::find($id);
 
+        $result->delete();
+    }
+    /**
+     * permanently Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function force_destroy($id)
+    {
+        //
+        $result = User::find($id);
 
+        $result->forceDelete();
+
+        // You may also use the forceDelete method when building Eloquent relationship queries:
+
+        //     $flight->history()->forceDelete();
+    }
+    /**
+     * permanently Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+        $result = User::find($id);
+
+        $result->resote();
     }
     /**
      * Logout user (Revoke the token)
@@ -338,7 +437,7 @@ class UserController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json(["user" => $request->user(),"roles" => $request->user()->roles, "success" => true]);
+        return response()->json(["user" => $request->user(), "roles" => $request->user()->roles, "success" => true]);
     }
     /**
      * Get All Users
@@ -346,8 +445,8 @@ class UserController extends Controller
      */
     public function getUsers(Request $request)
     {
-        $users = User::with(['roles'=>function($q){
-            $q->select('name','guard_name');
+        $users = User::with(['roles' => function ($q) {
+            $q->select('name', 'guard_name');
         }])->get(); //Isdoctor()->
 
         if (is_object($users)) {
@@ -442,61 +541,61 @@ class UserController extends Controller
      *
      * @return [json] roles object
      */
-    public function getUserRolesById(Request $request,$id)
+    public function getUserRolesById(Request $request, $id)
     {
 
-        $user=User::find($id);
-        if(!$user){
-            return response()->json(['message'=>'User Not valid'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'User Not valid'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
         }
-        if(!$request->user()->hasRole('SUPER_ADMIN'))
-            return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        if (!$request->user()->hasRole('SUPER_ADMIN'))
+            return response()->json(['message' => 'You are not authorized for this request'], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
 
-        return response()->json(["roles" => $user->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+        return response()->json(["roles" => $user->getRoleNames(), 'message' => 'My Roles Successfuly Collected', "success" => true], HttpFoundationResponse::HTTP_ACCEPTED);
     }
-    public function getAllRoles(Request $request){
+    public function getAllRoles(Request $request)
+    {
         // if(!$request->user()->hasRole('SUPER_ADMIN'))
         //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
-            $roles= collect(Role::select('id','name','guard_name')->get());
+        $roles = collect(Role::select('id', 'name', 'guard_name')->get());
 
-            $tranformedRoles=$roles->transform(function($value,$key){
-                return $value['name'];
-            });
-
-                return response()->json(["AllRoles" => $tranformedRoles, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
-
-    }
-    public function getAllPermissions(Request $request){
-        // if(!$request->user()->hasRole('SUPER_ADMIN'))
-        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
-            $permissions= collect(Permission::get());
-
-            $GroupedPermission=$permissions->groupBy('guard_name');
-            $tranformedPermission=$permissions->transform(function($value,$key){
-                return $value['name'];
-            });
-
-                return response()->json(["AllPermissionTransform" => $tranformedPermission,'groupedPermission'=>$GroupedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
-
-    }
-    public function getAllRolesPremissions(Request $request){
-        // if(!$request->user()->hasRole('SUPER_ADMIN'))
-        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
-
-        $roles= collect(Role::select('id','name','guard_name')->where('guard_name','web')->get());
-
-        $tranformedRoles=$roles->transform(function($value,$key){
+        $tranformedRoles = $roles->transform(function ($value, $key) {
             return $value['name'];
         });
-        $permissions= collect(Permission::get());
 
-            $GroupedPermission=$permissions->groupBy('guard_name');
-            $tranformedPermission=$permissions->transform(function($value,$key){
-                return $value['name'];
-            });
+        return response()->json(["AllRoles" => $tranformedRoles, 'message' => 'My Roles Successfuly Collected', "success" => true], HttpFoundationResponse::HTTP_ACCEPTED);
+    }
+    public function getAllPermissions(Request $request)
+    {
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        $permissions = collect(Permission::get());
 
-                return response()->json(["allRoles" => $tranformedRoles,'allPermissions'=>$tranformedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true],HttpFoundationResponse::HTTP_ACCEPTED);
+        $GroupedPermission = $permissions->groupBy('guard_name');
+        $tranformedPermission = $permissions->transform(function ($value, $key) {
+            return $value['name'];
+        });
 
+        return response()->json(["AllPermissionTransform" => $tranformedPermission, 'groupedPermission' => $GroupedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true], HttpFoundationResponse::HTTP_ACCEPTED);
+    }
+    public function getAllRolesPremissions(Request $request)
+    {
+        // if(!$request->user()->hasRole('SUPER_ADMIN'))
+        //     return response()->json(['message'=>'You are not authorized for this request'],HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+
+        $roles = collect(Role::select('id', 'name', 'guard_name')->where('guard_name', 'web')->get());
+
+        $tranformedRoles = $roles->transform(function ($value, $key) {
+            return $value['name'];
+        });
+        $permissions = collect(Permission::get());
+
+        $GroupedPermission = $permissions->groupBy('guard_name');
+        $tranformedPermission = $permissions->transform(function ($value, $key) {
+            return $value['name'];
+        });
+
+        return response()->json(["allRoles" => $tranformedRoles, 'allPermissions' => $tranformedPermission, 'message' => 'My Roles Successfuly Collected', "success" => true], HttpFoundationResponse::HTTP_ACCEPTED);
     }
 }
 ################ Spatie methods ############################################

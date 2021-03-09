@@ -1,24 +1,74 @@
 <template>
   <v-app id="app" class="app-admin-wrap layout-sidebar-large clearfix">
     <TopNav />
-    <Sidebardoctor />
-    <main>
-      <div
-        :class="{ 'sidenav-open': getSideBarToggleProperties.isSideNavOpen }"
-        class="main-content-wrap d-flex flex-column"
+
+    <section>
+      <template v-if="isAuth /* $auth.hasScope('super_admin') */">
+        <Sidebardoctor />
+      </template>
+      <!-- <notifications></notifications> -->
+      <v-main
+        :class="{
+          'sidenav-open': isSideNavOpen,
+        }"
+        class="main-content-wrap green lighten-5"
       >
-        <dashBreadCrumb
-          :mainSection="mainSection"
-          :MainPage="MainPage"
-          :SubPage="SubPage"
-        />
-        {{ get }}
-        <transition name="page" mode="out-in">
-          <nuxt />
-        </transition>
-        <appFooter />
+        <div class="page-container d-flex flex-column">
+          <dashBreadCrumb
+            :mainSection="mainSection"
+            :MainPage="MainPage"
+            :SubPage="SubPage"
+          />
+          {{ get }}
+          <separator></separator>
+
+          <v-container id="page-content" elevation="1">
+            <transition name="page" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </v-container>
+        </div>
+      </v-main>
+      <v-speed-dial
+        v-model="fab"
+        fixed
+        bottom
+        right
+        direction="top"
+        :open-on-hover="hover"
+        :transition="transition"
+        style="z-index: 100"
+      >
+        <template v-slot:activator>
+          <v-btn v-model="fab" color="blue darken-2" dark fab>
+            <v-icon v-if="fab"> mdi-close </v-icon>
+            <v-icon v-else> mdi-account-circle </v-icon>
+          </v-btn>
+        </template>
+        <v-btn
+          fab
+          v-for="(fabItem, i) in fabItems"
+          :key="i"
+          dark
+          small
+          :color="fabItem.color"
+          @click="$router.push({ name: fabItem.target })"
+        >
+          <v-icon>{{ fabItem.icon }}</v-icon>
+        </v-btn>
+      </v-speed-dial>
+      <div class="text-center">
+        <v-bottom-sheet v-model="sheet" inset>
+          <v-sheet class="text-center" height="200px">
+            <v-btn class="mt-6" text color="error" @click="sheet = !sheet">
+              close
+            </v-btn>
+            <div class="my-3">This is a bottom sheet using the inset prop</div>
+          </v-sheet>
+        </v-bottom-sheet>
       </div>
-    </main>
+    </section>
+    <appFooter />
   </v-app>
 </template>
 <script>
@@ -28,39 +78,31 @@ import dashBreadCrumb from "@/components/dashBreadCrumb";
 import Sidebardoctor from "./largeSidebar/Sidebardoctor";
 import { PerfectScrollbar as VuePerfectScrollbar } from "vue2-perfect-scrollbar";
 // import Sidebar from "./largeSidebar/Sidebar";
-import appFooter from "./common/footer";
+// import appFooter from "./common/footer";
+import appFooter from "@/layouts/common/footerVtfy";
 import { mapGetters, mapActions } from "vuex";
 export default {
+  name: "DoctorLayout",
   components: {
     TopNav,
     Sidebardoctor,
     appFooter,
     dashBreadCrumb,
-    VuePerfectScrollbar
+    VuePerfectScrollbar,
   },
-  middleware: ["doctor",'auth'],
-  head() {
-    return {
-      titleTemplate: "%s Doctors | Gamma Dental Radiology Center",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: "Doctors page for Gamma Dental Scan Radiology"
-        }
-      ]
-    };
-  },
+
   data() {
     return {
       mainSection: "Doctors",
       MainPage: null,
-      SubPage: null
+      SubPage: null,
     };
   },
   methods: {
     getBread() {
-      let currentParentUrl = this.$route.path.split("/").filter(x => x !== "");
+      let currentParentUrl = this.$route.path
+        .split("/")
+        .filter((x) => x !== "");
 
       if (currentParentUrl[1] !== undefined && currentParentUrl[1] !== null) {
         // console.log(currentParentUrl);
@@ -74,11 +116,16 @@ export default {
       } else {
         this.mainSection = "Home";
       }
-    }
+    },
   },
   computed: {
+    ...mapGetters("largeSidebarM", ["getSideBarToggleProperties"]),
+    ...mapGetters(["configM/getThemeMode"]),
+    ...mapGetters({ isAuth: "isAuth" }),
     get() {
-      let currentParentUrl = this.$route.path.split("/").filter(x => x !== "");
+      let currentParentUrl = this.$route.path
+        .split("/")
+        .filter((x) => x !== "");
 
       if (currentParentUrl[1] !== undefined && currentParentUrl[1] !== null) {
         // console.log(currentParentUrl);
@@ -96,36 +143,8 @@ export default {
         this.MainPage = null;
         this.SubPage = null;
       }
-    }
-  }
+    },
+  },
 };
 </script>
-<style lang="scss">
-html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-body {
-  background: #f1f1f1;
-}
-.main-content-wrap {
-  background: #f5f5f5;
-}
-.icon-font {
-  font-size: 18px;
-  /* font-weight: bolder; */
-}
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-</style>
+

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -40,8 +40,46 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'active' => 'boolean',
+        // 'active' => 'boolean',
     ];
+    /**
+     * Accessor
+     * Get the user's Active Status.
+     *
+     * @return string
+     */
+    public function getActiveAttribute($value)
+    {
+        if ($value == 1) return true;
+        if ($value == 0) return false;
+        return false;
+    }
+    /**
+     * Mutator
+     * Set the user's Active Status.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setActiveAttribute($value)
+    {
+        if ($value == true || $value == "true")
+            $this->attributes['active'] = 1;
+        if ($value == false || $value == "false")
+            $this->attributes['active'] = 0;
+    }
+    /**
+     * Mutator
+     * Set the user's Active Status.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+
+        $this->attributes['password'] = Hash::make($value);
+    }
     public function doctors()
     {
         return $this->hasMany(Doctors::class, 'user_id');

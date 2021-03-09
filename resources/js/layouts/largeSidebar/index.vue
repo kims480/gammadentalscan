@@ -5,12 +5,12 @@
       <template v-if="isAuth /* $auth.hasScope('super_admin') */">
         <Sidebar />
       </template>
-      <notifications></notifications>
+      <!-- <notifications></notifications> -->
       <v-main
         :class="{
           'sidenav-open': isSideNavOpen,
         }"
-        class="main-content-wrap"
+        class="main-content-wrap green lighten-5"
       >
         <div class="page-container d-flex flex-column">
           <dashBreadCrumb
@@ -55,6 +55,9 @@
         >
           <v-icon>{{ fabItem.icon }}</v-icon>
         </v-btn>
+        <v-btn fab dark small color="blue" @click="changeLocale()">
+          <v-icon>mdi-google-translate</v-icon>
+        </v-btn>
       </v-speed-dial>
       <div class="text-center">
         <v-bottom-sheet v-model="sheet" inset>
@@ -82,7 +85,7 @@ import { PerfectScrollbar as VuePerfectScrollbar } from "vue2-perfect-scrollbar"
 // import appFooter from "@/layouts/common/footer";
 import appFooter from "@/layouts/common/footerVtfy";
 import { mapGetters, mapActions } from "vuex";
-import Notifications from "@/components/Notifications.vue";
+// import Notifications from "@/components/Notifications.vue";
 import Separator from "@/components/separator.vue";
 // import Layout from "./../layouts/default";
 export default {
@@ -92,7 +95,7 @@ export default {
     appFooter,
     dashBreadCrumb,
     VuePerfectScrollbar,
-    Notifications,
+    // Notifications,
     Separator,
   },
   data: () => ({
@@ -199,6 +202,12 @@ export default {
         this.mainSection = "Home".toUpperCase();
       }
     },
+    changeLocale() {
+      this.$vuetify.lang.current =
+        this.$vuetify.lang.current == "en" ? "ar" : "en";
+      this.$store.dispatch("changeLang", this.$vuetify.lang.current);
+      this.$store.dispatch("configM/changeThemeRtl");
+    },
     toCapitalize(text) {
       return text
         .trim()
@@ -208,7 +217,7 @@ export default {
   },
   computed: {
     ...mapGetters("largeSidebarM", ["getSideBarToggleProperties"]),
-    ...mapGetters(["configM/getThemeMode"]),
+    // ...mapGetters(["configM/getThemeMode"]),
     ...mapGetters({ isAuth: "isAuth" }),
     activeFab() {
       switch (this.tabs) {
@@ -222,21 +231,21 @@ export default {
           return {};
       }
     },
-    themeName() {
-      return this.$store.getters["configM/getThemeMode"].dark
-        ? "dark-theme"
-        : " ";
-    },
-    isLoggedIn() {
-      return false;
-    },
+    // themeName() {
+    //   return this.$store.getters["configM/getThemeMode"].dark
+    //     ? "dark-theme"
+    //     : " ";
+    // },
+    // isLoggedIn() {
+    //   return false;
+    // },
     isSideNavOpen() {
-      return this.$store.getters["largeSidebarM/getSideBarToggleProperties"]
-        .isSideNavOpen;
+      //   return this.$store.getters["largeSidebarM/getSideBarToggleProperties"]
+      return this.getSideBarToggleProperties.isSideNavOpen;
     },
-    rtl() {
-      return this.$store.getters["configM/getThemeMode"].rtl ? "rtl" : " ";
-    },
+    // rtl() {
+    //   return this.$store.getters["configM/getThemeMode"].rtl ? "rtl" : " ";
+    // },
 
     get() {
       let currentParentUrl = this.$route.path
@@ -263,6 +272,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

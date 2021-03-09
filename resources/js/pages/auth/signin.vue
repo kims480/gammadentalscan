@@ -1,15 +1,27 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h5 class="card-title text-center">
-              <logo></logo>
-              <br />
-              Sign In
-            </h5>
-            <form class="form-signin">
+  <v-container>
+    <v-row>
+      <v-col
+        cols="12"
+        sm="9"
+        md="6"
+        lg="6"
+        class="mx-auto"
+        :class="{ arabic: lng == 'ar' }"
+      >
+        <v-card id="card-signin" class="my-5">
+          <!-- <v-card-title>
+            <span class="text-heading-3">{{ $t("login.title") }}</span>
+          </v-card-title> -->
+          <v-card-text class="text-center">
+            <logo id="logoo"></logo>
+            <v-card-subtitle class="text-heading-3">{{
+              $t("login.login")
+            }}</v-card-subtitle>
+            <form
+              class="form-signin"
+              :class="{ 'text-left': lng == 'en', 'text-right': lng == 'ar' }"
+            >
               <div class="form-label-group">
                 <input
                   type="email"
@@ -21,7 +33,7 @@
                   :class="[{ 'is-invalid': errorFor('email') }]"
                   autofocus
                 />
-                <label for="inputEmail">Email address</label>
+                <label for="inputEmail">{{ $t("login.username") }}</label>
               </div>
 
               <div class="form-label-group">
@@ -35,7 +47,7 @@
                   required
                 />
                 <v-errors :error="errorFor('email')"></v-errors>
-                <label for="inputPassword">Password</label>
+                <label for="inputPassword">{{ $t("login.password") }}</label>
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
@@ -45,20 +57,43 @@
                   id="customCheck1"
                 />
 
-                <label class="custom-control-label" for="customCheck1"
-                  >Remember password</label
-                >
+                <label class="custom-control-label" for="customCheck1">{{
+                  $t("login.rememberMe")
+                }}</label>
                 <v-errors :error="errorFor('password')"></v-errors>
               </div>
+
+              <span>
+                {{ $t("login.downmessage") }}
+                <router-link to="/register">{{
+                  $t("login.register")
+                }}</router-link>
+              </span>
+            </form>
+          </v-card-text>
+          <v-card-actions class="br-t-1">
+            <v-col cols="4" class="py-0">
+              <v-combobox
+                class="py-0"
+                v-model="lang"
+                :items="langs"
+                label="Language"
+                dense
+                solo
+                @change="changeLocale"
+              ></v-combobox>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col cols="4" class="mx-auto py-0">
               <v-btn
-                class="ma-2 bg-success"
                 :loading="loading"
                 :disabled="disabled"
+                large
                 color="success"
                 type="submit"
                 @click.prevent="login"
               >
-                SIGN IN
+                {{ $t("login.submit") }}
                 <v-progress-circular
                   v-if="loading"
                   :size="50"
@@ -66,16 +101,11 @@
                   indeterminate
                 ></v-progress-circular>
               </v-btn>
-              <hr class="my-4" />
-              <span>
-                Donot have Account! Need to
-                <router-link to="/register">Register</router-link>
-              </span>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+            </v-col>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
 
     <!-- <v-snackbar
                 v-model="snackbar"
@@ -95,7 +125,7 @@
                     </v-btn>
                 </template>
     </v-snackbar> -->
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -120,11 +150,18 @@ export default {
       snackbar: false,
       text: null,
       textType: "",
+      langs: ["Ar", "En"],
+      lang: "En",
     };
   },
+  mounted() {},
   computed: {
+    ...mapGetters(["lng"]),
     validation() {
       return true; //this.email > 4 && this.userId.length < 13;
+    },
+    currentLang() {
+      return this.lng;
     },
   },
   layout: "auth",
@@ -135,6 +172,17 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["login"]),
+    ...mapActions("setLang"),
+    changeLocale() {
+      //   console.dir(this.$root.$i18n.messages);
+      //   console.dir(this.$root.$i18n.locale);
+      this.$vuetify.lang.current = this.lang == "Ar" ? "ar" : "en";
+      //   this.$vuetify.lang.current = this.lang == "En" ? "en" : "ar";
+      this.$store.dispatch("changeLang", this.$vuetify.lang.current);
+      this.$store.dispatch("configM/changeThemeRtl");
+
+      this.$root.$i18n.locale = this.$vuetify.lang.current;
+    },
     async login() {
       this.loading = true;
       this.disabled = true;
@@ -183,22 +231,28 @@ export default {
   --input-padding-y: 0.75rem;
 }
 
-.card-signin {
+#card-signin {
   border: 0;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  //   box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
 }
 
-.card-signin .card-title {
+#card-signin .card-title {
   margin-bottom: 2rem;
   font-weight: 300;
   font-size: 1.5rem;
 }
 
-.card-signin .card-body {
+#card-signin .card-body {
   padding: 2rem;
 }
-
+#logo {
+  box-shadow:
+  /* logo shadow */ 0px 0px 2px #5f5f5f,
+    /* offset */ 0px 0px 0px 5px #ecf0f3, /*bottom right */ 8px 8px 15px #a7aaaf,
+    /* top left */ -8px -8px 15px #ffffff;
+}
 .form-signin {
   width: 100%;
 }

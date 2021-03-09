@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Patient;
 use App\Models\ScanRequests;
+use App\Models\ScanStatus;
 use App\Models\User;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ class ScanRequestsController extends Controller
         return response()->json(
             [
                 'requests' => $requestList->all(),
+                'success' => true,
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
                 'message' => 'Requests Collected Sucessfully'
@@ -127,6 +129,7 @@ class ScanRequestsController extends Controller
             [
                 'data' => $requestList->all(),
                 'extra' => $scanRequests,
+                'success' => true,
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
                 'message' => 'Requests Collected Sucessfully'
@@ -161,7 +164,33 @@ class ScanRequestsController extends Controller
 
             ], HttpFoundationResponse::HTTP_FORBIDDEN);
         }
+        $actions = $request['status'] ?
+            (
+                ($request['status'] === 'Canceled') ? 10
+                : (
+                    ($request['status'] === 'Dispatched') ? 1
+                    : (
+                        ($request['status'] === 'Accepted') ? 2
+                        : (
+                            ($request['status'] === 'Processing') ? 3
+                            : (
+                                ($request['status'] === 'Done') ? 4
+                                : (
+                                    ($request['status'] === 'Delivered') ? 3
+                                    : (
+                                        ($request['status'] === 'Rejected') ? 9 : 0))))))) : 0;
 
+        $scanStatus = ScanStatus::updateOrCreate(
+            ['scan_request_id' => $id, 'Action_id' => $actions],
+            [
+                'Action_id' => $request['status'],
+                'scan_request_id' => $id,
+                // 'scan_request_id' => $request->request_id,
+                'Action_by' => Auth::user()->id,
+                'updated_at' => date("Y-m-d H:i:s")
+            ]
+        );
+        $scanStatus->save();
 
         return response()->json(
             [
@@ -171,6 +200,8 @@ class ScanRequestsController extends Controller
                     'rqNum' => $scanRequests->rq_num,
                     'status' => $scanRequests->status
                 ],
+                'status' => $scanStatus,
+                'success' => true,
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
                 'message' => 'Request (' . $scanRequests->rq_num . ') status is ' . $request['status'] . ' now.'
@@ -218,6 +249,7 @@ class ScanRequestsController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'You are not authorized to access'
+
                 //  'patient_name'=>$scanRequest['patient']->name_en
                 //  'kk'=>$scanRequest
 
@@ -245,7 +277,8 @@ class ScanRequestsController extends Controller
         });
         return response()->json([
             'request' => $scanRequest,
-            'message' => 'Request Collected Sucessfully'
+            'message' => 'Request Collected Sucessfully',
+            'success' => true,
             //  'patient_name'=>$scanRequest['patient']->name_en
             //  'kk'=>$scanRequest
 

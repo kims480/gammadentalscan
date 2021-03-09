@@ -61,6 +61,14 @@ const routes = [
         // }
     },
     {
+        path: "/signin-n", //auth/sign-in
+        // meta: { layout: "default" },
+        component: () =>
+            import(/* webpackChunkName: 'test' */ "@/pages/auth/nemoprhlogin"),
+        // meta: { layout: "auth", guard: "NotLogged" },
+        name: "sign-in-n"
+    },
+    {
         path: "/auth/logout", //auth/sign-in
         meta: { layout: require("@/pages/auth/logout").default.layout },
         component: () =>
@@ -345,6 +353,97 @@ const routes = [
         meta: { guard: ["SUPER_ADMIN", "DEVELOPER"] },
         name: "points-crud"
     },
+    ///////////////////////////////////////////////////////////////////////
+
+    {
+        path: "/dentist",
+        // meta: { layout: "dashboard" },
+
+        component: () =>
+            import(
+                /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/index.vue"
+            ),
+        meta: {
+            guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"],
+            layout: require("@/pages/doctors/index").default.layout
+        },
+        children: [
+            {
+                path: "new-case",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/requests/new.vue"
+                    ),
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+
+                name: "doctor-request-new"
+            },
+            {
+                path: "case-details/:rqNum/:id",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/requests/_id/index.vue"
+                    ),
+
+                name: "doctor-request-view",
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                props: true
+            },
+
+            {
+                path: "case-details/:rqNum",
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/requests/_id/index.vue"
+                    ),
+
+                name: "doctor-request-show",
+                props: true
+            },
+            {
+                path: "cases-list",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/requests/list.vue"
+                    ),
+                name: "doctor-request-list",
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                props: true
+            },
+
+            /////////////////////////////////////////////////////
+            {
+                path: "patients",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/doctors/patient/index.vue"
+                    ),
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                name: "doctor-patients"
+            },
+            {
+                path: "patients/add",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/admin/patients/add.vue"
+                    ),
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                name: "doctor-add-patient"
+            },
+            {
+                path: "patient/:name/:id",
+                component: () =>
+                    import(
+                        /* webpackChunkName: 'Doctors-Portal' */ "@/pages/admin/patients/add.vue"
+                    ),
+                name: "doctor-edit-patient",
+                meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
+                props: true
+            }
+        ]
+    },
+
     {
         path: "/404",
         meta: { layout: "" },
@@ -353,74 +452,8 @@ const routes = [
         name: "404"
     },
     {
-        path: "/dentist/new-Case",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/new.vue"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-request-new"
-    },
-    {
-        path: "/dentist/case-details/:rqNum/:id",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/_id/index.vue"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-request-view",
-        props: true
-    },
-
-    {
-        path: "/dentist/case-details/:rqNum",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/_id/index.vue"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-request-show",
-        props: true
-    },
-    {
-        path: "/dentist/Cases-list",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-requests' */ "@/pages/doctors/requests/list.vue"
-            ),
-        meta: { guard: ["DOCTOR", "SUPER_ADMIN", "DEVELOPER"] },
-        name: "doctor-request-list",
-        props: true
-    },
-
-    /////////////////////////////////////////////////////
-    {
-        path: "/dentist/patients",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-patients' */ "@/pages/doctors/patient/index.vue"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-patients"
-    },
-    {
-        path: "/admin/patients/add",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
-            ),
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        name: "doctor-add-patient"
-    },
-    {
-        path: "/admin/patient/:name/:id",
-        component: () =>
-            import(
-                /* webpackChunkName: 'admin-patients' */ "@/pages/admin/patients/add.vue"
-            ),
-        name: "doctor-edit-patient",
-        meta: { guard: ["SUPER_ADMIN", "DOCTOR", "DEVELOPER"] },
-        props: true
+        path: "*",
+        redirect: { name: "404" }
     }
 ];
 const router = new VueRouter({
@@ -465,11 +498,11 @@ router.beforeEach(function(to, from, next) {
             next();
         } else if (store.getters["isAuth"]) {
             store.dispatch(
-                "notifications/pushNotif",
+                "notifications/pushErrorNotify",
                 "You are not Authorized",
                 "error"
             );
-            toasted.global.Not_Authorized();
+            // toasted.global.Not_Authorized();
             next({ name: "home" });
         } else {
             next({ name: "sign-in" });

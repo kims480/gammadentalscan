@@ -1,11 +1,16 @@
 <template>
   <v-app class="app-admin-wrap layout-sidebar-large clearfix">
-    <component :is="forceLayoutIfNotLoggedIn"></component>
+    <component
+      :is="forceLayoutIfNotLoggedIn"
+      class="green lighten-5"
+    ></component>
     <!--<router-view></router-view>-->
     <template v-if="show">
       <notifications
         :snackbar="notifications.show"
         :text="notifications.message"
+        :showToast="notifications.showToast"
+        :type="notifications.type"
       ></notifications>
     </template>
   </v-app>
@@ -14,7 +19,7 @@
 <script>
 import Notifications from "@/components/Notifications.vue";
 const default_layout = "large-sidebar";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 // import store from "@/store";
 import ServicesConst from "@/services/ServicesConst.js";
 export default {
@@ -69,7 +74,7 @@ export default {
     },
     forceLayoutIfNotLoggedIn() {
       // console.log(this.isLoggedIn);
-      return this.isLoggedIn ? this.layoutName : "auth-layout";
+      return this.isLoggedIn ? this.layoutName : "xyz-layout";
     },
     isLoggedIn() {
       return this.isAuth;
@@ -131,7 +136,9 @@ export default {
         },
       ],
       base: {
-        href: "https://gamma-dental-scan.com/dashboard", //process.env.MIX_APP_DASHBOARD_URL ,
+        href:
+          process.env.MIX_APP_DASHBOARD_URL ??
+          "https://gamma-dental-scan.com/dashboard", //
         target: "_Self",
       },
       bodyAttrs: {
@@ -141,7 +148,7 @@ export default {
         ],
       },
       htmlAttrs: {
-        dir: this.$store.getters["configM/getThemeMode"].rtl,
+        dir: this.$store.getters["configM/getThemeMode"].rtl ? "rtl" : "",
       },
     };
   },

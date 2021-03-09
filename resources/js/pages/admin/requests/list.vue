@@ -405,6 +405,18 @@ export default {
           //Find index of specific object using findIndex method.
           let objIndex = this.desserts.findIndex((obj) => obj.id == id);
           this.desserts[objIndex].status = res[0]["status"];
+          this.$toasted
+            .success(res.message, {
+              position: "top-center",
+              className: "mytoast",
+              type: "success",
+              iconPack: "material",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
           console.log(res);
         })
         .catch((err) => console.log(err));
@@ -416,6 +428,18 @@ export default {
           //Find index of specific object using findIndex method.
           let objIndex = this.desserts.findIndex((obj) => obj.id == id);
           this.desserts[objIndex].status = res[0]["status"];
+          this.$toasted
+            .success(res.message, {
+              position: "top-center",
+              className: "mytoast",
+              type: "success",
+              iconPack: "material",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
           console.log(res);
         })
         .catch((err) => console.log(err));
@@ -427,6 +451,18 @@ export default {
           //Find index of specific object using findIndex method.
           let objIndex = this.desserts.findIndex((obj) => obj.id == id);
           this.desserts[objIndex].status = res[0]["status"];
+          this.$toasted
+            .success(res.message, {
+              position: "top-center",
+              className: "mytoast",
+              type: "success",
+              iconPack: "material",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
           console.log(res);
         })
         .catch((err) => console.log(err));
@@ -438,6 +474,18 @@ export default {
           //Find index of specific object using findIndex method.
           let objIndex = this.desserts.findIndex((obj) => obj.id == id);
           this.desserts[objIndex].status = res[0]["status"];
+          this.$toasted
+            .success(res.message, {
+              position: "top-center",
+              className: "mytoast",
+              type: "success",
+              iconPack: "material",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
           console.log(res);
         })
         .catch((err) => console.log(err));
@@ -450,6 +498,18 @@ export default {
           let objIndex = this.desserts.findIndex((obj) => obj.id == id);
           //   this.desserts[objIndex].status = res[0]["status"];
           if (objIndex !== -1) this.desserts.splice(objIndex, 1);
+          this.$toasted
+            .success(res.message, {
+              position: "top-center",
+              className: "mytoast",
+              type: "success",
+              iconPack: "material",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
           console.log(res);
         })
         .catch((err) => console.log(err));

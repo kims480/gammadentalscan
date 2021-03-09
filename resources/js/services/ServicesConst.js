@@ -1,7 +1,10 @@
 /** @format */
 import { mapGetters } from "vuex";
 import axios from "axios";
-const myBaseURL = "https://gamma-dental-scan.com"; //process.env.MIX_APP_API_BASEURL ??
+import nProgress from "nprogress";
+import store from "@/store/index";
+const myBaseURL =
+    process.env.MIX_APP_API_BASEURL ?? "https://gamma-dental-scan.com"; //
 const myBaseURLPort = "/"; //process.env.MIX_APP_API_PORT ??
 const myFullBaseURL = myBaseURL + myBaseURLPort; //process.env.MIX_APP_API_MYFULLBASEURL ??
 const myApiBaseURL = myFullBaseURL + "api"; //process.env.MIX_APP_API_MYAPIBASEURL ??
@@ -11,12 +14,27 @@ export const myApiClient = axios.create({
     withCredentials: true,
     headers: {
         "X-Requested-With": "XMLHttpRequest",
-        Accept: ["application/json", "Access-Control-Allow-Origin"],
+        Accept: "application/json", //
         "Content-Type": "application/json",
         Authorization: "Bearer " + localStorage.getItem("token") //token !== null ? token :
-    }
+    },
+    timeout: 10000
 });
-
+myApiClient.interceptors.request.use(config => {
+    nProgress.start();
+    return config;
+});
+myApiClient.interceptors.response.use(response => {
+    nProgress.done();
+    console.log(response.data);
+    if (response.data.success == true) {
+        store.dispatch(
+            "notifications/pushSuccessNotify",
+            response.data.messsage
+        );
+    }
+    return response;
+});
 export default {
     myBaseURL: myBaseURL,
     myBaseURLPort,

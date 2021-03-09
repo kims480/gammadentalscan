@@ -1,24 +1,23 @@
-import axios from "@/plugins/axios";
+// import axios from "@/plugins/axios";
 import ServicesConst from "@/services/ServicesConst";
 import UserServices from "@/services/UserServices";
+
 export const namespaced = true;
 
 export const state = () => ({
-    permissions:null,
-    roles:null
+    permissions: null,
+    roles: null
 });
 
-
-
 export const mutations = {
-    SET_ALL_PERMISSIONS:(state,data)=>{
-        state.permissions = data
+    SET_ALL_PERMISSIONS: (state, data) => {
+        state.permissions = data;
     },
-    SET_ALL_ROLES:(state,data)=>{
-        state.roles = data
+    SET_ALL_ROLES: (state, data) => {
+        state.roles = data;
     },
-    SET_USER_CREATE:(state,data)=>{
-        state.user=data
+    SET_USER_CREATE: (state, data) => {
+        state.user = data;
     }
 };
 export const actions = {
@@ -37,7 +36,7 @@ export const actions = {
         //     "" + UserServices.login("local");
 
         return new Promise((resolve, reject) => {
-            console.log('Iam get User');
+            console.log("Iam get User");
             UserServices.getUsers()
                 .then(res => {
                     console.log(res);
@@ -65,19 +64,18 @@ export const actions = {
     userRegister({ commit, rootState }, data) {
         // axios.defaults.headers.common["Content-Type"] =
         //     "multipart/form-data";
-     console.log(data)
-    //  let form= new FormData()
-    //  form.append('file',data.image)
+        console.log(data);
+        //  let form= new FormData()
+        //  form.append('file',data.image)
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient
-                .post("createWithRolesPremissions", data
-                ,{
+                .post("createWithRolesPremissions", data, {
                     headers: {
                         // 'enctype': 'multipart/form-data',
                         // 'Content-Type': 'multipart/form-data; charset=utf-8; boundary=' + Math.random().toString().substr(2)
                     }
-                  }
-                ).then(res => {
+                })
+                .then(res => {
                     // console.log(res);
                     commit("SET_USER_CREATE", res.data);
                     /* this.$auth.setUserToken(res.data.access_token);
@@ -95,6 +93,67 @@ export const actions = {
 
             // await this.$axios.post("api/auth/login", this.form);
             // console.log(data);
+        });
+    },
+    userUpdate({ commit, rootState }, data) {
+        console.log(data);
+        console.log(data.formData);
+        let formData = new FormData();
+        data.formData.forEach(value => {
+            if (!Array.isArray(value[1])) {
+                value[1] != null ? formData.append(value[0], value[1]) : false;
+                // value[1] != null ? formData.append(value[0], value[1]) : false;
+                // console.log(value[0], value[1]);
+            } else {
+                value[1].forEach((valueb, index) => {
+                    value[1] != null
+                        ? formData.append(value[0] + "[]", valueb)
+                        : false;
+                });
+            }
+        });
+        formData.append("_method", "PUT");
+        //Laravel cheats with PUT/PATCH etc requests. These need to be POST requests with the extra POST variable '_method' set to the request type (e.g.) PUT.
+        //http://laravel.com/docs/html#opening-a-form (read the read box in this section)
+        // Display the key/value pairs
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+        }
+
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .post("users/" + data.id, formData, {
+                    headers: {
+                        type: "PUT",
+                        _method: "PUT",
+                        enctype: "multipart/form-data",
+                        "Content-Type":
+                            "multipart/form-data; charset=utf-8; boundary=" +
+                            Math.random()
+                                .toString()
+                                .substr(2)
+                    }
+                })
+                .then(res => {
+                    commit("SET_USER_CREATE", res.data);
+
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
+    userDelete({ commit }, userID) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .delete("users/" + userID)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
         });
     },
     getUserDoctors({ commit, rootState }, id) {
@@ -145,35 +204,35 @@ export const actions = {
             // console.log(data);
         });
     },
-    getRolesPermissions({commit}){
+    getRolesPermissions({ commit }) {
         return new Promise((resolve, reject) => {
-            ServicesConst.myApiClient.get('getAllRolesPremissions').then(res=>{
-                if(res)
-                commit('SET_ALL_PERMISSIONS',res.data.allPermissions)
-                commit('SET_ALL_ROLES',res.data.allRoles)
+            ServicesConst.myApiClient
+                .get("getAllRolesPremissions")
+                .then(res => {
+                    if (res)
+                        commit("SET_ALL_PERMISSIONS", res.data.allPermissions);
+                    commit("SET_ALL_ROLES", res.data.allRoles);
                     resolve(res.data);
                 })
                 .catch(err => {
                     reject(err);
                 });
-
         });
     },
-    getUserById({commit},id){
+    getUserById({ commit }, id) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient
-                .get("users/"+ id)
-                    .then(res => {
-                        commit("SET_USER_CREATE", res.data);
-                        resolve(res.data);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
+                .get("users/" + id)
+                .then(res => {
+                    commit("SET_USER_CREATE", res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
         });
     }
 };
-
 
 /* GETTERS */
 export const getters = {
@@ -184,6 +243,5 @@ export const getters = {
     allPermissions: state => {
         // console.log(store);
         return state.roles;
-    },
-
+    }
 };

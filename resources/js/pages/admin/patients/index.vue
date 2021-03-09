@@ -87,12 +87,11 @@
             @click="
               $router.push({
                 name: 'edit-user',
-
                 params: { id: item.user.id, name: item.user.name },
               })
             "
           >
-            {{ item.user.name }}
+            {{ item.user ? item.user.name : "" }}
           </span>
         </template>
 
@@ -107,16 +106,11 @@
 
         <template v-slot:item.action="{ item }">
           <div class="action">
-            <Edit class="btn-action" :user="item" />
-            <span class="btn-action"></span>
-            <v-btn
-              small
-              rounded
-              class="btn-action"
-              color="error"
-              @click="delUser(item)"
-              ><i class="i-Folder-Trash icon-font"></i
-            ></v-btn>
+            <Edit :user="item" />
+
+            <v-btn small rounded icon @click="delUser(item)"
+              ><v-icon color="error">mdi-account-remove</v-icon>
+            </v-btn>
           </div>
         </template>
       </v-data-table>
@@ -196,16 +190,18 @@ export default {
       this.fetchUsers(res.data);
       this.loading = false;
       this.$toasted
-        .success("users table loaded", {
+        .success("Patients List loaded", {
           position: "top-center",
           className: "mytoast",
-          type: "success",
+          type: "info",
+          iconPack: "mdi",
           icon: {
-            name: "check",
+            name: "check-circle-outline",
             after: true,
           },
         })
         .goAway(3000);
+      //   console.log(this.$toasted);
     });
   },
   computed: {},

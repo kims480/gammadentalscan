@@ -18,6 +18,20 @@ export const actions = {
                 });
         });
     },
+    delRequestFile({ commit }, files) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .delete("results/" + files)
+                .then(res => {
+                    console.log(res);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                });
+        });
+    },
     getRequestFile({ commit }) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient

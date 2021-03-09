@@ -55,9 +55,10 @@ export const actions = {
     pushErrorNotify({ commit }, notifications) {
         const data = {
             error: notifications,
-            message: notifications.message,
+            message: notifications,
             type: "error",
-            show: true
+            show: true,
+            showToast: true
         };
         // console.log(data);
         commit("SET_Notification", data);

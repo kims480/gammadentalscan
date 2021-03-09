@@ -3,6 +3,9 @@
     "/css/app.css": "/css/app.css",
     "/css/lite-green.css": "/css/lite-green.css",
     "/css/print.css": "/css/print.css",
+    "/js/Doctors-Portal.js": "/js/Doctors-Portal.js",
+    "/js/Doctors-Portal~admin-patients.js": "/js/Doctors-Portal~admin-patients.js",
+    "/js/Doctors-Portal~admin-requests.js": "/js/Doctors-Portal~admin-requests.js",
     "/js/Not-Found.js": "/js/Not-Found.js",
     "/js/admin-Layout.js": "/js/admin-Layout.js",
     "/js/admin-Layout~dashboard~doctor-Layout.js": "/js/admin-Layout~dashboard~doctor-Layout.js",
@@ -24,11 +27,11 @@
     "/js/dashboard.js": "/js/dashboard.js",
     "/js/doctor-Layout.js": "/js/doctor-Layout.js",
     "/js/login.js": "/js/login.js",
+    "/js/test.js": "/js/test.js",
     "/js/v-errors.js": "/js/v-errors.js",
+    "/js/vendors~Doctors-Portal~admin-patients~admin-users.js": "/js/vendors~Doctors-Portal~admin-patients~admin-users.js",
+    "/js/vendors~Doctors-Portal~admin-requests.js": "/js/vendors~Doctors-Portal~admin-requests.js",
     "/js/vendors~admin-Layout~dashboard~doctor-Layout.js": "/js/vendors~admin-Layout~dashboard~doctor-Layout.js",
     "/js/vendors~admin-doctors.js": "/js/vendors~admin-doctors.js",
-    "/js/vendors~admin-patients~admin-users.js": "/js/vendors~admin-patients~admin-users.js",
-    "/js/vendors~admin-requests.js": "/js/vendors~admin-requests.js",
-    "/js/xyz-Layout.js": "/js/xyz-Layout.js",
-    "/js/vendors~admin-patients~admin-requests~admin-users.js": "/js/vendors~admin-patients~admin-requests~admin-users.js"
+    "/js/xyz-Layout.js": "/js/xyz-Layout.js"
 }

@@ -123,9 +123,7 @@
                         v-on="on"
                         @click="cancelRequest(item.id)"
                       >
-                        <v-icon color="error">
-                          mdi-close-circle-outline
-                        </v-icon></v-btn
+                        <v-icon color="error"> mdi-file-cancel </v-icon></v-btn
                       >
                     </template>
                     <span>Cancel</span>

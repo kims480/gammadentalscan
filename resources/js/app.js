@@ -14,12 +14,12 @@ import GammaDentalScan from "./plugins/GammaDentalScan.kit";
 // es6Promise.polyfill();
 import store from "./store/index";
 import Breadcumb from "./components/breadcumb";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// import { firebaseSettings } from "@/data/config";
+
 // import i18n from "./lang/lang";
 import i18n from "./locales/index";
 import DateRangePicker from "vue2-daterange-picker";
+import "nprogress/nprogress.css";
+
 //you need to import the CSS manually (in case you want to override it)
 
 //defined as global component
@@ -44,7 +44,7 @@ const printOptions = {
     specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
     styles: [
         // "https://gamma-dental-scan.dev/public/css/app.css",
-        "https://gamma-dental-scan.dev/public/css/print.css"
+        "https://gamma-dental-scan.com/public/css/print.css"
     ]
 };
 Vue.use(VueHtmlToPaper, printOptions);

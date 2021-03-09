@@ -8,7 +8,9 @@ use App\Models\ScanRequests;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use App\Models\ScanResults;
-use Dotenv\Result\Success;
+use App\Models\ScanStatus;
+use App\Models\ScanStaus;
+use Dotenv\Result\success;
 use Illuminate\Support\Facades\Auth;
 
 class ScanResultsController extends Controller
@@ -33,7 +35,7 @@ class ScanResultsController extends Controller
     public function index()
     {
         $scanFiles = ScanResults::all();
-        return response()->json(['Message' => 'Request Dispatched Successfully', 'Success' => true, 'data' => $scanFiles], HttpFoundationResponse::HTTP_CREATED);
+        return response()->json(['message' => 'Request Dispatched successfully', 'success' => true, 'data' => $scanFiles], HttpFoundationResponse::HTTP_CREATED);
     }
 
     /**
@@ -60,7 +62,19 @@ class ScanResultsController extends Controller
                     'comment' => $request->comment,
                 ]
             );
-            return response()->json(['Message' => 'Request Dispatched Successfully', 'Success' => true, 'data' => $scanRequest], HttpFoundationResponse::HTTP_CREATED);
+            if ($scanRequest) {
+                $scanStatus = ScanStatus::updateOrCreate(
+                    ['Action_id' => 4],
+                    [
+                        'Action_id' => "Done",
+                        'scan_request_id' => $request->request_id,
+                        'Action_by' => Auth::user()->id,
+                        // 'created_at' => date_format(date_create(), 'U = Y-m-d H:i:s')
+                    ]
+                );
+                $scanStatus->save();
+            }
+            return response()->json(['message' => 'File Saved successfully', 'success' => true, 'data' => $scanRequest, 'status' => $scanStatus], HttpFoundationResponse::HTTP_CREATED);
         }
         if (is_array($request->requestFiles) && count($request->requestFiles) > 1) {
             foreach ($request->requestFiles as $sFile) {
@@ -78,10 +92,30 @@ class ScanResultsController extends Controller
                     ]
                 );
             }
-            return response()->json(['Message' => 'Request Dispatched Successfully', 'Success' => true, 'data' => $scanRequest], HttpFoundationResponse::HTTP_CREATED);
+            if ($scanRequest) {
+                $permission = [
+                    [
+                        'Action_id' => 3, //insert has no acces for mutators //create Model::create -- has access to mutator 'Action_id' => 'On-Process',
+                        'scan_request_id' => $request->request_id,
+                        'Action_by' => Auth::user()->id,
+                        'created_at' => date("Y-m-d H:i:s"),
+                        'updated_at' => date("Y-m-d H:i:s")
+                    ],
+                    [
+                        'Action_id' => 4,
+                        'scan_request_id' => $request->request_id,
+                        'Action_by' => Auth::user()->id,
+                        'created_at' => date("Y-m-d H:i:s"),
+                        'updated_at' => date("Y-m-d H:i:s")
+                    ]
+                ];
+                $scanStatus = ScanStatus::insert($permission);
+                // $scanStatus->save();
+            }
+            return response()->json(['message' => 'Files Saved successfully', 'success' => true, 'data' => $scanRequest, 'status' => $scanStatus], HttpFoundationResponse::HTTP_CREATED);
         }
 
-        return response()->json(['Message' => 'Error Creating Request', 'Success' => false, 'data' => $request->requestFiles], HttpFoundationResponse::HTTP_CREATED);
+        return response()->json(['message' => 'Error Saving files', 'success' => false, 'data' => $request->requestFiles], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
     }
 
     /**
@@ -113,7 +147,7 @@ class ScanResultsController extends Controller
         //     ];
         // });
         // $scanfiles = $scanResult->scan_results();
-        return response()->json(['Message' => 'Case Files Collected', 'Success' => true, 'files' => $scanResult[0]->scan_results], HttpFoundationResponse::HTTP_ACCEPTED);
+        return response()->json(['message' => 'Case Files Collected', 'success' => true, 'files' => $scanResult[0]->scan_results], HttpFoundationResponse::HTTP_ACCEPTED);
     }
 
     /**
@@ -137,7 +171,7 @@ class ScanResultsController extends Controller
     public function destroy($id)
     {
         //\
-        $result = ScanResults::find(1);
+        $result = ScanResults::find($id);
 
         $result->delete();
 
@@ -152,7 +186,7 @@ class ScanResultsController extends Controller
     public function force_destroy($id)
     {
         //
-        $result = ScanResults::find(1);
+        $result = ScanResults::find($id);
 
         $result->forceDelete();
 
@@ -169,7 +203,7 @@ class ScanResultsController extends Controller
     public function restore($id)
     {
         //
-        $result = ScanResults::find(1);
+        $result = ScanResults::find($id);
 
         $result->resote();
     }

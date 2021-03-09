@@ -5,6 +5,7 @@
  */
 
 import axios from "axios";
+import nProgress from "nprogress";
 const apiClient = axios.create({
     baseURL: process.env.MIX_APP_API_MYAPIBASEURL,
     withCredentials: true,
@@ -12,6 +13,14 @@ const apiClient = axios.create({
         Accept: ["application/json", "Access-Control-Allow-Origin"],
         "Content-Type": "application/json"
     }
+});
+apiClient.interceptors.request.use(config => {
+    nProgress.start();
+    return config;
+});
+apiClient.interceptors.response.use(response => {
+    nProgress.done();
+    return response;
 });
 // export interface Credintials {
 //     email:string,

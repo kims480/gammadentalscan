@@ -7,6 +7,7 @@
         :is-complete="n.id <= scanRequestData.status.id"
         :is-active="n.id === scanRequestData.status.id + 1"
         :is-rejected="scanRequestData.status.id === 9"
+        :is-canceled="scanRequestData.status.id === 10"
         :title="!$vuetify.breakpoint.mobile ? n.title : ''"
         :marker="n.labelmob"
         :textmob="$vuetify.breakpoint.mobile ? n.title : ''"
@@ -17,7 +18,7 @@
     <v-row align="start" class="mb-3" no-gutters style="height: auto">
       <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
         <v-card
-          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          class="flex-grow-1 col-4 green darken-2 pa-2 mr-1 text-white text-text-subtitle-2 text-center justify-center align-center"
           outlined
           tile
         >
@@ -25,21 +26,21 @@
         </v-card>
 
         <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
+          class="flex-grow-1 col-8 gray lighten-5 green--text text--darken-4 text-no-wrap rounded-r-xl pa-2"
           outlined
           >{{ scanRequestData.rqNum }} - {{ scanRequestData.id }}
         </v-card>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
         <v-card
-          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          class="flex-grow-1 col-4 green darken-2 pa-2 mr-1 text-white text-text-subtitle-2 text-center justify-center align-center"
           outlined
           tile
         >
           Patient
         </v-card>
         <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 text-no-wrap rounded-r-xl pa-2"
+          class="flex-grow-1 col-8 gray lighten-5 text-subtitle-2 text-no-wrap rounded-r-xl pa-2"
           outlined
           style="font-family: 'Kufi', 'Helvetica Neue', Helvetica, Arial"
         >
@@ -58,82 +59,15 @@
       </div>
       <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
         <v-card
-          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
+          class="flex-grow-1 col-4 green darken-2 pa-2 mr-1 text-white text-text-subtitle-2 text-center justify-center align-center"
           outlined
           tile
         >
-          Status
-        </v-card>
-
-        <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
-          outlined
-          >{{ scanRequestData.status ? scanRequestData.status.text : "" }}
-        </v-card>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
-        <v-card
-          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
-          outlined
-          tile
-        >
-          Created
-        </v-card>
-
-        <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
-          outlined
-          >{{ scanRequestData.created_at }}
-        </v-card>
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
-        <v-card
-          class="flex-grow-1 col-4 col-sm-6 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
-          outlined
-          tile
-        >
-          Last Update
-        </v-card>
-
-        <v-card
-          class="flex-grow-1 col-8 col-sm-6 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
-          outlined
-          >{{ scanRequestData.updated_at }}
-        </v-card>
-      </div>
-    </v-row>
-    <!-- <v-row align="start" class="mb-3" no-gutters style="height: auto">
-      <div
-        class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex pa-1"
-        v-for="(item, name, index) in scanRequestData"
-        :key="index"
-      >
-        <v-card
-          class="flex-grow-1 col-4 blue-grey darken-1 pa-2 mr-1 text-white text-subtitle-2 text-center justify-center align-center"
-          outlined
-          tile
-        >
-          {{
-            name
-              .trim()
-              .toLowerCase()
-              .replace("_", " ")
-              .replace(/\w\S*/g, (w) =>
-                w.replace(/^\w/, (c) => c.toUpperCase())
-              )
-          }}
-        </v-card>
-
-        <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 blue--text text-no-wrap rounded-r-xl pa-2"
-          outlined
-          v-if="typeof item !== 'object'"
-          >{{ item }}
+          Doctor
         </v-card>
         <v-card
-          class="flex-grow-1 col-8 blue-grey lighten-5 text-no-wrap rounded-r-xl pa-2"
+          class="flex-grow-1 col-8 gray lighten-5 text-no-wrap text-subtitle-2 rounded-r-xl pa-2"
           outlined
-          v-else
           style="font-family: 'Kufi', 'Helvetica Neue', Helvetica, Arial"
         >
           <router-link
@@ -142,95 +76,117 @@
                 sans-serif;
             "
             :to="{
-              name: name == 'patient' ? 'edit-patient' : 'edit-user',
-              params: item,
+              name: 'edit-user',
+              params: scanRequestData.patient,
             }"
-            >{{ item.name }}</router-link
+            >{{ scanRequestData.doctor["name"] }}</router-link
           >
         </v-card>
       </div>
-    </v-row> -->
-    <v-divider></v-divider>
-    <v-row class="mb-3 elevation-0 border-0" style="height: auto">
-      <div class="col-12">
-        <template v-if="errorMessage">
-          <v-alert
-            v-model="errorMessage"
-            transition="slide-y-reverse-transition"
-            dismissible
-            border="top"
-            dense
-            text
-            type="error"
-            class="notif-message"
-            id="error-message"
-            >{{ errorMessageTxt }}
-          </v-alert>
-        </template>
-        <template v-if="statusMessage">
-          <v-alert
-            v-model="statusMessage"
-            transition="slide-y-reverse-transition"
-            dismissible
-            dense
-            type="info"
-            class="notif-message"
-            id="status-message"
-            >{{ statusMessageTxt }}</v-alert
-          >
-        </template>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 green darken-2 pa-2 mr-1 text-white text-text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Status
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 gray lighten-5 green--text text--darken-4 text-subtitle-2 text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.status ? scanRequestData.status.text : "" }}
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 green darken-2 pa-2 mr-1 text-white text-text-subtitle-2 text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Created
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 gray lighten-5 green--text text--darken-4 text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.created_at }}
+        </v-card>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6 col-12 d-flex pa-1">
+        <v-card
+          class="flex-grow-1 col-4 col-sm-6 green darken-2 pa-2 mr-1 text-white text-center justify-center align-center"
+          outlined
+          tile
+        >
+          Last Update
+        </v-card>
+
+        <v-card
+          class="flex-grow-1 col-8 col-sm-6 gray lighten-5 green--text text--darken-4 text-subtitle-2 font-weight-medium text-no-wrap rounded-r-xl pa-2"
+          outlined
+          >{{ scanRequestData.updated_at }}
+        </v-card>
       </div>
     </v-row>
+
+    <v-divider></v-divider>
     <v-row class="grey lighten-5 mb-3" no-gutters style="height: auto">
       <v-col cols="12">
         <v-card outlined tile class="text-left">
           <v-card-text>
             <!-- <h4 class="card-title mb-3">Basic Tab With Icon</h4> -->
             <ul class="nav nav-tabs" id="myIconTab" role="tablist">
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  id="contact-icon-tab"
-                  data-toggle="tab"
-                  href="#contactIcon"
-                  role="tab"
-                  aria-controls="contactIcon"
-                  aria-selected="false"
-                  ><i class="nav-icon i-Google-Drive mr-1"></i> G-Drive</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="home-icon-tab"
-                  data-toggle="tab"
-                  href="#homeIcon"
-                  role="tab"
-                  aria-controls="homeIcon"
-                  aria-selected="true"
-                  @click="addFolder = true"
-                  ><i class="nav-icon i-Folder-Open mr-1"></i>Folder</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="profile-icon-tab"
-                  data-toggle="tab"
-                  href="#profileIcon"
-                  role="tab"
-                  @click="addFiles = true"
-                  aria-controls="profileIcon"
-                  aria-selected="false"
-                  ><i class="nav-icon i-Files mr-1"></i> Files</a
-                >
-              </li>
+              <template v-if="notSignedIn">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="contact-icon-tab"
+                    data-toggle="tab"
+                    href="#contactIcon"
+                    role="tab"
+                    aria-controls="contactIcon"
+                    aria-selected="false"
+                    ><i class="nav-icon i-Google-Drive mr-1"></i> G-Drive</a
+                  >
+                </li>
+              </template>
+              <template v-else>
+                <li class="nav-item" v-show="!notSignedIn">
+                  <a
+                    class="nav-link active"
+                    id="home-icon-tab"
+                    data-toggle="tab"
+                    href="#homeIcon"
+                    role="tab"
+                    aria-controls="homeIcon"
+                    aria-selected="true"
+                    @click="addFolder = true"
+                    ><i class="nav-icon i-Folder-Open mr-1"></i>Folder</a
+                  >
+                </li>
+                <li class="nav-item" v-show="!notSignedIn">
+                  <a
+                    class="nav-link"
+                    id="profile-icon-tab"
+                    data-toggle="tab"
+                    href="#profileIcon"
+                    role="tab"
+                    :disabled="notSignedIn"
+                    @click="addFiles = true"
+                    aria-controls="profileIcon"
+                    aria-selected="false"
+                    ><i class="nav-icon i-Files mr-1"></i> Files</a
+                  >
+                </li>
+              </template>
             </ul>
             <div class="tab-content" id="myIconTabContent">
               <div
-                class="tab-pane fade"
+                class="tab-pane fade show active"
                 id="homeIcon"
                 role="tabpanel"
+                v-show="!notSignedIn"
                 aria-labelledby="home-icon-tab"
               >
                 <div class="folder-container-form d-flex align-center">
@@ -399,6 +355,7 @@
                 class="tab-pane fade"
                 id="profileIcon"
                 role="tabpanel"
+                v-show="!notSignedIn"
                 aria-labelledby="profile-icon-tab"
               >
                 <template v-if="addFiles">
@@ -468,17 +425,30 @@
                 class="tab-pane fade show active"
                 id="contactIcon"
                 role="tabpanel"
+                v-show="notSignedIn"
                 aria-labelledby="contact-icon-tab"
               >
-                <v-btn
-                  color="green lighten-5 "
+                <v-card
                   v-show="notSignedIn"
-                  light
-                  @click="handleAuthClick()"
+                  class="pa-2 text-green"
+                  elevation="0"
+                  tile
                 >
-                  <v-icon left>mdi-login-variant</v-icon> Sign In
-                </v-btn>
-                <v-card class="pa-2 text-green" outlined tile>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="green lighten-5 "
+                    depressed
+                    @click="handleAuthClick()"
+                  >
+                    <v-icon left>mdi-login-variant</v-icon> Sign In G-Drive
+                  </v-btn>
+                </v-card>
+                <v-card
+                  v-show="!notSignedIn"
+                  class="pa-2 text-green"
+                  outlined
+                  tile
+                >
                   You Aleady Signed In
                 </v-card>
               </div>
@@ -487,89 +457,74 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row>
-      <div class="col-md-12">
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="card-title mb-3">Form Inputs Rounded</div>
-            <form>
-              <div class="row">
-                <div class="col-md-6 form-group mb-3">
-                  <label for="firstName2">First name</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="firstName2"
-                    type="text"
-                    placeholder="Enter your first name"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="lastName2">Last name</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="lastName2"
-                    type="text"
-                    placeholder="Enter your last name"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="exampleInputEmail2">Email address</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="exampleInputEmail2"
-                    type="email"
-                    placeholder="Enter email"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="phone1">Phone</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="phone1"
-                    placeholder="Enter phone"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="credit2">Cradit card number</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="credit2"
-                    placeholder="Card"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="website2">Website</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="website2"
-                    placeholder="Web address"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="picker3">Birth date</label>
-                  <input
-                    class="form-control form-control-rounded"
-                    id="picker3"
-                    placeholder="yyyy-mm-dd"
-                    name="dp"
-                  />
-                </div>
-                <div class="col-md-6 form-group mb-3">
-                  <label for="picker1">Select</label>
-                  <select class="form-control form-control-rounded">
-                    <option>Option 1</option>
-                    <option>Option 1</option>
-                    <option>Option 1</option>
-                  </select>
-                </div>
-                <div class="col-md-12">
-                  <button class="btn btn-primary">Submit</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <v-row class="grey lighten-5 mb-3" no-gutters style="height: auto">
+      <v-col cols="12" class="py-0">
+        <v-card>
+          <v-card-title> </v-card-title>
+          <v-card-text>
+            <v-row class="py-0">
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-row class="p-0">
+                  <v-col cols="4" class="py-0">
+                    <v-subheader>Folder Name</v-subheader>
+                  </v-col>
+                  <v-col cols="8" class="py-0 px-1">
+                    <v-text-field
+                      outlined
+                      rounded
+                      dense
+                      v-model="newFolderName"
+                      color="success"
+                      :disabled="FOLDER_ARRAY.length > 0"
+                      background-color="blue-grey lighten-5"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-row class="p-0">
+                  <v-col cols="4" class="py-0">
+                    <v-subheader>Folder Name</v-subheader>
+                  </v-col>
+                  <v-col cols="8" class="py-0 px-1">
+                    <v-text-field filled rounded dense></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-row class="p-0">
+                  <v-col cols="4" class="py-0">
+                    <v-subheader>Folder Name</v-subheader>
+                  </v-col>
+                  <v-col cols="8" class="py-0 px-1">
+                    <v-text-field filled rounded dense></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-row class="p-0">
+                  <v-col cols="4" class="py-0">
+                    <v-subheader>Folder Name</v-subheader>
+                  </v-col>
+                  <v-col cols="8" class="py-0 px-1">
+                    <v-text-field filled rounded dense></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-row class="p-0">
+                  <v-col cols="4" class="py-0">
+                    <v-subheader>Folder Name</v-subheader>
+                  </v-col>
+                  <v-col cols="8" class="py-0 px-1">
+                    <v-text-field filled rounded dense></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
     <!-- <v-row align="start" class="grey lighten-5" no-gutters style="height: auto">
       <v-card
@@ -699,25 +654,77 @@
                       >mdi-cloud-download</v-icon
                     ></a
                   >
-                  <v-btn @click="GivePermission_Gdrive(file.file_id)">
+                  <v-btn
+                    depressed
+                    class="m-1"
+                    @click="GivePermission_Gdrive(file.file_id)"
+                  >
                     <v-icon>mdi-fingerprint</v-icon>
                   </v-btn>
-                  <button
-                    class="btn btn-danger btn-sm btn-icon m-1"
-                    type="button"
+                  <v-btn
+                    depressed
+                    color="warning"
+                    class="m-1"
+                    @click="removePermission_Gdrive(file.file_id)"
                   >
-                    <v-icon small class="white--text">mdi-delete</v-icon>
-                    <!-- <span class="ul-btn__icon"
-                      ><i class="i-RSS white--text"></i
-                    ></span> -->
-                  </button>
+                    <v-icon class="white--text">mdi-link-variant-off</v-icon>
+                  </v-btn>
+                  <v-btn
+                    color="error"
+                    class="m-1"
+                    depressed
+                    @click="delFile(file.id)"
+                  >
+                    <v-icon class="white--text">mdi-delete</v-icon>
+                  </v-btn>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+        <!-- <v-snackbar
+            v-model="confirmDelete"
+            :timeout="2000"
+            absolute
+            bottom
+            left
+            >
+            Confirm Deleting file
+            <v-btn absolute> Confirm </v-btn>
+            <v-btn> cancel </v-btn>
+        </v-snackbar> -->
       </div>
     </div>
+    <v-row class="mb-3 elevation-0 border-0" style="height: auto">
+      <div class="col-12">
+        <template v-if="errorMessage">
+          <v-alert
+            v-model="errorMessage"
+            transition="slide-y-reverse-transition"
+            dismissible
+            border="top"
+            dense
+            text
+            type="error"
+            class="notif-message"
+            id="error-message"
+            >{{ errorMessageTxt }}
+          </v-alert>
+        </template>
+        <template v-if="statusMessage">
+          <v-alert
+            v-model="statusMessage"
+            transition="slide-y-reverse-transition"
+            dismissible
+            dense
+            type="info"
+            class="notif-message"
+            id="status-message"
+            >{{ statusMessageTxt }}</v-alert
+          >
+        </template>
+      </div>
+    </v-row>
   </div>
 </template>
 
@@ -1024,9 +1031,75 @@ export default {
         })
         .then((res) => {
           console.log(res);
+          this.$toasted
+            .success(res.message, {
+              position: "top-right",
+              className: "mytoast",
+              type: "success",
+              theme: "outline",
+              iconPack: "mdi",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
+          this.getSavedFiles();
         })
         .catch((err) => {
           console.log(err);
+          this.$toasted
+            .error(err, {
+              // position: "top-right",
+              className: "mytoast",
+              type: "error",
+              theme: "outline",
+              iconPack: "mdi",
+              icon: {
+                name: "eye-off",
+                after: true,
+              },
+            })
+            .goAway(3000);
+        });
+    },
+    async delFile(fileId) {
+      await this.$store
+        .dispatch("scanResult/delRequestFile", fileId)
+        .then((res) => {
+          console.log(res);
+          let objIndex = this.storedFiles.findIndex((obj) => obj.id == fileId);
+          //   this.desserts[objIndex].status = res[0]["status"];
+          if (objIndex !== -1) this.storedFiles.splice(objIndex, 1);
+          this.$toasted
+            .success(res.message, {
+              position: "top-right",
+              className: "mytoast",
+              type: "success",
+              theme: "outline",
+              iconPack: "mdi",
+              icon: {
+                name: "check",
+                after: true,
+              },
+            })
+            .goAway(3000);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toasted
+            .error(err, {
+              // position: "top-right",
+              className: "mytoast",
+              type: "error",
+              theme: "outline",
+              iconPack: "mdi",
+              icon: {
+                name: "eye-off",
+                after: true,
+              },
+            })
+            .goAway(3000);
         });
     },
     async getSavedFiles() {
@@ -1040,17 +1113,53 @@ export default {
             res.files.forEach(function (file) {
               _this.storedFiles.push(file);
             });
+            this.$toasted
+              .success("Case Files collected", {
+                // position: "top-center",
+                className: "mytoast",
+                type: "success",
+                theme: "outline",
+                iconPack: "mdi",
+                icon: {
+                  name: "check",
+                  after: true,
+                },
+              })
+              .goAway(3000);
           } else {
-            console.log(res);
+            this.$toasted
+              .success("Case Files collecting error", {
+                position: "top-center",
+                className: "mytoast",
+                type: "error",
+                iconPack: "mdi",
+                icon: {
+                  // name: "mdi-check",
+                  after: true,
+                },
+              })
+              .goAway(3000);
           }
         })
 
         .catch((err) => {
-          console.log(err);
+          this.$toasted
+            .success(err + err, {
+              position: "top-right",
+              className: "mytoast",
+              type: "error",
+              iconPack: "mdi",
+              icon: {
+                // name: "mdi-check",
+                after: true,
+              },
+            })
+            .goAway(3000);
         });
     },
     GivePermission_Gdrive(fileId) {
       console.log(fileId);
+      var _this = this;
       gapi.load("client", function () {
         gapi.client.load("drive", "v2", function () {
           var request = gapi.client.drive.permissions.insert({
@@ -1063,6 +1172,52 @@ export default {
           });
           request.execute(function (executed) {
             console.log(executed);
+            _this.$toasted
+              .success("Permission Granted", {
+                position: "top-right",
+                className: "mytoast",
+                type: "success",
+                theme: "outline",
+                iconPack: "mdi",
+                icon: {
+                  name: "eye-check",
+                  after: true,
+                },
+              })
+              .goAway(3000);
+          });
+        });
+      });
+    },
+    removePermission_Gdrive(fileId) {
+      console.log(fileId);
+      var _this = this;
+      gapi.load("client", function () {
+        gapi.client.load("drive", "v2", function () {
+          var request = gapi.client.drive.permissions.delete({
+            fileId: fileId,
+            permissionId: "anyoneWithLink",
+            // resource: {
+            //   type: "anyone",
+            //   role: "reader",
+            //   withLink: true,
+            // },
+          });
+          request.execute(function (executed) {
+            console.log(executed);
+            _this.$toasted
+              .error("Permission forbiden", {
+                // position: "top-right",
+                className: "mytoast",
+                type: "error",
+                theme: "outline",
+                iconPack: "mdi",
+                icon: {
+                  name: "eye-off",
+                  after: true,
+                },
+              })
+              .goAway(3000);
           });
         });
       });

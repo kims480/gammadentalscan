@@ -151,21 +151,27 @@ table tbody tr td {
     font-family: kufi;
 }
 table tbody tr:nth-child(even) {
-    // background: beige;
+    // background: rgba(219, 240, 220, 0.651);
+}
+table tbody tr:nth-child(odd) {
+    // background: rgba(255, 255, 255, 0.37);
 }
 table tbody tr {
     font-weight: 400;
     transition: all 0.2 ease-in;
 }
 table tbody tr:hover {
-    background: rgb(0, 36, 8);
-    background: linear-gradient(
-        114deg,
-        rgba(0, 36, 8, 0.205) 0%,
-        rgba(7, 139, 49, 0.205) 35%,
-        rgb(3, 109, 46, 0.205) 100%
-    );
+    // background: rgb(0, 36, 8);
+    // background: linear-gradient(
+    //     114deg,
+    //     rgba(0, 36, 8, 0.205) 0%,
+    //     rgba(7, 139, 49, 0.205) 35%,
+    //     rgb(3, 109, 46, 0.205) 100%
+    // );
+    background: white !important;
     font-weight: 600;
+    box-shadow: 0 3px 15px -2px rgb(0 0 0 / 12%);
+    transform: translateY(-4px);
 }
 
 /* /////////// Humburger Menu button /////////// */

@@ -58,7 +58,8 @@ export default new Vuex.Store({
         user: null,
         error: null,
         roles: localStorage.getItem("permissions"),
-        token: localStorage.getItem("token")
+        token: localStorage.getItem("token"),
+        lng: localStorage.getItem("lang") ?? "en"
     },
     mutations: {
         setUser(state, data) {
@@ -74,6 +75,9 @@ export default new Vuex.Store({
             state.isLoggedIn = false;
             state.error = null;
             // this.$router.go("/");
+        },
+        CHANGE_LANG(state, lang) {
+            state.lng = lang;
         }
     },
     actions: {
@@ -87,6 +91,10 @@ export default new Vuex.Store({
         async signOut({ commit }) {
             localStorage.removeItem("userInfo");
             commit("setLogout");
+        },
+        async changeLang({ commit }, lang) {
+            localStorage.setItem("lang", lang);
+            commit("CHANGE_LANG", lang);
         }
     },
     getters: {
@@ -122,6 +130,9 @@ export default new Vuex.Store({
                     name: null
                 }
             );
+        },
+        lng: state => {
+            return state.lng;
         }
     }
 });
