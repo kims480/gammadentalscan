@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use PDO;
@@ -250,14 +252,28 @@ class UserController extends Controller
         $user = $this->create($request); //only('name','phone','email', 'password','active','whatsapp','image')
         $roles = $user->syncRoles($request->only('userRoles'));
         $permissions = $user->syncPermissions($request->only('userPermissions'));
-
+        $email = $request->email;
         if ($user && $roles && $permissions)
-            return response()->json([
-                'success' => true,
-                'Message' => 'User ' . $user->name . ' Registered Successfully',
-                'user' => $user,
+            Mail::send('newuser', [
+                'email' => $request->email,
+                'name' => $request->name,
+                'telephone' => $request->telephone
+            ], function (Message $message) use ($email) {
+                // $message->from('mail2@localhost.org', 'John Doe');
 
-            ], HttpFoundationResponse::HTTP_CREATED);
+                $message->to('gammadentalscan@gmail.com', 'GAMMA Dental Scan');
+
+                // $message->replyTo('email2@localhost.org', 'John Doe');
+                $message->subject('New User Registered');
+                // $message->priority(3);
+                // $message->attach('pathToFile');
+            });
+        return response()->json([
+            'success' => true,
+            'Message' => 'User ' . $user->name . ' Registered Successfully',
+            'user' => $user,
+
+        ], HttpFoundationResponse::HTTP_CREATED);
 
         return response()->json([
             'success' => false,

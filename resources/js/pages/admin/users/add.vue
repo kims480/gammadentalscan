@@ -373,34 +373,35 @@ export default {
     submit() {
       console.log("submit!");
       this.$v.$touch();
-      if (this.$v.$invalid) {
-        console.dir(this.$v);
-        this.submitStatus = "ERROR";
-      } else {
-        this.submitStatus = "PENDING";
-        let fa = Object.entries(this.myForm);
-        fa.forEach((value) => {
-          //    console.log(value)
-          if (!Array.isArray(value[1])) {
-            formData.append(value[0], value[1]);
-          } else {
-            value[1].forEach((valueb, index) => {
-              formData.append(value[0] + "[]", valueb);
-            });
-          }
-        });
-        this.$store
-          .dispatch("users/userRegister", formData)
-          .then((res) => {
-            console.log(res);
-            this.submitStatus = "OK";
-            this.afterSubmit();
-          })
-          .catch((err) => {
-            console.log(err);
-            this.$store.dispatch("notifications/pushNotif", err);
+      //   if (this.$v.$invalid) {
+      //     console.dir(this.$v);
+      //     this.submitStatus = "ERROR";
+      //   } else {
+      this.submitStatus = "PENDING";
+      let fa = Object.entries(this.myForm);
+      let formData = new FormData();
+      fa.forEach((value) => {
+        //    console.log(value)
+        if (!Array.isArray(value[1])) {
+          formData.append(value[0], value[1]);
+        } else {
+          value[1].forEach((valueb, index) => {
+            formData.append(value[0] + "[]", valueb);
           });
-      }
+        }
+      });
+      this.$store
+        .dispatch("users/userRegister", formData)
+        .then((res) => {
+          console.log(res);
+          this.submitStatus = "OK";
+          this.afterSubmit();
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$store.dispatch("notifications/pushNotif", err);
+        });
+      // }
     },
     updateUser() {
       console.log("update User !");
