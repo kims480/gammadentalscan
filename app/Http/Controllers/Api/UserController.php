@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendNewUserMail;
 use Illuminate\Foundation\Auth\User as Authinticated;
 use App\Models\User;
 use App\Traits\UserTrait;
@@ -252,25 +253,20 @@ class UserController extends Controller
         $user = $this->create($request); //only('name','phone','email', 'password','active','whatsapp','image')
         $roles = $user->syncRoles($request->only('userRoles'));
         $permissions = $user->syncPermissions($request->only('userPermissions'));
-        $email = $request->email;
+
+
         if ($user && $roles && $permissions)
-            Mail::send('newuser', [
-                'email' => $request->email,
-                'name' => $request->name,
-                'telephone' => $request->telephone
-            ], function (Message $message) use ($email) {
-                // $message->from('mail2@localhost.org', 'John Doe');
+            $emailUsers = User::select('name', 'email')->role('SUPER_ADMIN')->get();
+        dispatch(new SendNewUserMail(['emailUsers' => $emailUsers, 'dataToPass' => [
+            'email' => $request->email,
+            'name' => $request->name,
+            'telephone' => $request->phone
+        ]]));
 
-                $message->to('gammadentalscan@gmail.com', 'GAMMA Dental Scan');
-
-                // $message->replyTo('email2@localhost.org', 'John Doe');
-                $message->subject('New User Registered');
-                // $message->priority(3);
-                // $message->attach('pathToFile');
-            });
         return response()->json([
             'success' => true,
             'Message' => 'User ' . $user->name . ' Registered Successfully',
+            // 'admin_emails' => $emailUsers,
             'user' => $user,
 
         ], HttpFoundationResponse::HTTP_CREATED);

@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'google', 'googleDrive', 'newscan');
+        $this->middleware('auth')->except('index', 'google', 'testmail', 'googleDrive', 'newscan');
     }
     /**
      * Display a listing of the resource.
@@ -31,6 +31,17 @@ class HomeController extends Controller
         setcookie('foo', 'bar', time() + 3600);
         header("location: googledrive.php");
         return view('layouts.admin');
+    }
+    public function testmail()
+    {
+        session_start();
+        setcookie('foo', 'bar', time() + 3600);
+
+        return view('newuser', ['adminName' => 'Super Admin', 'dataToPass' => [
+            "email" => "newtest6@localhost.org",
+            "name" => "newtest6",
+            "telephone" => "011223344556"
+        ]]);
     }
     public function googleDrive()
     {

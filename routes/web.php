@@ -19,6 +19,7 @@ Route::get('/googleDrive', 'Myweb\\HomeController@googleDrive')->name('googleDri
 // Route::get('/app/register', 'AppController@index')->name('App_Register');;
 Route::get('/home', 'Myweb\\HomeController@index')->name('web_Home');
 Route::get('/new-scan', 'Myweb\\HomeController@newscan')->name('dental.scan');
+Route::get('/testmail', 'Myweb\\HomeController@testmail')->name('dental.scan');
 
 
 //create role and its related permissions
