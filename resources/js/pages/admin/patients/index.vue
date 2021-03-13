@@ -41,76 +41,163 @@
         loading-text="Loading Patients... Please wait"
       >
         <template v-slot:item.name="{ item }">
-          <!--<nuxt-link
-            :to="{
-              path: '/admin/users/' + item.name + '?',
-              params: { id: item.id, name: item.name }
-            }"
-            >{{ item.name }}</nuxt-link
-          >-->
-          <span
-            class="username"
-            @click="
-              $router.push({
-                name: 'edit-patient',
-                //path:'/admin/patient/edit/'+item.id,
-                params: { id: item.id, name: item.name_en },
-              })
-            "
-          >
-            {{ item.name_en }}
-          </span>
-          <!-- ,
-                query:{doctor: item }
-                query:{patient: item}-->
-        </template>
-        <template v-slot:item.active="{ item }">
-          <v-chip small :color="getActive(item.active)">{{
-            item.active == 1 ? "Active" : "inactive"
-          }}</v-chip>
-        </template>
+          <template v-if="!enableEditUser || currentUserId != item.id">
+            <span
+              class="username"
+              @click="
+                $router.push({
+                  name: 'edit-patient',
 
-        <template class="name-ar" v-slot:item.arabic="{ item }">
-          {{ item.name_ar }}
+                  params: {
+                    id: item.id,
+                    name: item.name_en.replace(/ /g, '-'),
+                  },
+                })
+              "
+            >
+              {{ item.name_en }}
+            </span>
+          </template>
+          <template v-if="enableEditUser && currentUserId == item.id">
+            <v-text-field
+              color="white"
+              v-model="item.name_en"
+              :rules="rules.name"
+              :error-messages="errorMessages"
+              hide-details
+              dense
+              backgroundColor="green lighten-5"
+              height="20"
+              placeholder="Patient Name 1st"
+              required
+            ></v-text-field>
+          </template>
+        </template>
+        <template v-slot:item.lastName="{ item }">
+          <template v-if="!enableEditUser || currentUserId != item.id">
+            <span class="username">
+              {{ item.name_ar }}
+            </span>
+          </template>
+          <template v-if="enableEditUser && currentUserId == item.id">
+            <v-text-field
+              color="white"
+              v-model="item.name_ar"
+              :error-messages="errorMessages"
+              hide-details
+              dense
+              backgroundColor="green lighten-5"
+              height="20"
+              placeholder="Patient Name last"
+              required
+            ></v-text-field>
+          </template>
+        </template>
+        <template v-slot:item.gender="{ item }">
+          <template v-if="!enableEditUser || currentUserId != item.id">
+            <span>
+              {{ item.gender }}
+            </span>
+          </template>
+          <template v-if="enableEditUser && currentUserId == item.id">
+            <v-combobox
+              dense
+              :items="genders"
+              color="white"
+              v-model="item.gender"
+              hide-details
+              backgroundColor="green lighten-5"
+              height="20"
+              placeholder="Patient Name last"
+              required
+            ></v-combobox>
+          </template>
         </template>
         <template v-slot:item.refered_by="{ item }">
-          <!--<nuxt-link
-            :to="{
-              path: '/admin/users/' + item.name + '?',
-              params: { id: item.id, name: item.name }
-            }"
-            >{{ item.name }}</nuxt-link
-            name: 'admin-users-name',
-          >-->
-          <span
-            class="username"
-            @click="
-              $router.push({
-                name: 'edit-user',
-                params: { id: item.user.id, name: item.user.name },
-              })
-            "
-          >
-            {{ item.user ? item.user.name : "" }}
-          </span>
+          <template v-if="!enableEditUser || currentUserId != item.id">
+            <span
+              class="username"
+              @click="
+                $router.push({
+                  name: 'edit-user',
+                  params: { id: item.user.id, name: item.user.name },
+                })
+              "
+            >
+              {{ item.user ? item.user.name : "" }}
+            </span>
+          </template>
+          <template v-if="enableEditUser && currentUserId == item.id">
+            <v-autocomplete
+              v-model="item.user"
+              dense
+              label="Refered By"
+              prepend-icon="mdi-database-search"
+              return-object
+              :items="doctors"
+              item-text="name"
+            >
+            </v-autocomplete>
+            <!-- <v-text-field
+              color="white"
+              v-model="item.user.id"
+              hide-details
+              dense
+              backgroundColor="green lighten-5"
+              height="20"
+              placeholder="Refered_By"
+              required
+            ></v-text-field> -->
+          </template>
         </template>
 
         <template v-slot:item.telephone="{ item }">
-          <a :href="`tel: ${item.telephone}`">
-            {{
-              //new Date(item.created_at).toDateString()
-              item.telephone
-            }}</a
-          >
+          <template v-if="!enableEditUser || currentUserId != item.id">
+            <a :href="`tel: ${item.telephone}`">
+              {{
+                //new Date(item.created_at).toDateString()
+                item.telephone
+              }}</a
+            >
+          </template>
+          <template v-if="enableEditUser && currentUserId == item.id">
+            <v-text-field
+              color="white"
+              v-model="item.telephone"
+              :error-messages="errorMessages"
+              hide-details
+              dense
+              backgroundColor="green lighten-5"
+              height="20"
+              placeholder="Patient Phone"
+              required
+            ></v-text-field>
+          </template>
         </template>
 
         <template v-slot:item.action="{ item }">
           <div class="action">
-            <Edit :user="item" />
-
-            <v-btn small rounded icon @click="delUser(item)"
-              ><v-icon color="error">mdi-account-remove</v-icon>
-            </v-btn>
+            <v-icon
+              class="mr-2"
+              color="success"
+              @click="editUserInline(item.id)"
+            >
+              mdi-account-edit
+            </v-icon>
+            <template v-if="!enableEditUser || currentUserId != item.id">
+              <v-icon class="mr-2" color="error" @click="delUser(item)">
+                mdi-account-remove
+              </v-icon>
+            </template>
+            <template v-if="enableEditUser && currentUserId == item.id">
+              <v-icon
+                class="mr-2"
+                color="green darken-4"
+                @click="updateUser(item)"
+              >
+                mdi-content-save
+              </v-icon>
+            </template>
           </div>
         </template>
       </v-data-table>
@@ -121,6 +208,7 @@
 <script>
 import breadcumb from "@/components/breadcumb";
 import Edit from "./edit";
+import doctorsList from "@/mixins/doctorsList.js";
 export default {
   components: {
     breadcumb,
@@ -133,6 +221,10 @@ export default {
     selected: [],
     search: "",
     loading: true,
+    enableEditUser: false,
+    currentUserId: null,
+    refered_by: null,
+    genders: ["Male", "Female"],
     headers: [
       {
         text: "First Name",
@@ -142,7 +234,7 @@ export default {
         value: "name",
         color: "primary",
       },
-      { text: "Last Name", value: "name_ar", width: "15%" },
+      { text: "Last Name", value: "lastName", width: "15%" },
       { text: "Refered By", value: "refered_by" },
       { text: "Gender", value: "gender" },
 
@@ -156,6 +248,22 @@ export default {
       },
     ],
     desserts: [],
+    rules: {
+      name: [(val) => (val || "").length > 0 || "This field is required"],
+      email: [
+        (email) => !!email || "This field is required",
+        (email) =>
+          (!!email && email.length <= 35) || "Email must be less than 35",
+        (v) => !!(v || "").match(/@/) || "Please enter a valid email",
+        (email) =>
+          (!!email && email.length >= 5) || "Email must be more than 5",
+        //   this.addressCheck(),
+      ],
+      length: (len) => (v) =>
+        (v || "").length >= len || `Invalid character length, required ${len}`,
+      telephone: [(val) => (val || "").length > 0 || "This field is required"],
+      required: (v) => !!v || "This field is required",
+    },
   }),
 
   head() {
@@ -163,6 +271,7 @@ export default {
       title: "Patients List",
     };
   },
+  mixins: [doctorsList],
   methods: {
     getActive(isActive) {
       if (isActive == 1) return "green";
@@ -173,15 +282,98 @@ export default {
     fetchUsers(data) {
       this.desserts = data;
     },
-    editUser(user) {
-      this.$swal.fire("edit : " + user.id + " // " + user.name);
-      console.dir(this.selected);
-    },
-    delUser(user) {
-      alert(user.id + " // " + user.name);
-    },
     goUser(user) {
       //this.$router.push("/admin/users/" + user.id);
+    },
+    editUser(userID) {
+      this.enableEditUser = true;
+      this.currentUserId = userID;
+    },
+    updateCurrentUser(user) {
+      console.log(user);
+      let objIndex = this.desserts.findIndex((obj) => obj.id == user.id);
+      if (objIndex !== -1) this.desserts.splice(objIndex, 1, user);
+    },
+    editUserInline(userId = null) {
+      if (this.enableEditUser) {
+        this.currentUserId = null;
+        this.enableEditUser = false;
+      } else {
+        this.enableEditUser = true;
+
+        this.currentUserId = userId;
+      }
+    },
+    delUser(user) {
+      this.$store.dispatch("patient/patientDelete", user.id).then((res) => {
+        this.loading = false;
+        let objIndex = this.desserts.findIndex((obj) => obj.id == user.id);
+        if (objIndex !== -1) this.desserts.splice(objIndex, 1);
+        this.$toasted
+          .error("Patient Deleted successfully", {
+            theme: "bubble",
+            position: "top-right",
+            duration: 5000,
+            className: "mytoast",
+            type: "success",
+            iconPack: "mdi",
+            icon: {
+              name: "Business-Mens",
+              after: true,
+            },
+          })
+          .goAway(3000);
+      });
+    },
+    updateUser(item) {
+      console.log("update Patient !");
+      this.submitStatus = "PENDING";
+      let fa = Object.entries(item);
+      this.$store
+        .dispatch("patient/patientUpdate", { id: item.id, formData: fa })
+        .then((res) => {
+          console.log(res);
+
+          this.editUserInline(item.id);
+          this.afterSubmit(res);
+        })
+        .catch((err) => {
+          console.log(err);
+
+          this.$toasted
+            .error("Error updating user", {
+              theme: "bubble",
+              position: "top-right",
+              duration: 5000,
+              className: "mytoast",
+              type: "error",
+              iconPack: "mdi",
+              icon: {
+                name: "eye-off",
+                after: true,
+              },
+            })
+            .goAway(3000);
+        });
+      //   }
+    },
+    afterSubmit(res) {
+      console.log(res);
+
+      this.$toasted
+        .success("Patient Updated Successfully", {
+          theme: "bubble",
+          position: "top-right",
+          duration: 5000,
+          className: "mytoast",
+          type: "success",
+          iconPack: "mdi",
+          icon: {
+            name: "eye-off",
+            after: true,
+          },
+        })
+        .goAway(3000);
     },
   },
   created() {
@@ -203,7 +395,9 @@ export default {
         .goAway(3000);
       //   console.log(this.$toasted);
     });
+    this.loadPatientsDoctors();
   },
+
   computed: {},
 };
 </script>

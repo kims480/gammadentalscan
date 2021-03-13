@@ -117,6 +117,30 @@ export const actions = {
                 });
         });
     },
+    checkPatientMail({ commit }, mail) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .get("check-patient-mail/" + mail)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
+    checkPatientPhone({ commit }, phone) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .get("check-patient-phone/" + phone)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
     getPatientById({ commit }, id) {
         return new Promise((resolve, reject) => {
             ServicesConst.myApiClient
@@ -124,6 +148,70 @@ export const actions = {
                 .then(res => {
                     console.log(res);
                     commit("SET_PATIENT_CREATE", res.data);
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
+    patientUpdate({ commit }, data) {
+        console.log(data);
+        console.log(data.formData);
+        let formData = new FormData();
+        data.formData.forEach(value => {
+            if (!Array.isArray(value[1])) {
+                value[1] != null ? formData.append(value[0], value[1]) : false;
+
+                value[0] == "user"
+                    ? formData.append(
+                          "refered_by",
+                          value[1] ? value[1].id : null
+                      )
+                    : null;
+                // value[1] != null ? formData.append(value[0], value[1]) : false;
+                // console.log(value[0], value[1]);
+            } else {
+                value[1].forEach((valueb, index) => {
+                    value[1] != null
+                        ? formData.append(value[0] + "[]", valueb)
+                        : false;
+                });
+            }
+        });
+        formData.append("_method", "PUT");
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+        }
+
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .post("patient/" + data.id, formData, {
+                    headers: {
+                        type: "PUT",
+                        _method: "PUT",
+                        enctype: "multipart/form-data",
+                        "Content-Type":
+                            "multipart/form-data; charset=utf-8; boundary=" +
+                            Math.random()
+                                .toString()
+                                .substr(2)
+                    }
+                })
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    },
+    patientDelete({ commit }, userID) {
+        return new Promise((resolve, reject) => {
+            ServicesConst.myApiClient
+                .delete("patient/" + userID)
+                .then(res => {
                     resolve(res.data);
                 })
                 .catch(err => {

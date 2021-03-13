@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +41,36 @@ class PatientController extends Controller
         $patient = $patient->keyBy('id');
         $patient = $patient->all();
         return response()->json(['patients' => $patientList, 'list' => array_values($patient)], 201);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPatientMail($mail)
+    {
+        //
+        $patient = Patient::select('email')->where('email', $mail)->get();
+        if (count($patient) > 0) {
+
+            return response()->json(['message' => 'This Mail Already exist before', 'success' => false], 201);
+        }
+        return response()->json(['message' => "Available Mail", 'success' => true], 201);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkPatientPhone($phone)
+    {
+        //
+        $patient = Patient::select('telephone')->where('telephone', $phone)->get();
+        if (count($patient) > 0) {
+
+            return response()->json(['message' => 'This Phone Already exist before', 'success' => false], 201);
+        }
+        return response()->json(['message' => "Available Phone", 'success' => true], 201);
     }
     /**
      * Display a listing of the resource of specifc doctor.
@@ -142,8 +173,37 @@ class PatientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return response()->json([
+                'success' => false,
+                'id' => $id,
+                'Message' => 'Patient Not Vailable',
+            ], HttpFoundationResponse::HTTP_NOT_FOUND);
+        }
 
+        try {
+            $patient->update($request->all());
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'id' => $id,
+                'Message' => $e,
+                'request' => $request->all()
+            ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
+        }
+        if ($patient) {
+            return response()->json([
+                'success' => true,
+                'Message' => 'Patient ' . $patient->name . ' Updated Successfully',
+                'patient' => $patient,
+            ], HttpFoundationResponse::HTTP_CREATED);
+        }
+
+        return response()->json([
+            'success' => false,
+            'Message' => 'General Error',
+        ], HttpFoundationResponse::HTTP_NOT_ACCEPTABLE);
     }
 
     /**
@@ -155,6 +215,39 @@ class PatientController extends Controller
     public function destroy($id)
     {
         //
+        $result = Patient::find($id);
+
+        $result->delete();
+    }
+    /**
+     * permanently Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function force_destroy($id)
+    {
+        //
+        $result = Patient::find($id);
+
+        $result->forceDelete();
+
+        // You may also use the forceDelete method when building Eloquent relationship queries:
+
+        //     $flight->history()->forceDelete();
+    }
+    /**
+     * permanently Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+        $result = Patient::find($id);
+
+        $result->resote();
     }
 
     /**
@@ -162,7 +255,7 @@ class PatientController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return \App\Models\User
+     * @return \App\Models\Patient
      */
     protected function create(Request $request)
     {

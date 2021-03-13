@@ -38,6 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     ///////////////////////////// Ptients ///////////////////////////////
     Route::post('/patient-list', 'Api\\PatientController@getPatientList')->name('patient.list');
+    Route::get('/check-patient-mail/{email}', 'Api\\PatientController@checkPatientMail')->name('check.patient.mail');
+    Route::get('/check-patient-phone/{phone}', 'Api\\PatientController@checkPatientPhone')->name('check.patient.phone');
     Route::post('/getPatientListOfDoctor', 'Api\\PatientController@getPatientListOfDoctor')->name('patient.list');
     Route::post('/doctors-patients-list', 'Api\\ScanRequestsController@getDoctorsPatientsList')->name('doctors.patients.list');
     Route::post('/dispatch-request', 'Api\\ScanRequestsController@dispatchRequest')->name('dispatch.request');

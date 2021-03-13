@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewUserEvent;
 use App\Http\Controllers\Controller;
 use App\Jobs\SendNewUserMail;
 use Illuminate\Foundation\Auth\User as Authinticated;
@@ -368,7 +369,7 @@ class UserController extends Controller
         $permissions = $user->syncPermissions($request->only('userPermissions'));
 
         if ($user && $roles && $permissions) {
-
+            event(new NewUserEvent($user));
             return response()->json([
                 'success' => true,
                 'Message' => 'User ' . $user->name . ' Updated Successfully',

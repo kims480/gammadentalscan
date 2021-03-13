@@ -46,11 +46,11 @@ class Patient extends Model
 
         'others',
         'refered_by',
-        'whatsapp'
+
     ];
     /**
      * Accessor
-     * Get the Patinet Name
+     * Get the Patinet Gender
      *
      * @return string
      */
@@ -59,6 +59,19 @@ class Patient extends Model
         if ($value == 1) return "Male";
         if ($value == 2) return "Female";
         return 'NA';
+    }
+    /**
+     * Mutator
+     * set the Patinet Gender
+     *
+     * @return string
+     */
+    public function setGenderAttribute($value)
+    {
+        if ($value == "Male" || $value == 1)
+            $this->attributes['gender'] = 1;
+        if ($value == "Female" || $value == 2)
+            $this->attributes['gender'] = 2;
     }
 
 
