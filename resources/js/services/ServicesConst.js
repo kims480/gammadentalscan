@@ -22,9 +22,11 @@ export const myApiClient = axios.create({
 });
 myApiClient.interceptors.request.use(config => {
     nProgress.start();
+    store.dispatch("setOverlay");
     return config;
 });
 myApiClient.interceptors.response.use(response => {
+    store.dispatch("removeOverlay");
     nProgress.done();
     // console.log(response.data);
     // if (response.data.success == true) {

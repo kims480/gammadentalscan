@@ -474,7 +474,7 @@ router.beforeEach(function(to, from, next) {
     } else if (middleware === "auth") {
         if (store.getters["isAuth"]) {
             console.log("auth success:" + store.getters["isAuth"]);
-            next();
+            if (!store.getters["isOverlay"]) next();
         } else {
             next({ name: "sign-in" });
             console.log("auth false:" + store.getters["isAuth"]);

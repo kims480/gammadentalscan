@@ -643,6 +643,7 @@ export default {
     };
   },
   mounted() {
+    this.$store.dispatch("setOverlay");
     if (!this.notSignedIn) {
       this.handleClientLoad().then(() => {
         this.getDriveFiles();
@@ -681,6 +682,7 @@ export default {
           this.showErrorMessage("Error: " + resp.error.message);
         }
       });
+      this.$store.dispatch("removeOverlay");
     },
 
     cloneObject(obj) {
@@ -1094,6 +1096,8 @@ export default {
       return this.items;
     },
   },
+
+  created() {},
 };
 </script>
 

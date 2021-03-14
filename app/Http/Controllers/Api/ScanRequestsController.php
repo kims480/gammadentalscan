@@ -25,9 +25,17 @@ class ScanRequestsController extends Controller
         //
         // $scanRequest = ScanRequests::get();
         if ($request->user()->hasRole('SUPER_ADMIN') || $request->user()->hasRole('DEVELOPER') || $request->user()->hasRole('ADMIN')) {
-            $scanRequest = ScanRequests::with(['user', 'patient'])->orderBy('id', 'desc')->get();
+            $scanRequest = ScanRequests::with(['user' => function ($q) {
+                $q->select('id', 'name');
+            }, 'patient' => function ($q) {
+                $q->select('id', 'name_ar', 'name_en');
+            }])->orderBy('id', 'desc')->get();
         } elseif ($request->user()->hasRole('DOCTOR')) {
-            $scanRequest = ScanRequests::with(['user', 'patient'])->where('refered_by', Auth::user()->id)->orderBy('id', 'desc')->get();
+            $scanRequest = ScanRequests::with(['user' => function ($q) {
+                $q->select('id', 'name');
+            }, 'patient' => function ($q) {
+                $q->select('id', 'name_ar', 'name_en');
+            }])->where('refered_by', Auth::user()->id)->orderBy('id', 'desc')->get();
         } else {
             return response()->json([
                 'success' => false,

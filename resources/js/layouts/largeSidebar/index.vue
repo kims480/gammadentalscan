@@ -71,6 +71,10 @@
       </div>
     </section>
     <appFooter />
+    <v-overlay :value="overlay">
+      <logo-main></logo-main>
+      <!-- <v-progress-circular indeterminate size="64"></v-progress-circular> -->
+    </v-overlay>
   </div>
 </template>
 
@@ -81,12 +85,12 @@ import TopNav from "@/layouts/partials/TopNav";
 import dashBreadCrumb from "@/components/dashBreadCrumb";
 import Sidebar from "@/layouts/largeSidebar/Sidebar";
 import { PerfectScrollbar as VuePerfectScrollbar } from "vue2-perfect-scrollbar";
-// import Sidebar from "./largeSidebar/Sidebar";
-// import appFooter from "@/layouts/common/footer";
+
 import appFooter from "@/layouts/common/footerVtfy";
-import { mapGetters, mapActions } from "vuex";
-// import Notifications from "@/components/Notifications.vue";
+import { mapGetters } from "vuex";
+import LogoMain from "@/components/LogoMainLoading";
 import Separator from "@/components/separator.vue";
+// import LogoMain from "../../components/LogoMain.vue";
 // import Layout from "./../layouts/default";
 export default {
   components: {
@@ -95,7 +99,7 @@ export default {
     appFooter,
     dashBreadCrumb,
     VuePerfectScrollbar,
-    // Notifications,
+    LogoMain,
     Separator,
   },
   data: () => ({
@@ -104,6 +108,7 @@ export default {
     SubPage: null,
     drawer: true,
     sheet: false,
+    // overlay: false,
     items: [
       { id: 1, title: "Home", link: "home", icon: "mdi-home-city" },
       {
@@ -220,6 +225,7 @@ export default {
     ...mapGetters("largeSidebarM", ["getSideBarToggleProperties"]),
     // ...mapGetters(["configM/getThemeMode"]),
     ...mapGetters({ isAuth: "isAuth" }),
+    ...mapGetters({ overlay: "isOverlay" }),
     activeFab() {
       switch (this.tabs) {
         case "one":

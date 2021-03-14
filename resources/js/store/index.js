@@ -59,7 +59,8 @@ export default new Vuex.Store({
         error: null,
         roles: localStorage.getItem("permissions"),
         token: localStorage.getItem("token"),
-        lng: localStorage.getItem("lang") ?? "en"
+        lng: localStorage.getItem("lang") ?? "en",
+        isOverlay: localStorage.getItem("overlay") ?? false
     },
     mutations: {
         setUser(state, data) {
@@ -78,6 +79,12 @@ export default new Vuex.Store({
         },
         CHANGE_LANG(state, lang) {
             state.lng = lang;
+        },
+        SET_OVERLAY(state) {
+            state.isOverlay = true;
+        },
+        REMOVE_OVERLAY(state) {
+            state.isOverlay = false;
         }
     },
     actions: {
@@ -95,11 +102,22 @@ export default new Vuex.Store({
         async changeLang({ commit }, lang) {
             localStorage.setItem("lang", lang);
             commit("CHANGE_LANG", lang);
+        },
+        setOverlay({ commit }) {
+            localStorage.setItem("overlay", true);
+            commit("SET_OVERLAY");
+        },
+        removeOverlay({ commit }) {
+            localStorage.setItem("overlay", false);
+            commit("REMOVE_OVERLAY");
         }
     },
     getters: {
         isAuth: state => {
             return state.isLoggedIn;
+        },
+        isOverlay: state => {
+            return state.isOverlay;
         },
         loggedUserID: state => {
             return state.loggedInUserID;

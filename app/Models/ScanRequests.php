@@ -76,7 +76,7 @@ class ScanRequests extends Model
     public function getPatientNameAttribute()
     {
         //  return $value;
-        return ['id' => $this->patient_id, 'name' => $this->patient->name_en . ' : ' . $this->patient->name_ar];
+        return ['id' => $this->patient_id, 'name' => $this->patient ? $this->patient->name_en . ' ' . $this->patient->name_ar : ''];
     }
     /**
      * Accessor

@@ -39,3 +39,6 @@ mix.js("resources/js/app.js", "public/js").sass(
 );
 mix.sass("resources/sass/lite-green.scss", "public/css");
 mix.sass("resources/sass/print.scss", "public/css");
+module.exports = {
+    mode: "production"
+};

@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/lite-green.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/print.css') }}" />
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <link rel="preload" href="{{ asset('drive/uploadworker.js') }}" as="script">
+    {{-- <link rel="preload" href="{{ asset('drive/uploadworker.js') }}" as="script">
 
     <link rel="preload" href="{{ asset('js/0.js') }}" as="script">
     <link rel="preload" href="{{ asset('js/1.js') }}" as="script">
@@ -59,7 +59,7 @@
     <link rel="preload" href="{{ asset('js/doctor-Layout.js') }}" as="script">
     <link rel="preload" href="{{ asset('js/vendors~admin-Layout~dashboard~doctor-Layout.js') }}" as="script">
     <link rel="preload" href="{{ asset('js/vendors~admin-doctors.js') }}" as="script">
-    <link rel="preload" href="{{ asset('js/vendors~admin-patients~admin-users.js') }}" as="script">
+    <link rel="preload" href="{{ asset('js/vendors~admin-patients~admin-users.js') }}" as="script"> --}}
 
 
 </head>
